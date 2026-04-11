@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\HotelResource;
+use App\Http\Resources\ReviewResource;
 use App\Models\Hotel;
 
 class HotelController extends Controller
@@ -50,5 +51,22 @@ class HotelController extends Controller
             ->firstOrFail();
 
         return new HotelResource($hotel);
+    }
+
+    public function reviews(string $slug)
+    {
+        // Devuelve las reseñas publicadas de un hotel publicado por su slug
+        $hotel = Hotel::query()
+            ->where('status', 'published')
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        $reviews = $hotel->reviews()
+            ->where('status', 'published')
+            ->with('user:id,name')
+            ->orderByDesc('created_at')
+            ->get();
+
+        return ReviewResource::collection($reviews);
     }
 }
