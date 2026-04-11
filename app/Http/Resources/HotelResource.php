@@ -43,6 +43,51 @@ class HotelResource extends JsonResource
                 'url' => $this->coverImage->image_url,
                 'alt_text' => $this->coverImage->alt_text,
             ] : null,
+            'images' => $this->whenLoaded('images', fn () => $this->images->map(fn ($image) => [
+                'id' => $image->id,
+                'url' => $image->image_url,
+                'alt_text' => $image->alt_text,
+                'is_cover' => $image->is_cover,
+                'sort_order' => $image->sort_order,
+            ])),
+            'services' => $this->whenLoaded('services', fn () => $this->services->map(fn ($service) => [
+                'id' => $service->id,
+                'name' => $service->name,
+                'slug' => $service->slug,
+                'icon' => $service->icon,
+                'category' => $service->category,
+                'scope' => $service->scope,
+            ])),
+            'room_types' => $this->whenLoaded('roomTypes', fn () => $this->roomTypes->map(fn ($roomType) => [
+                'id' => $roomType->id,
+                'name' => $roomType->name,
+                'description' => $roomType->description,
+                'capacity_adults' => $roomType->capacity_adults,
+                'capacity_children' => $roomType->capacity_children,
+                'size_m2' => $roomType->size_m2,
+                'bed_type' => $roomType->bed_type,
+                'base_price' => $roomType->base_price,
+                'total_units' => $roomType->total_units,
+                'images' => $roomType->relationLoaded('images')
+                    ? $roomType->images->map(fn ($image) => [
+                        'id' => $image->id,
+                        'url' => $image->image_url,
+                        'alt_text' => $image->alt_text,
+                        'is_cover' => $image->is_cover,
+                        'sort_order' => $image->sort_order,
+                    ])
+                    : [],
+                'services' => $roomType->relationLoaded('services')
+                    ? $roomType->services->map(fn ($service) => [
+                        'id' => $service->id,
+                        'name' => $service->name,
+                        'slug' => $service->slug,
+                        'icon' => $service->icon,
+                        'category' => $service->category,
+                        'scope' => $service->scope,
+                    ])
+                    : [],
+            ])),
         ];
     }
 }
