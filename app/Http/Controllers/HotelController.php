@@ -20,7 +20,7 @@ class HotelController extends Controller
             ->withCount([
                 'reviews as reviews_count' => fn ($query) => $query->where('status', 'published'),
             ])
-            ->orderBy('name')
+            ->orderBy('id')
             ->get();
 
         return HotelResource::collection($hotels);
