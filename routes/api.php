@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\RoomTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,9 @@ Route::post('/bookings/{id}/cancel', [BookingController::class, 'cancel']);
 Route::post('/bookings/{id}/payments', [BookingController::class, 'payments']);
 Route::post('/bookings/{id}/review', [BookingController::class, 'review']);
 Route::get('/bookings/{id}', [BookingController::class, 'show']);
+
+// Endpoints públicos de favoritos
+Route::get('/favorites', [FavoriteController::class, 'index']);
 
 Route::get('/user', function (Request $request) {
     return $request->user();

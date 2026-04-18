@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Booking;
+use App\Models\Favorite;
 use App\Models\Hotel;
 use App\Models\HotelImage;
 use App\Models\Role;
@@ -101,6 +102,21 @@ class DatabaseSeeder extends Seeder
                         'price' => round((float) $roomType->base_price * $priceMultiplier, 2),
                         'status' => 'open',
                         'min_stay_nights' => $isWeekend ? 2 : 1,
+                    ]);
+                });
+            });
+
+        // Crea algunos favoritos de demo para usuarios existentes
+        User::query()
+            ->where('status', 'active')
+            ->whereDoesntHave('favorites')
+            ->limit(5)
+            ->get()
+            ->each(function (User $user) use ($hotels): void {
+                $hotels->take(3)->each(function (Hotel $hotel) use ($user): void {
+                    Favorite::query()->firstOrCreate([
+                        'user_id' => $user->id,
+                        'hotel_id' => $hotel->id,
                     ]);
                 });
             });
