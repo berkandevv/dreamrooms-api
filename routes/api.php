@@ -16,6 +16,7 @@ Route::get('/room-types/{id}/availability', [RoomTypeController::class, 'availab
 
 // Endpoints públicos de reservas
 Route::get('/bookings', [BookingController::class, 'index']);
+Route::get('/bookings/{id}', [BookingController::class, 'show']);
 
 Route::get('/user', function (Request $request) {
     return $request->user();
