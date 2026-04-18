@@ -7,6 +7,7 @@ use App\Models\Hotel;
 use App\Models\HotelImage;
 use App\Models\Role;
 use App\Models\RoomType;
+use App\Models\RoomTypeAvailability;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -81,5 +82,27 @@ class DatabaseSeeder extends Seeder
                     ]);
                 });
         });
+
+        // Crea disponibilidad futura para que el calendario tenga datos de demo
+        RoomType::query()
+            ->where('status', 'active')
+            ->whereDoesntHave('availability')
+            ->get()
+            ->each(function (RoomType $roomType): void {
+                collect(range(0, 90))->each(function (int $daysFromToday) use ($roomType): void {
+                    $date = today()->addDays($daysFromToday);
+                    $isWeekend = $date->isWeekend();
+                    $priceMultiplier = $isWeekend ? 1.2 : 1;
+
+                    RoomTypeAvailability::factory()->create([
+                        'room_type_id' => $roomType->id,
+                        'date' => $date->toDateString(),
+                        'available_units' => fake()->numberBetween(1, $roomType->total_units),
+                        'price' => round((float) $roomType->base_price * $priceMultiplier, 2),
+                        'status' => 'open',
+                        'min_stay_nights' => $isWeekend ? 2 : 1,
+                    ]);
+                });
+            });
     }
 }
