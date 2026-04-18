@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\HotelResource;
 use App\Models\Favorite;
+use App\Models\Hotel;
 use Illuminate\Http\Request;
 
 class FavoriteController extends Controller
@@ -34,5 +35,51 @@ class FavoriteController extends Controller
             ->pluck('hotel');
 
         return HotelResource::collection($hotels);
+    }
+
+    public function store(Request $request, int $id)
+    {
+        $validated = $request->validate([
+            'user_id' => ['required', 'integer', 'exists:users,id'],
+        ]);
+
+        // Añade el hotel a favoritos para el usuario indicado hasta que activemos auth
+        $hotel = Hotel::query()
+            ->where('status', 'published')
+            ->findOrFail($id);
+
+        Favorite::query()->firstOrCreate([
+            'user_id' => $validated['user_id'],
+            'hotel_id' => $hotel->id,
+        ]);
+
+        return response()->json([
+            'hotel_id' => $hotel->id,
+            'user_id' => $validated['user_id'],
+            'is_favorite' => true,
+        ], 201);
+    }
+
+    public function destroy(Request $request, int $id)
+    {
+        $validated = $request->validate([
+            'user_id' => ['required', 'integer', 'exists:users,id'],
+        ]);
+
+        // Quita el hotel de favoritos para el usuario indicado hasta que activemos auth
+        $hotel = Hotel::query()
+            ->where('status', 'published')
+            ->findOrFail($id);
+
+        Favorite::query()
+            ->where('user_id', $validated['user_id'])
+            ->where('hotel_id', $hotel->id)
+            ->delete();
+
+        return response()->json([
+            'hotel_id' => $hotel->id,
+            'user_id' => $validated['user_id'],
+            'is_favorite' => false,
+        ]);
     }
 }

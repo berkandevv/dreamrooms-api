@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 
 // Endpoints públicos del catálogo de hoteles
 Route::get('/hotels', [HotelController::class, 'index']);
+Route::post('/hotels/{id}/favorite', [FavoriteController::class, 'store']);
+Route::delete('/hotels/{id}/favorite', [FavoriteController::class, 'destroy']);
 Route::get('/hotels/{slug}', [HotelController::class, 'show']);
 Route::get('/hotels/{slug}/reviews', [HotelController::class, 'reviews']);
 
