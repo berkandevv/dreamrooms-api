@@ -3,6 +3,7 @@
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\OwnerHotelController;
 use App\Http\Controllers\RoomTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,9 @@ Route::get('/bookings/{id}', [BookingController::class, 'show']);
 
 // Endpoints públicos de favoritos
 Route::get('/favorites', [FavoriteController::class, 'index']);
+
+// Endpoints temporales de propietario hasta activar auth
+Route::get('/owner/hotels', [OwnerHotelController::class, 'index']);
 
 Route::get('/user', function (Request $request) {
     return $request->user();
