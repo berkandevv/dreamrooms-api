@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 
 class RoomTypeController extends Controller
 {
+    /**
+     * List room type availability.
+     *
+     * Returns the public availability calendar for an active room type in a
+     * published hotel. When no dates are provided, the next 90 days are returned.
+     */
     public function availability(Request $request, int $id)
     {
         $validated = $request->validate([

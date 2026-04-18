@@ -16,6 +16,11 @@ use Illuminate\Validation\ValidationException;
 
 class BookingController extends Controller
 {
+    /**
+     * List bookings.
+     *
+     * Returns existing bookings to support the public booking demo flow.
+     */
     public function index()
     {
         // Devuelve las reservas existentes para poder probar el flujo sin autenticación
@@ -31,6 +36,11 @@ class BookingController extends Controller
         return BookingResource::collection($bookings);
     }
 
+    /**
+     * Show a booking.
+     *
+     * Returns the full details for a booking, including guests and payments.
+     */
     public function show(int $id): BookingResource
     {
         // Devuelve los detalles de una reserva concreta
@@ -47,6 +57,11 @@ class BookingController extends Controller
         return new BookingResource($booking);
     }
 
+    /**
+     * Cancel a booking.
+     *
+     * Cancels an active booking and restores the booked units to availability.
+     */
     public function cancel(int $id): BookingResource
     {
         $booking = DB::transaction(fn (): Booking => $this->cancelBooking($id));
@@ -62,6 +77,11 @@ class BookingController extends Controller
         return new BookingResource($booking);
     }
 
+    /**
+     * Register a booking payment.
+     *
+     * Adds a payment attempt to a booking and recalculates its payment status.
+     */
     public function payments(Request $request, int $id)
     {
         $validated = $request->validate([
@@ -88,6 +108,11 @@ class BookingController extends Controller
             ->setStatusCode(201);
     }
 
+    /**
+     * Create a booking review.
+     *
+     * Creates a single public review for a completed booking.
+     */
     public function review(Request $request, int $id)
     {
         $validated = $request->validate([
@@ -104,6 +129,12 @@ class BookingController extends Controller
             ->setStatusCode(201);
     }
 
+    /**
+     * Create a booking.
+     *
+     * Creates a booking for an available room type, validates occupancy and dates,
+     * stores optional guests, and decrements availability.
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
