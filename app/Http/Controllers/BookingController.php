@@ -46,6 +46,21 @@ class BookingController extends Controller
         return new BookingResource($booking);
     }
 
+    public function cancel(int $id): BookingResource
+    {
+        $booking = DB::transaction(fn (): Booking => $this->cancelBooking($id));
+
+        $booking->load([
+            'user:id,name,email',
+            'hotel:id,name,slug',
+            'roomType:id,name',
+            'guests',
+            'payments',
+        ]);
+
+        return new BookingResource($booking);
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -104,6 +119,48 @@ class BookingController extends Controller
 
         $this->decrementAvailability($availability, $unitsBooked);
         $this->createBookingGuests($booking, $validated);
+
+        return $booking;
+    }
+
+    private function cancelBooking(int $id): Booking
+    {
+        // Cancela una reserva activa y devuelve sus unidades al calendario de disponibilidad
+        $booking = Booking::query()
+            ->lockForUpdate()
+            ->findOrFail($id);
+
+        if ($booking->status === 'cancelled') {
+            throw ValidationException::withMessages([
+                'booking' => ['The booking is already cancelled.'],
+            ]);
+        }
+
+        if ($booking->status === 'completed') {
+            throw ValidationException::withMessages([
+                'booking' => ['Completed bookings cannot be cancelled.'],
+            ]);
+        }
+
+        $stayDates = $this->buildStayDates(
+            CarbonImmutable::parse($booking->check_in),
+            CarbonImmutable::parse($booking->check_out),
+        );
+
+        $availability = $booking->roomType
+            ->availability()
+            ->whereIn('date', $stayDates)
+            ->lockForUpdate()
+            ->get();
+
+        foreach ($availability as $day) {
+            $day->increment('available_units', $booking->units_booked);
+        }
+
+        $booking->forceFill([
+            'status' => 'cancelled',
+            'cancelled_at' => now(),
+        ])->save();
 
         return $booking;
     }
