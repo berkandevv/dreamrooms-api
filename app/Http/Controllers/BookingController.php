@@ -61,6 +61,32 @@ class BookingController extends Controller
         return new BookingResource($booking);
     }
 
+    public function payments(Request $request, int $id)
+    {
+        $validated = $request->validate([
+            'provider' => ['required', 'string', 'in:stripe,paypal,manual'],
+            'amount' => ['required', 'numeric', 'min:0.01'],
+            'currency' => ['nullable', 'string', 'size:3'],
+            'status' => ['nullable', 'string', 'in:pending,authorized,paid,failed,refunded,partially_refunded'],
+            'transaction_reference' => ['nullable', 'string', 'max:100'],
+            'metadata' => ['nullable', 'array'],
+        ]);
+
+        $booking = DB::transaction(fn (): Booking => $this->registerPayment($id, $validated));
+
+        $booking->load([
+            'user:id,name,email',
+            'hotel:id,name,slug',
+            'roomType:id,name',
+            'guests',
+            'payments',
+        ]);
+
+        return (new BookingResource($booking))
+            ->response()
+            ->setStatusCode(201);
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -163,6 +189,66 @@ class BookingController extends Controller
         ])->save();
 
         return $booking;
+    }
+
+    private function registerPayment(int $id, array $validated): Booking
+    {
+        // Registra un intento de pago y recalcula el estado de pago de la reserva
+        $booking = Booking::query()
+            ->with('payments')
+            ->lockForUpdate()
+            ->findOrFail($id);
+
+        if ($booking->status === 'cancelled') {
+            throw ValidationException::withMessages([
+                'booking' => ['Cancelled bookings cannot receive payments.'],
+            ]);
+        }
+
+        $paymentStatus = $validated['status'] ?? 'paid';
+        $amount = round((float) $validated['amount'], 2);
+        $paidAmount = (float) $booking->payments()
+            ->where('status', 'paid')
+            ->sum('amount');
+        $remainingAmount = round((float) $booking->total_amount - $paidAmount, 2);
+
+        if ($paymentStatus === 'paid' && $amount > $remainingAmount) {
+            throw ValidationException::withMessages([
+                'amount' => ['The payment amount cannot exceed the remaining booking total.'],
+            ]);
+        }
+
+        $booking->payments()->create([
+            'provider' => $validated['provider'],
+            'amount' => $amount,
+            'currency' => strtoupper($validated['currency'] ?? $booking->currency),
+            'status' => $paymentStatus,
+            'transaction_reference' => $validated['transaction_reference'] ?? null,
+            'paid_at' => $paymentStatus === 'paid' ? now() : null,
+            'metadata' => $validated['metadata'] ?? null,
+        ]);
+
+        $this->refreshBookingPaymentStatus($booking, $paymentStatus);
+
+        return $booking->refresh();
+    }
+
+    private function refreshBookingPaymentStatus(Booking $booking, string $latestPaymentStatus): void
+    {
+        // Sincroniza el estado agregado de pago usando los pagos confirmados
+        $paidAmount = (float) $booking->payments()
+            ->where('status', 'paid')
+            ->sum('amount');
+        $totalAmount = (float) $booking->total_amount;
+
+        $paymentStatus = match (true) {
+            $paidAmount >= $totalAmount => 'paid',
+            $paidAmount > 0 => 'partial',
+            $latestPaymentStatus === 'failed' => 'failed',
+            default => 'pending',
+        };
+
+        $booking->forceFill(['payment_status' => $paymentStatus])->save();
     }
 
     private function findBookableRoomType(int $roomTypeId): RoomType
