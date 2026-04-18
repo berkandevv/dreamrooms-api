@@ -68,15 +68,52 @@ class OwnerHotelController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validated = $request->validate($this->hotelRules());
+
+        // Crea un hotel del propietario indicado como borrador por defecto
+        $hotel = Hotel::query()->create($this->hotelPayload($validated));
+
+        $hotel->load('coverImage');
+
+        return (new HotelResource($hotel))
+            ->response()
+            ->setStatusCode(201);
+    }
+
+    public function update(Request $request, int $id): HotelResource
+    {
+        $validated = $request->validate($this->hotelRules(required: false));
+
+        // Actualiza solo hoteles que pertenecen al propietario indicado
+        $hotel = Hotel::query()
+            ->where('owner_user_id', $validated['owner_user_id'])
+            ->findOrFail($id);
+
+        $payload = $this->hotelPayload($validated, $hotel);
+
+        if (isset($validated['name']) && $validated['name'] !== $hotel->name) {
+            $payload['slug'] = $this->generateUniqueSlug($validated['name'], $hotel->id);
+        }
+
+        $hotel->update($payload);
+        $hotel->load('coverImage');
+
+        return new HotelResource($hotel);
+    }
+
+    private function hotelRules(bool $required = true): array
+    {
+        $presence = $required ? 'required' : 'sometimes';
+
+        return [
             'owner_user_id' => ['required', 'integer', 'exists:users,id'],
-            'name' => ['required', 'string', 'max:180'],
+            'name' => [$presence, 'string', 'max:180'],
             'description' => ['nullable', 'string'],
-            'stars' => ['required', 'integer', 'min:1', 'max:5'],
-            'country' => ['required', 'string', 'max:100'],
+            'stars' => [$presence, 'integer', 'min:1', 'max:5'],
+            'country' => [$presence, 'string', 'max:100'],
             'region' => ['nullable', 'string', 'max:100'],
-            'city' => ['required', 'string', 'max:100'],
-            'address' => ['required', 'string', 'max:255'],
+            'city' => [$presence, 'string', 'max:100'],
+            'address' => [$presence, 'string', 'max:255'],
             'postal_code' => ['nullable', 'string', 'max:20'],
             'latitude' => ['nullable', 'numeric', 'between:-90,90'],
             'longitude' => ['nullable', 'numeric', 'between:-180,180'],
@@ -88,47 +125,51 @@ class OwnerHotelController extends Controller
             'pets_allowed' => ['nullable', 'boolean'],
             'smoking_allowed' => ['nullable', 'boolean'],
             'status' => ['nullable', 'string', 'in:draft,published,inactive'],
-        ]);
-
-        // Crea un hotel del propietario indicado como borrador por defecto
-        $hotel = Hotel::query()->create([
-            'owner_user_id' => $validated['owner_user_id'],
-            'name' => $validated['name'],
-            'slug' => $this->generateUniqueSlug($validated['name']),
-            'description' => $validated['description'] ?? null,
-            'stars' => $validated['stars'],
-            'country' => $validated['country'],
-            'region' => $validated['region'] ?? null,
-            'city' => $validated['city'],
-            'address' => $validated['address'],
-            'postal_code' => $validated['postal_code'] ?? null,
-            'latitude' => $validated['latitude'] ?? null,
-            'longitude' => $validated['longitude'] ?? null,
-            'contact_email' => $validated['contact_email'] ?? null,
-            'contact_phone' => $validated['contact_phone'] ?? null,
-            'check_in_time' => $validated['check_in_time'] ?? null,
-            'check_out_time' => $validated['check_out_time'] ?? null,
-            'cancellation_policy' => $validated['cancellation_policy'] ?? null,
-            'pets_allowed' => $validated['pets_allowed'] ?? false,
-            'smoking_allowed' => $validated['smoking_allowed'] ?? false,
-            'status' => $validated['status'] ?? 'draft',
-        ]);
-
-        $hotel->load('coverImage');
-
-        return (new HotelResource($hotel))
-            ->response()
-            ->setStatusCode(201);
+        ];
     }
 
-    private function generateUniqueSlug(string $name): string
+    private function hotelPayload(array $validated, ?Hotel $hotel = null): array
+    {
+        $payload = collect([
+            'owner_user_id' => $validated['owner_user_id'] ?? $hotel?->owner_user_id,
+            'name' => $validated['name'] ?? $hotel?->name,
+            'description' => $validated['description'] ?? $hotel?->description,
+            'stars' => $validated['stars'] ?? $hotel?->stars,
+            'country' => $validated['country'] ?? $hotel?->country,
+            'region' => $validated['region'] ?? $hotel?->region,
+            'city' => $validated['city'] ?? $hotel?->city,
+            'address' => $validated['address'] ?? $hotel?->address,
+            'postal_code' => $validated['postal_code'] ?? $hotel?->postal_code,
+            'latitude' => $validated['latitude'] ?? $hotel?->latitude,
+            'longitude' => $validated['longitude'] ?? $hotel?->longitude,
+            'contact_email' => $validated['contact_email'] ?? $hotel?->contact_email,
+            'contact_phone' => $validated['contact_phone'] ?? $hotel?->contact_phone,
+            'check_in_time' => $validated['check_in_time'] ?? $hotel?->check_in_time,
+            'check_out_time' => $validated['check_out_time'] ?? $hotel?->check_out_time,
+            'cancellation_policy' => $validated['cancellation_policy'] ?? $hotel?->cancellation_policy,
+            'pets_allowed' => $validated['pets_allowed'] ?? $hotel?->pets_allowed ?? false,
+            'smoking_allowed' => $validated['smoking_allowed'] ?? $hotel?->smoking_allowed ?? false,
+            'status' => $validated['status'] ?? $hotel?->status ?? 'draft',
+        ])->filter(fn ($value) => $value !== null)->all();
+
+        if (! $hotel) {
+            $payload['slug'] = $this->generateUniqueSlug($validated['name']);
+        }
+
+        return $payload;
+    }
+
+    private function generateUniqueSlug(string $name, ?int $ignoreHotelId = null): string
     {
         // Evita colisiones cuando un propietario repite nombres de hotel
         $baseSlug = Str::slug($name);
         $slug = $baseSlug;
         $counter = 2;
 
-        while (Hotel::query()->where('slug', $slug)->exists()) {
+        while (Hotel::query()
+            ->where('slug', $slug)
+            ->when($ignoreHotelId, fn ($query) => $query->whereKeyNot($ignoreHotelId))
+            ->exists()) {
             $slug = "{$baseSlug}-{$counter}";
             $counter++;
         }
