@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\BookingResource;
+use App\Http\Resources\ReviewResource;
 use App\Models\Booking;
 use App\Models\RoomType;
 use App\Models\User;
@@ -83,6 +84,22 @@ class BookingController extends Controller
         ]);
 
         return (new BookingResource($booking))
+            ->response()
+            ->setStatusCode(201);
+    }
+
+    public function review(Request $request, int $id)
+    {
+        $validated = $request->validate([
+            'rating' => ['required', 'integer', 'min:1', 'max:5'],
+            'comment' => ['nullable', 'string'],
+        ]);
+
+        $review = DB::transaction(fn () => $this->createReview($id, $validated));
+
+        $review->load('user:id,name');
+
+        return (new ReviewResource($review))
             ->response()
             ->setStatusCode(201);
     }
@@ -249,6 +266,35 @@ class BookingController extends Controller
         };
 
         $booking->forceFill(['payment_status' => $paymentStatus])->save();
+    }
+
+    private function createReview(int $id, array $validated)
+    {
+        // Crea una única reseña para reservas completadas
+        $booking = Booking::query()
+            ->with('review')
+            ->lockForUpdate()
+            ->findOrFail($id);
+
+        if ($booking->status !== 'completed') {
+            throw ValidationException::withMessages([
+                'booking' => ['Only completed bookings can be reviewed.'],
+            ]);
+        }
+
+        if ($booking->review) {
+            throw ValidationException::withMessages([
+                'booking' => ['This booking already has a review.'],
+            ]);
+        }
+
+        return $booking->review()->create([
+            'hotel_id' => $booking->hotel_id,
+            'user_id' => $booking->user_id,
+            'rating' => $validated['rating'],
+            'comment' => $validated['comment'] ?? null,
+            'status' => 'published',
+        ]);
     }
 
     private function findBookableRoomType(int $roomTypeId): RoomType

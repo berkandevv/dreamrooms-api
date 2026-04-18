@@ -19,6 +19,7 @@ Route::get('/bookings', [BookingController::class, 'index']);
 Route::post('/bookings', [BookingController::class, 'store']);
 Route::post('/bookings/{id}/cancel', [BookingController::class, 'cancel']);
 Route::post('/bookings/{id}/payments', [BookingController::class, 'payments']);
+Route::post('/bookings/{id}/review', [BookingController::class, 'review']);
 Route::get('/bookings/{id}', [BookingController::class, 'show']);
 
 Route::get('/user', function (Request $request) {
