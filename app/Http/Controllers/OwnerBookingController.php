@@ -237,9 +237,9 @@ class OwnerBookingController extends Controller
             ->sum('amount');
 
         $paymentStatus = match (true) {
+            $latestPaymentStatus === 'refunded' => 'refunded',
             $paidAmount >= $totalAmount => 'paid',
             $paidAmount > 0 => 'partial',
-            $latestPaymentStatus === 'refunded' => 'refunded',
             $latestPaymentStatus === 'failed' => 'failed',
             default => 'pending',
         };
