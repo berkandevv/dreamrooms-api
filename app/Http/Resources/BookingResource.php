@@ -70,7 +70,7 @@ class BookingResource extends JsonResource
                 'transaction_reference' => $payment->transaction_reference,
                 'paid_at' => $payment->paid_at?->toISOString(),
             ])),
-            'notes' => $this->whenLoaded('guests', fn () => $this->notes),
+            'notes' => $this->notes,
             'booked_at' => $this->booked_at?->toISOString(),
             'expires_at' => $this->expires_at?->toISOString(),
             'confirmed_at' => $this->confirmed_at?->toISOString(),
