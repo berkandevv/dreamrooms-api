@@ -73,6 +73,24 @@ class OwnerRoomTypeController extends Controller
         return new RoomTypeResource($roomType);
     }
 
+    public function update(Request $request, int $roomTypeId): RoomTypeResource
+    {
+        $validated = $request->validate($this->roomTypeRules(required: false));
+
+        // Actualiza solo habitaciones que pertenecen a hoteles del propietario indicado
+        $roomType = RoomType::query()
+            ->where('id', $roomTypeId)
+            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $validated['owner_user_id']))
+            ->firstOrFail();
+
+        $roomType->update($this->roomTypePayload($validated, $roomType));
+        $roomType->load(['images', 'services']);
+        $roomType->loadCount(['availability', 'bookings']);
+
+        return new RoomTypeResource($roomType);
+    }
+
+
     private function roomTypeRules(bool $required = true): array
     {
         $presence = $required ? 'required' : 'sometimes';
@@ -91,18 +109,18 @@ class OwnerRoomTypeController extends Controller
         ];
     }
 
-    private function roomTypePayload(array $validated): array
+    private function roomTypePayload(array $validated, ?RoomType $roomType = null): array
     {
-        return [
-            'name' => $validated['name'],
-            'description' => $validated['description'] ?? null,
-            'capacity_adults' => $validated['capacity_adults'],
-            'capacity_children' => $validated['capacity_children'],
-            'size_m2' => $validated['size_m2'] ?? null,
-            'bed_type' => $validated['bed_type'] ?? null,
-            'base_price' => $validated['base_price'],
-            'total_units' => $validated['total_units'],
-            'status' => $validated['status'] ?? 'active',
-        ];
+        return collect([
+            'name' => $validated['name'] ?? $roomType?->name,
+            'description' => $validated['description'] ?? $roomType?->description,
+            'capacity_adults' => $validated['capacity_adults'] ?? $roomType?->capacity_adults,
+            'capacity_children' => $validated['capacity_children'] ?? $roomType?->capacity_children,
+            'size_m2' => $validated['size_m2'] ?? $roomType?->size_m2,
+            'bed_type' => $validated['bed_type'] ?? $roomType?->bed_type,
+            'base_price' => $validated['base_price'] ?? $roomType?->base_price,
+            'total_units' => $validated['total_units'] ?? $roomType?->total_units,
+            'status' => $validated['status'] ?? $roomType?->status ?? 'active',
+        ])->filter(fn ($value) => $value !== null)->all();
     }
 }
