@@ -89,7 +89,7 @@ class OwnerBookingController extends Controller
             'provider' => ['required', 'string', 'in:stripe,paypal,manual'],
             'amount' => ['required', 'numeric', 'min:0.01'],
             'currency' => ['nullable', 'string', 'size:3'],
-            'status' => ['nullable', 'string', 'in:pending,authorized,paid,failed,refunded,partially_refunded'],
+            'status' => ['nullable', 'string', 'in:pending,authorized,paid,failed,refunded'],
             'transaction_reference' => ['nullable', 'string', 'max:100'],
             'metadata' => ['nullable', 'array'],
         ]);
