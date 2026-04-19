@@ -20,6 +20,7 @@ class HotelResource extends JsonResource
             'slug' => $this->slug,
             'description' => $this->description,
             'stars' => $this->stars,
+            'status' => $this->status,
             'location' => [
                 'country' => $this->country,
                 'region' => $this->region,
@@ -44,6 +45,8 @@ class HotelResource extends JsonResource
                 ? round((float) $this->average_rating, 1)
                 : null,
             'reviews_count' => $this->reviews_count,
+            'bookings_count' => $this->whenCounted('bookings'),
+            'room_types_count' => $this->whenCounted('roomTypes'),
             'cover_image' => $this->coverImage ? [
                 'id' => $this->coverImage->id,
                 'url' => $this->coverImage->image_url,
