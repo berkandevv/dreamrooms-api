@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class RoomTypeController extends Controller
 {
-    public function availability(Request $request, int $id)
+    public function availability(Request $request, int $roomTypeId)
     {
         $validated = $request->validate([
             'from' => ['required', 'date'],
@@ -23,7 +23,7 @@ class RoomTypeController extends Controller
         $roomType = RoomType::query()
             ->where('status', 'active')
             ->whereHas('hotel', fn ($query) => $query->where('status', 'published'))
-            ->findOrFail($id);
+            ->findOrFail($roomTypeId);
 
         $availability = $roomType->availability()
             ->whereBetween('date', [$from->toDateString(), $to->toDateString()])

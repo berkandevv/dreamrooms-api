@@ -41,7 +41,7 @@ class BookingController extends Controller
      *
      * Returns the full details for a booking, including guests and payments.
      */
-    public function show(int $id): BookingResource
+    public function show(int $bookingId): BookingResource
     {
         // Devuelve los detalles de una reserva concreta
         $booking = Booking::query()
@@ -49,10 +49,10 @@ class BookingController extends Controller
                 'user:id,name,email',
                 'hotel:id,name,slug',
                 'roomType:id,name',
-                'guests',
-                'payments',
-            ])
-            ->findOrFail($id);
+            'guests',
+            'payments',
+        ])
+            ->findOrFail($bookingId);
 
         return new BookingResource($booking);
     }
@@ -62,9 +62,9 @@ class BookingController extends Controller
      *
      * Cancels an active booking and restores the booked units to availability.
      */
-    public function cancel(int $id): BookingResource
+    public function cancel(int $bookingId): BookingResource
     {
-        $booking = DB::transaction(fn (): Booking => $this->cancelBooking($id));
+        $booking = DB::transaction(fn (): Booking => $this->cancelBooking($bookingId));
 
         $booking->load([
             'user:id,name,email',
@@ -82,7 +82,7 @@ class BookingController extends Controller
      *
      * Adds a payment attempt to a booking and recalculates its payment status.
      */
-    public function payments(Request $request, int $id)
+    public function payments(Request $request, int $bookingId)
     {
         $validated = $request->validate([
             'provider' => ['required', 'string', 'in:stripe,paypal,manual'],
@@ -93,7 +93,7 @@ class BookingController extends Controller
             'metadata' => ['nullable', 'array'],
         ]);
 
-        $booking = DB::transaction(fn (): Booking => $this->registerPayment($id, $validated));
+        $booking = DB::transaction(fn (): Booking => $this->registerPayment($bookingId, $validated));
 
         $booking->load([
             'user:id,name,email',
@@ -113,14 +113,14 @@ class BookingController extends Controller
      *
      * Creates a single public review for a completed booking.
      */
-    public function review(Request $request, int $id)
+    public function review(Request $request, int $bookingId)
     {
         $validated = $request->validate([
             'rating' => ['required', 'integer', 'min:1', 'max:5'],
             'comment' => ['nullable', 'string'],
         ]);
 
-        $review = DB::transaction(fn () => $this->createReview($id, $validated));
+        $review = DB::transaction(fn () => $this->createReview($bookingId, $validated));
 
         $review->load('user:id,name');
 

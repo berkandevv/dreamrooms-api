@@ -34,7 +34,7 @@ class OwnerHotelController extends Controller
         return HotelResource::collection($hotels);
     }
 
-    public function show(Request $request, int $id): HotelResource
+    public function show(Request $request, int $hotelId): HotelResource
     {
         $validated = $request->validate([
             'owner_user_id' => ['required', 'integer', 'exists:users,id'],
@@ -43,7 +43,7 @@ class OwnerHotelController extends Controller
         // Devuelve el detalle completo de un hotel del propietario indicado
         $hotel = Hotel::query()
             ->where('owner_user_id', $validated['owner_user_id'])
-            ->where('id', $id)
+            ->where('id', $hotelId)
             ->with([
                 'coverImage',
                 'images' => fn ($query) => $query->orderBy('sort_order'),
@@ -80,14 +80,14 @@ class OwnerHotelController extends Controller
             ->setStatusCode(201);
     }
 
-    public function update(Request $request, int $id): HotelResource
+    public function update(Request $request, int $hotelId): HotelResource
     {
         $validated = $request->validate($this->hotelRules(required: false));
 
         // Actualiza solo hoteles que pertenecen al propietario indicado
         $hotel = Hotel::query()
             ->where('owner_user_id', $validated['owner_user_id'])
-            ->findOrFail($id);
+            ->findOrFail($hotelId);
 
         $payload = $this->hotelPayload($validated, $hotel);
 

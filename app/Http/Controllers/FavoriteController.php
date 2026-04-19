@@ -37,7 +37,7 @@ class FavoriteController extends Controller
         return HotelResource::collection($hotels);
     }
 
-    public function store(Request $request, int $id)
+    public function store(Request $request, int $hotelId)
     {
         $validated = $request->validate([
             'user_id' => ['required', 'integer', 'exists:users,id'],
@@ -46,7 +46,7 @@ class FavoriteController extends Controller
         // Añade el hotel a favoritos para el usuario indicado hasta que activemos auth
         $hotel = Hotel::query()
             ->where('status', 'published')
-            ->findOrFail($id);
+            ->findOrFail($hotelId);
 
         Favorite::query()->firstOrCreate([
             'user_id' => $validated['user_id'],
@@ -60,7 +60,7 @@ class FavoriteController extends Controller
         ], 201);
     }
 
-    public function destroy(Request $request, int $id)
+    public function destroy(Request $request, int $hotelId)
     {
         $validated = $request->validate([
             'user_id' => ['required', 'integer', 'exists:users,id'],
@@ -69,7 +69,7 @@ class FavoriteController extends Controller
         // Quita el hotel de favoritos para el usuario indicado hasta que activemos auth
         $hotel = Hotel::query()
             ->where('status', 'published')
-            ->findOrFail($id);
+            ->findOrFail($hotelId);
 
         Favorite::query()
             ->where('user_id', $validated['user_id'])
