@@ -44,7 +44,9 @@ class HotelController extends Controller
                 })
             )
             ->with('coverImage')
-            ->withMin('roomTypes', 'base_price')
+            ->withMin([
+                'roomTypes' => fn ($query) => $query->where('status', 'active'),
+            ], 'base_price')
             ->withAvg([
                 'reviews as average_rating' => fn ($query) => $query->where('status', 'published'),
             ], 'rating')
@@ -77,7 +79,9 @@ class HotelController extends Controller
                 'roomTypes.images' => fn ($query) => $query->orderByDesc('is_cover')->orderBy('sort_order'),
                 'roomTypes.services' => fn ($query) => $query->where('is_active', true)->orderBy('name'),
             ])
-            ->withMin('roomTypes', 'base_price')
+            ->withMin([
+                'roomTypes' => fn ($query) => $query->where('status', 'active'),
+            ], 'base_price')
             ->withAvg([
                 'reviews as average_rating' => fn ($query) => $query->where('status', 'published'),
             ], 'rating')

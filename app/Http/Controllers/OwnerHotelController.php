@@ -17,7 +17,9 @@ class OwnerHotelController extends Controller
         $hotels = Hotel::query()
             ->where('owner_user_id', $ownerUserId)
             ->with('coverImage')
-            ->withMin('roomTypes', 'base_price')
+            ->withMin([
+                'roomTypes' => fn ($query) => $query->where('status', 'active'),
+            ], 'base_price')
             ->withAvg([
                 'reviews as average_rating' => fn ($query) => $query->where('status', 'published'),
             ], 'rating')
@@ -48,7 +50,9 @@ class OwnerHotelController extends Controller
                 'roomTypes.images' => fn ($query) => $query->orderByDesc('is_cover')->orderBy('sort_order'),
                 'roomTypes.services' => fn ($query) => $query->orderBy('name'),
             ])
-            ->withMin('roomTypes', 'base_price')
+            ->withMin([
+                'roomTypes' => fn ($query) => $query->where('status', 'active'),
+            ], 'base_price')
             ->withAvg([
                 'reviews as average_rating' => fn ($query) => $query->where('status', 'published'),
             ], 'rating')

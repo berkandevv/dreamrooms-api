@@ -20,7 +20,9 @@ class FavoriteController extends Controller
             ->with([
                 'hotel.coverImage',
                 'hotel' => fn ($query) => $query
-                    ->withMin('roomTypes', 'base_price')
+                    ->withMin([
+                        'roomTypes' => fn ($roomTypeQuery) => $roomTypeQuery->where('status', 'active'),
+                    ], 'base_price')
                     ->withAvg([
                         'reviews as average_rating' => fn ($reviewQuery) => $reviewQuery->where('status', 'published'),
                     ], 'rating')
