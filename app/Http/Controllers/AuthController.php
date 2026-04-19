@@ -12,6 +12,11 @@ use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
+    /**
+     * Register a customer account.
+     *
+     * Creates an active customer user and returns a bearer token.
+     */
     public function register(Request $request)
     {
         $validated = $request->validate([
@@ -40,6 +45,11 @@ class AuthController extends Controller
         ], 201);
     }
 
+    /**
+     * Login with email and password.
+     *
+     * Returns a bearer token for active users with valid credentials.
+     */
     public function login(Request $request)
     {
         $validated = $request->validate([
@@ -72,6 +82,24 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * Show the authenticated user.
+     *
+     * Returns the profile associated with the bearer token.
+     */
+    public function me(Request $request): UserResource
+    {
+        $user = $request->user();
+        $user->loadMissing('role');
+
+        return new UserResource($user);
+    }
+
+    /**
+     * Logout the current token.
+     *
+     * Revokes only the bearer token used for the current request.
+     */
     public function logout(Request $request)
     {
         // Revoca solo el token actual enviado en el header Authorization

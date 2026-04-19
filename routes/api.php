@@ -8,12 +8,12 @@ use App\Http\Controllers\OwnerHotelController;
 use App\Http\Controllers\OwnerBookingController;
 use App\Http\Controllers\OwnerRoomTypeController;
 use App\Http\Controllers\RoomTypeController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Endpoints públicos de autenticación
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
+Route::get('/auth/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 // Endpoints públicos del catálogo de hoteles
@@ -51,7 +51,3 @@ Route::put('/owner/room-types/{roomTypeId}', [OwnerRoomTypeController::class, 'u
 Route::post('/owner/room-types/{roomTypeId}/availability/bulk', [OwnerRoomTypeController::class, 'availabilityBulk']);
 Route::get('/owner/room-types/{roomTypeId}/availability', [OwnerRoomTypeController::class, 'availability']);
 Route::get('/owner/room-types/{roomTypeId}', [OwnerRoomTypeController::class, 'show']);
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
