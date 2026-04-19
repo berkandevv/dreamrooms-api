@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 // Endpoints públicos de autenticación
 Route::post('/auth/register', [AuthController::class, 'register']);
+Route::post('/auth/login', [AuthController::class, 'login']);
 
 // Endpoints públicos del catálogo de hoteles
 Route::get('/hotels', [HotelController::class, 'index']);

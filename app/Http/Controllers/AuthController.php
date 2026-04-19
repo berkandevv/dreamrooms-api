@@ -6,6 +6,8 @@ use App\Http\Resources\UserResource;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
@@ -36,5 +38,37 @@ class AuthController extends Controller
             'token' => $user->createToken('api')->plainTextToken,
             'token_type' => 'Bearer',
         ], 201);
+    }
+
+    public function login(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string'],
+        ]);
+
+        // Genera un token solo para usuarios activos con credenciales válidas
+        $user = User::query()
+            ->with('role')
+            ->where('email', $validated['email'])
+            ->first();
+
+        if (! $user || ! Hash::check($validated['password'], $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
+        }
+
+        if ($user->status !== 'active') {
+            throw ValidationException::withMessages([
+                'email' => ['This user account is not active.'],
+            ]);
+        }
+
+        return response()->json([
+            'data' => new UserResource($user),
+            'token' => $user->createToken('api')->plainTextToken,
+            'token_type' => 'Bearer',
+        ]);
     }
 }
