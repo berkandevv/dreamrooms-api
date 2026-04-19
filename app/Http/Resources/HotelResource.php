@@ -29,6 +29,11 @@ class HotelResource extends JsonResource
                 'latitude' => $this->latitude,
                 'longitude' => $this->longitude,
             ],
+            'contact' => [
+                'email' => $this->contact_email,
+                'phone' => $this->contact_phone,
+                'address' => $this->address,
+            ],
             'check_in_time' => $this->check_in_time?->format('H:i:s'),
             'check_out_time' => $this->check_out_time?->format('H:i:s'),
             'cancellation_policy' => $this->cancellation_policy,
