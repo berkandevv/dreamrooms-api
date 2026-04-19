@@ -125,6 +125,7 @@ class BookingController extends Controller
             'guests.*.is_primary' => ['nullable', 'boolean'],
         ]);
         $validated['user_id'] = $request->user()->id;
+        $this->validateGuestsCount($validated);
 
         $booking = DB::transaction(fn (): Booking => $this->createBooking($validated));
 
@@ -261,6 +262,24 @@ class BookingController extends Controller
 
         throw ValidationException::withMessages([
             'room_type_id' => ['The selected room type does not support the requested occupancy.'],
+        ]);
+    }
+
+    private function validateGuestsCount(array $validated): void
+    {
+        if (! isset($validated['guests'])) {
+            return;
+        }
+
+        // Si se envian huespedes, deben coincidir con la ocupación indicada (adults + children)
+        $expectedGuests = $validated['adults_count'] + ($validated['children_count'] ?? 0);
+
+        if (\count($validated['guests']) === $expectedGuests) {
+            return;
+        }
+
+        throw ValidationException::withMessages([
+            'guests' => ['The number of guests must match adults_count plus children_count.'],
         ]);
     }
 
