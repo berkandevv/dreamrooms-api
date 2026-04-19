@@ -134,6 +134,12 @@ class OwnerBookingController extends Controller
             ]);
         }
 
+        if ($newStatus === 'completed' && $booking->payment_status !== 'paid') {
+            throw ValidationException::withMessages([
+                'payment_status' => ['Only paid bookings can be completed.'],
+            ]);
+        }
+
         $this->validateStatusTransition($booking->status, $newStatus);
 
         if ($newStatus === 'cancelled') {
