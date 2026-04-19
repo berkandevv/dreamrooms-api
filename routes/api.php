@@ -36,6 +36,7 @@ Route::post('/owner/hotels', [OwnerHotelController::class, 'store']);
 Route::put('/owner/hotels/{hotelId}', [OwnerHotelController::class, 'update']);
 Route::get('/owner/hotels/{hotelId}/room-types', [OwnerRoomTypeController::class, 'index']);
 Route::get('/owner/hotels/{hotelId}', [OwnerHotelController::class, 'show']);
+Route::get('/owner/room-types/{roomTypeId}', [OwnerRoomTypeController::class, 'show']);
 
 Route::get('/user', function (Request $request) {
     return $request->user();

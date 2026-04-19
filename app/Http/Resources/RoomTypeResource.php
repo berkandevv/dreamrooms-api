@@ -26,6 +26,7 @@ class RoomTypeResource extends JsonResource
             'base_price' => $this->base_price,
             'total_units' => $this->total_units,
             'status' => $this->status,
+            'availability_count' => $this->whenCounted('availability'),
             'bookings_count' => $this->whenCounted('bookings'),
             'images' => $this->whenLoaded('images', fn () => $this->images->map(fn ($image) => [
                 'id' => $image->id,
