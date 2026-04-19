@@ -7,15 +7,15 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
     /**
-     * Register a customer account.
+     * Register a customer account
      *
-     * Creates an active customer user and returns a bearer token.
+     * Creates an active customer user and returns a bearer token
      */
     public function register(Request $request)
     {
@@ -46,9 +46,9 @@ class AuthController extends Controller
     }
 
     /**
-     * Login with email and password.
+     * Login with email and password
      *
-     * Returns a bearer token for active users with valid credentials.
+     * Returns a bearer token for active users with valid credentials
      */
     public function login(Request $request)
     {
@@ -83,9 +83,9 @@ class AuthController extends Controller
     }
 
     /**
-     * Show the authenticated user.
+     * Show the authenticated user
      *
-     * Returns the profile associated with the bearer token.
+     * Returns the profile associated with the bearer token
      */
     public function me(Request $request): UserResource
     {
@@ -96,9 +96,9 @@ class AuthController extends Controller
     }
 
     /**
-     * Logout the current token.
+     * Logout the current token
      *
-     * Revokes only the bearer token used for the current request.
+     * Revokes only the bearer token used for the current request
      */
     public function logout(Request $request)
     {

@@ -11,13 +11,11 @@ class OwnerHotelController extends Controller
 {
     public function index(Request $request)
     {
-        $validated = $request->validate([
-            'owner_user_id' => ['required', 'integer', 'exists:users,id'],
-        ]);
+        // El owner solo ve los hoteles asociados a su propio usuario
+        $ownerUserId = $request->user()->id;
 
-        // Devuelve los hoteles del propietario indicado hasta que activemos auth
         $hotels = Hotel::query()
-            ->where('owner_user_id', $validated['owner_user_id'])
+            ->where('owner_user_id', $ownerUserId)
             ->with('coverImage')
             ->withMin('roomTypes', 'base_price')
             ->withAvg([
@@ -36,13 +34,11 @@ class OwnerHotelController extends Controller
 
     public function show(Request $request, int $hotelId): HotelResource
     {
-        $validated = $request->validate([
-            'owner_user_id' => ['required', 'integer', 'exists:users,id'],
-        ]);
+        // Evita que un propietario consulte hoteles de otro owner cambiando el ID
+        $ownerUserId = $request->user()->id;
 
-        // Devuelve el detalle completo de un hotel del propietario indicado
         $hotel = Hotel::query()
-            ->where('owner_user_id', $validated['owner_user_id'])
+            ->where('owner_user_id', $ownerUserId)
             ->where('id', $hotelId)
             ->with([
                 'coverImage',
@@ -69,8 +65,9 @@ class OwnerHotelController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate($this->hotelRules());
+        // El propietario se toma del token; no se acepta owner_user_id en el body
+        $validated['owner_user_id'] = $request->user()->id;
 
-        // Crea un hotel del propietario indicado como borrador por defecto
         $hotel = Hotel::query()->create($this->hotelPayload($validated));
 
         $hotel->load('coverImage');
@@ -83,10 +80,11 @@ class OwnerHotelController extends Controller
     public function update(Request $request, int $hotelId): HotelResource
     {
         $validated = $request->validate($this->hotelRules(required: false));
+        // La actualización queda limitada a hoteles del owner autenticado
+        $ownerUserId = $request->user()->id;
 
-        // Actualiza solo hoteles que pertenecen al propietario indicado
         $hotel = Hotel::query()
-            ->where('owner_user_id', $validated['owner_user_id'])
+            ->where('owner_user_id', $ownerUserId)
             ->findOrFail($hotelId);
 
         $payload = $this->hotelPayload($validated, $hotel);
@@ -106,7 +104,6 @@ class OwnerHotelController extends Controller
         $presence = $required ? 'required' : 'sometimes';
 
         return [
-            'owner_user_id' => ['required', 'integer', 'exists:users,id'],
             'name' => [$presence, 'string', 'max:180'],
             'description' => ['nullable', 'string'],
             'stars' => [$presence, 'integer', 'min:1', 'max:5'],

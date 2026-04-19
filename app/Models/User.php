@@ -42,6 +42,13 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function hasRole(string|array $roles): bool
+    {
+        $roles = is_array($roles) ? $roles : [$roles];
+
+        return in_array($this->role?->name, $roles, true);
+    }
+
     public function ownedHotels(): HasMany
     {
         return $this->hasMany(Hotel::class, 'owner_user_id');

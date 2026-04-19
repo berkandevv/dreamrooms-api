@@ -11,13 +11,11 @@ class FavoriteController extends Controller
 {
     public function index(Request $request)
     {
-        $validated = $request->validate([
-            'user_id' => ['required', 'integer', 'exists:users,id'],
-        ]);
+        // Los favoritos se resuelven siempre desde el token para evitar suplantar usuarios
+        $user = $request->user();
 
-        // Devuelve los hoteles favoritos del usuario indicado hasta que activemos auth
         $hotels = Favorite::query()
-            ->where('user_id', $validated['user_id'])
+            ->where('user_id', $user->id)
             ->whereHas('hotel', fn ($query) => $query->where('status', 'published'))
             ->with([
                 'hotel.coverImage',
@@ -39,46 +37,42 @@ class FavoriteController extends Controller
 
     public function store(Request $request, int $hotelId)
     {
-        $validated = $request->validate([
-            'user_id' => ['required', 'integer', 'exists:users,id'],
-        ]);
+        // Solo se pueden marcar como favoritos hoteles publicados
+        $user = $request->user();
 
-        // Añade el hotel a favoritos para el usuario indicado hasta que activemos auth
         $hotel = Hotel::query()
             ->where('status', 'published')
             ->findOrFail($hotelId);
 
         Favorite::query()->firstOrCreate([
-            'user_id' => $validated['user_id'],
+            'user_id' => $user->id,
             'hotel_id' => $hotel->id,
         ]);
 
         return response()->json([
             'hotel_id' => $hotel->id,
-            'user_id' => $validated['user_id'],
+            'user_id' => $user->id,
             'is_favorite' => true,
         ], 201);
     }
 
     public function destroy(Request $request, int $hotelId)
     {
-        $validated = $request->validate([
-            'user_id' => ['required', 'integer', 'exists:users,id'],
-        ]);
+        // El borrado queda acotado al favorito del usuario autenticado
+        $user = $request->user();
 
-        // Quita el hotel de favoritos para el usuario indicado hasta que activemos auth
         $hotel = Hotel::query()
             ->where('status', 'published')
             ->findOrFail($hotelId);
 
         Favorite::query()
-            ->where('user_id', $validated['user_id'])
+            ->where('user_id', $user->id)
             ->where('hotel_id', $hotel->id)
             ->delete();
 
         return response()->json([
             'hotel_id' => $hotel->id,
-            'user_id' => $validated['user_id'],
+            'user_id' => $user->id,
             'is_favorite' => false,
         ]);
     }

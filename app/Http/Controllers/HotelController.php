@@ -9,10 +9,10 @@ use App\Models\Hotel;
 class HotelController extends Controller
 {
     /**
-     * List published hotels.
+     * List published hotels
      *
      * Returns the public hotel catalog with location, cover image, starting price,
-     * average rating, and review count.
+     * average rating, and review count
      */
     public function index()
     {
@@ -34,10 +34,10 @@ class HotelController extends Controller
     }
 
     /**
-     * Show a published hotel.
+     * Show a published hotel
      *
      * Returns the full public detail for a hotel, including images, services,
-     * room types, room images, and room services.
+     * room types, room images, and room services
      */
     public function show(string $slug): HotelResource
     {
@@ -66,9 +66,9 @@ class HotelController extends Controller
     }
 
     /**
-     * List published hotel reviews.
+     * List published hotel reviews
      *
-     * Returns the public reviews for a published hotel ordered from newest to oldest.
+     * Returns the public reviews for a published hotel ordered from newest to oldest
      */
     public function reviews(string $slug)
     {

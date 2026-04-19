@@ -14,13 +14,11 @@ class OwnerRoomTypeController extends Controller
 {
     public function index(Request $request, int $hotelId)
     {
-        $validated = $request->validate([
-            'owner_user_id' => ['required', 'integer', 'exists:users,id'],
-        ]);
+        // Las habitaciones se listan solo si el hotel pertenece al owner autenticado
+        $ownerUserId = $request->user()->id;
 
-        // Lista las habitaciones de un hotel que pertenece el propietario indicado
         $hotel = Hotel::query()
-            ->where('owner_user_id', $validated['owner_user_id'])
+            ->where('owner_user_id', $ownerUserId)
             ->findOrFail($hotelId);
 
         $roomTypes = $hotel->roomTypes()
@@ -38,10 +36,11 @@ class OwnerRoomTypeController extends Controller
     public function store(Request $request, int $hotelId)
     {
         $validated = $request->validate($this->roomTypeRules());
+        // La nueva habitación se crea dentro de un hotel propio del owner
+        $ownerUserId = $request->user()->id;
 
-        // Crea una habitación dentro de un hotel del propietario indicado
         $hotel = Hotel::query()
-            ->where('owner_user_id', $validated['owner_user_id'])
+            ->where('owner_user_id', $ownerUserId)
             ->findOrFail($hotelId);
 
         $roomType = $hotel->roomTypes()->create($this->roomTypePayload($validated));
@@ -55,14 +54,12 @@ class OwnerRoomTypeController extends Controller
 
     public function show(Request $request, int $roomTypeId): RoomTypeResource
     {
-        $validated = $request->validate([
-            'owner_user_id' => ['required', 'integer', 'exists:users,id'],
-        ]);
+        // Evita consultar habitaciones de hoteles de otros propietarios
+        $ownerUserId = $request->user()->id;
 
-        // Devuelve el detalle de una habitación de un hotel del propietario indicado
         $roomType = RoomType::query()
             ->where('id', $roomTypeId)
-            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $validated['owner_user_id']))
+            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $ownerUserId))
             ->with([
                 'images' => fn ($query) => $query->orderByDesc('is_cover')->orderBy('sort_order'),
                 'services' => fn ($query) => $query->orderBy('name'),
@@ -79,15 +76,15 @@ class OwnerRoomTypeController extends Controller
     public function availability(Request $request, int $roomTypeId)
     {
         $validated = $request->validate([
-            'owner_user_id' => ['required', 'integer', 'exists:users,id'],
             'from' => ['required', 'date'],
             'to' => ['required', 'date', 'after_or_equal:from'],
         ]);
+        // La disponibilidad privada solo se expone para habitaciones propias
+        $ownerUserId = $request->user()->id;
 
-        // Devuelve la disponibilidad de una habitación del propietario indicado
         $roomType = RoomType::query()
             ->where('id', $roomTypeId)
-            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $validated['owner_user_id']))
+            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $ownerUserId))
             ->firstOrFail();
 
         $from = CarbonImmutable::parse($validated['from']);
@@ -104,7 +101,6 @@ class OwnerRoomTypeController extends Controller
     public function availabilityBulk(Request $request, int $roomTypeId)
     {
         $validated = $request->validate([
-            'owner_user_id' => ['required', 'integer', 'exists:users,id'],
             'items' => ['required', 'array', 'min:1'],
             'items.*.date' => ['required', 'date'],
             'items.*.available_units' => ['required', 'integer', 'min:0'],
@@ -112,11 +108,12 @@ class OwnerRoomTypeController extends Controller
             'items.*.status' => ['required', 'string', 'in:open,closed'],
             'items.*.min_stay_nights' => ['nullable', 'integer', 'min:1'],
         ]);
+        // El bulk update queda limitado a habitaciones del owner autenticado
+        $ownerUserId = $request->user()->id;
 
-        // Crea o actualiza disponibilidad en bloque para una habitación del propietario
         $roomType = RoomType::query()
             ->where('id', $roomTypeId)
-            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $validated['owner_user_id']))
+            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $ownerUserId))
             ->firstOrFail();
 
         $dates = collect($validated['items'])
@@ -153,11 +150,12 @@ class OwnerRoomTypeController extends Controller
     public function update(Request $request, int $roomTypeId): RoomTypeResource
     {
         $validated = $request->validate($this->roomTypeRules(required: false));
+        // Solo se permite actualizar habitaciones de hoteles propios
+        $ownerUserId = $request->user()->id;
 
-        // Actualiza solo habitaciones que pertenecen a hoteles del propietario indicado
         $roomType = RoomType::query()
             ->where('id', $roomTypeId)
-            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $validated['owner_user_id']))
+            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $ownerUserId))
             ->firstOrFail();
 
         $roomType->update($this->roomTypePayload($validated, $roomType));
@@ -172,7 +170,6 @@ class OwnerRoomTypeController extends Controller
         $presence = $required ? 'required' : 'sometimes';
 
         return [
-            'owner_user_id' => ['required', 'integer', 'exists:users,id'],
             'name' => [$presence, 'string', 'max:120'],
             'description' => ['nullable', 'string'],
             'capacity_adults' => [$presence, 'integer', 'min:1', 'max:255'],

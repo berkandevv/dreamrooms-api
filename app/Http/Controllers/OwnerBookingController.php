@@ -15,15 +15,15 @@ class OwnerBookingController extends Controller
     public function index(Request $request)
     {
         $validated = $request->validate([
-            'owner_user_id' => ['required', 'integer', 'exists:users,id'],
             'hotel_id' => ['nullable', 'integer', 'exists:hotels,id'],
             'status' => ['nullable', 'string', 'in:pending,confirmed,cancelled,completed'],
             'payment_status' => ['nullable', 'string', 'in:pending,partial,paid,failed,refunded'],
         ]);
+        // El owner solo lista reservas de hoteles que le pertenecen
+        $ownerUserId = $request->user()->id;
 
-        // Lista solo las reservas de hoteles que pertenecen al propietario indicado
         $bookings = Booking::query()
-            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $validated['owner_user_id']))
+            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $ownerUserId))
             ->when($validated['hotel_id'] ?? null, fn ($query, $hotelId) => $query->where('hotel_id', $hotelId))
             ->when($validated['status'] ?? null, fn ($query, $status) => $query->where('status', $status))
             ->when($validated['payment_status'] ?? null, fn ($query, $paymentStatus) => $query->where('payment_status', $paymentStatus))
@@ -43,14 +43,12 @@ class OwnerBookingController extends Controller
 
     public function show(Request $request, int $bookingId): BookingResource
     {
-        $validated = $request->validate([
-            'owner_user_id' => ['required', 'integer', 'exists:users,id'],
-        ]);
+        // La reserva debe pertenecer a un hotel del owner autenticado
+        $ownerUserId = $request->user()->id;
 
-        // Devuelve una reserva concreta solo si pertenece a un hotel del propietario indicado
         $booking = Booking::query()
             ->whereKey($bookingId)
-            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $validated['owner_user_id']))
+            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $ownerUserId))
             ->with([
                 'user:id,name,email',
                 'hotel:id,name,slug',
@@ -66,9 +64,10 @@ class OwnerBookingController extends Controller
     public function updateStatus(Request $request, int $bookingId): BookingResource
     {
         $validated = $request->validate([
-            'owner_user_id' => ['required', 'integer', 'exists:users,id'],
             'status' => ['required', 'string', 'in:pending,confirmed,cancelled,completed'],
         ]);
+        // El propietario no llega desde el request; se deriva del token
+        $validated['owner_user_id'] = $request->user()->id;
 
         $booking = DB::transaction(fn (): Booking => $this->changeBookingStatus($bookingId, $validated));
 

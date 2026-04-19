@@ -17,14 +17,14 @@ use Illuminate\Validation\ValidationException;
 class BookingController extends Controller
 {
     /**
-     * List bookings.
+     * List bookings
      *
-     * Returns existing bookings to support the public booking demo flow.
+     * Returns the bookings that belong to the authenticated customer
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Devuelve las reservas existentes para poder probar el flujo sin autenticación
         $bookings = Booking::query()
+            ->where('user_id', $request->user()->id)
             ->with([
                 'user:id,name,email',
                 'hotel:id,name,slug',
@@ -37,34 +37,34 @@ class BookingController extends Controller
     }
 
     /**
-     * Show a booking.
+     * Show a booking
      *
-     * Returns the full details for a booking, including guests and payments.
+     * Returns the full details for one of the authenticated customer's bookings
      */
-    public function show(int $bookingId): BookingResource
+    public function show(Request $request, int $bookingId): BookingResource
     {
-        // Devuelve los detalles de una reserva concreta
         $booking = Booking::query()
+            ->where('user_id', $request->user()->id)
             ->with([
                 'user:id,name,email',
                 'hotel:id,name,slug',
                 'roomType:id,name',
-            'guests',
-            'payments',
-        ])
+                'guests',
+                'payments',
+            ])
             ->findOrFail($bookingId);
 
         return new BookingResource($booking);
     }
 
     /**
-     * Cancel a booking.
+     * Cancel a booking
      *
-     * Cancels an active booking and restores the booked units to availability.
+     * Cancels an active booking and restores the booked units to availability
      */
-    public function cancel(int $bookingId): BookingResource
+    public function cancel(Request $request, int $bookingId): BookingResource
     {
-        $booking = DB::transaction(fn (): Booking => $this->cancelBooking($bookingId));
+        $booking = DB::transaction(fn (): Booking => $this->cancelBooking($bookingId, $request->user()->id));
 
         $booking->load([
             'user:id,name,email',
@@ -78,9 +78,9 @@ class BookingController extends Controller
     }
 
     /**
-     * Register a booking payment.
+     * Register a booking payment
      *
-     * Adds a payment attempt to a booking and recalculates its payment status.
+     * Adds a payment attempt to a booking and recalculates its payment status
      */
     public function payments(Request $request, int $bookingId)
     {
@@ -93,7 +93,7 @@ class BookingController extends Controller
             'metadata' => ['nullable', 'array'],
         ]);
 
-        $booking = DB::transaction(fn (): Booking => $this->registerPayment($bookingId, $validated));
+        $booking = DB::transaction(fn (): Booking => $this->registerPayment($bookingId, $request->user()->id, $validated));
 
         $booking->load([
             'user:id,name,email',
@@ -109,9 +109,9 @@ class BookingController extends Controller
     }
 
     /**
-     * Create a booking review.
+     * Create a booking review
      *
-     * Creates a single public review for a completed booking.
+     * Creates a single public review for a completed booking
      */
     public function review(Request $request, int $bookingId)
     {
@@ -120,7 +120,7 @@ class BookingController extends Controller
             'comment' => ['nullable', 'string'],
         ]);
 
-        $review = DB::transaction(fn () => $this->createReview($bookingId, $validated));
+        $review = DB::transaction(fn () => $this->createReview($bookingId, $request->user()->id, $validated));
 
         $review->load('user:id,name');
 
@@ -130,10 +130,10 @@ class BookingController extends Controller
     }
 
     /**
-     * Create a booking.
+     * Create a booking
      *
      * Creates a booking for an available room type, validates occupancy and dates,
-     * stores optional guests, and decrements availability.
+     * stores optional guests, and assigns it to the authenticated customer
      */
     public function store(Request $request)
     {
@@ -144,7 +144,6 @@ class BookingController extends Controller
             'adults_count' => ['required', 'integer', 'min:1'],
             'children_count' => ['nullable', 'integer', 'min:0'],
             'units_booked' => ['nullable', 'integer', 'min:1'],
-            'user_id' => ['required', 'integer', 'exists:users,id'],
             'customer_name' => ['required', 'string', 'max:150'],
             'customer_email' => ['required', 'email', 'max:150'],
             'customer_phone' => ['nullable', 'string', 'max:30'],
@@ -156,6 +155,7 @@ class BookingController extends Controller
             'guests.*.birth_date' => ['nullable', 'date'],
             'guests.*.is_primary' => ['nullable', 'boolean'],
         ]);
+        $validated['user_id'] = $request->user()->id;
 
         $booking = DB::transaction(fn (): Booking => $this->createBooking($validated));
 
@@ -197,10 +197,11 @@ class BookingController extends Controller
         return $booking;
     }
 
-    private function cancelBooking(int $id): Booking
+    private function cancelBooking(int $id, int $userId): Booking
     {
         // Cancela una reserva activa y devuelve sus unidades al calendario de disponibilidad
         $booking = Booking::query()
+            ->where('user_id', $userId)
             ->lockForUpdate()
             ->findOrFail($id);
 
@@ -239,10 +240,11 @@ class BookingController extends Controller
         return $booking;
     }
 
-    private function registerPayment(int $id, array $validated): Booking
+    private function registerPayment(int $id, int $userId, array $validated): Booking
     {
         // Registra un intento de pago y recalcula el estado de pago de la reserva
         $booking = Booking::query()
+            ->where('user_id', $userId)
             ->with('payments')
             ->lockForUpdate()
             ->findOrFail($id);
@@ -299,10 +301,11 @@ class BookingController extends Controller
         $booking->forceFill(['payment_status' => $paymentStatus])->save();
     }
 
-    private function createReview(int $id, array $validated)
+    private function createReview(int $id, int $userId, array $validated)
     {
         // Crea una única reseña para reservas completadas
         $booking = Booking::query()
+            ->where('user_id', $userId)
             ->with('review')
             ->lockForUpdate()
             ->findOrFail($id);
