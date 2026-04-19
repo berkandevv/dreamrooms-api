@@ -232,6 +232,7 @@ class OwnerBookingController extends Controller
         $paymentStatus = match (true) {
             $paidAmount >= $totalAmount => 'paid',
             $paidAmount > 0 => 'partial',
+            $latestPaymentStatus === 'refunded' => 'refunded',
             $latestPaymentStatus === 'failed' => 'failed',
             default => 'pending',
         };
