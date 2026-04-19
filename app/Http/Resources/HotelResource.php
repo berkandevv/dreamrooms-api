@@ -77,6 +77,7 @@ class HotelResource extends JsonResource
                 'bed_type' => $roomType->bed_type,
                 'base_price' => $roomType->base_price,
                 'total_units' => $roomType->total_units,
+                'status' => $roomType->status,
                 'images' => $roomType->relationLoaded('images')
                     ? $roomType->images->map(fn ($image) => [
                         'id' => $image->id,
