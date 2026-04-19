@@ -33,6 +33,7 @@ Route::get('/favorites', [FavoriteController::class, 'index']);
 
 // Endpoints temporales de propietario hasta activar auth
 Route::get('/owner/bookings', [OwnerBookingController::class, 'index']);
+Route::get('/owner/bookings/{bookingId}', [OwnerBookingController::class, 'show']);
 Route::get('/owner/hotels', [OwnerHotelController::class, 'index']);
 Route::post('/owner/hotels', [OwnerHotelController::class, 'store']);
 Route::put('/owner/hotels/{hotelId}', [OwnerHotelController::class, 'update']);

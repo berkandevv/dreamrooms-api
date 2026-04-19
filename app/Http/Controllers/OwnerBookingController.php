@@ -36,4 +36,26 @@ class OwnerBookingController extends Controller
 
         return BookingResource::collection($bookings);
     }
+
+    public function show(Request $request, int $bookingId): BookingResource
+    {
+        $validated = $request->validate([
+            'owner_user_id' => ['required', 'integer', 'exists:users,id'],
+        ]);
+
+        // Devuelve una reserva concreta solo si pertenece a un hotel del propietario indicado
+        $booking = Booking::query()
+            ->whereKey($bookingId)
+            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $validated['owner_user_id']))
+            ->with([
+                'user:id,name,email',
+                'hotel:id,name,slug',
+                'roomType:id,name',
+                'guests',
+                'payments',
+            ])
+            ->firstOrFail();
+
+        return new BookingResource($booking);
+    }
 }
