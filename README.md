@@ -19,6 +19,20 @@ Roles actuales:
 - `owner`: propietario que gestiona sus hoteles, habitaciones, disponibilidad, reservas y pagos.
 - `admin`: reservado para uso futuro; el panel admin irá por vistas.
 
+## Documentación de la API
+
+La documentación técnica de la API se genera con Scramble, que expone la especificación OpenAPI compatible con Swagger.
+
+Rutas disponibles en local:
+
+```http
+GET /docs/api       # documentación visual generada por Scramble
+GET /docs/api.json  # especificación OpenAPI en JSON
+GET /docs/swagger   # vista Swagger del proyecto
+```
+
+`/docs/api` permite consultar la documentación visual generada por Scramble, `/docs/api.json` devuelve la especificación OpenAPI en formato JSON y `/docs/swagger` muestra la vista Swagger definida en el proyecto.
+
 ---
 
 # 1. Auth
