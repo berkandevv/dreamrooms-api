@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\FavoriteController;
@@ -9,6 +10,9 @@ use App\Http\Controllers\OwnerRoomTypeController;
 use App\Http\Controllers\RoomTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+// Endpoints públicos de autenticación
+Route::post('/auth/register', [AuthController::class, 'register']);
 
 // Endpoints públicos del catálogo de hoteles
 Route::get('/hotels', [HotelController::class, 'index']);
