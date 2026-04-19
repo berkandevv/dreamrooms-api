@@ -68,7 +68,7 @@ class BookingResource extends JsonResource
                 'currency' => $payment->currency,
                 'status' => $payment->status,
                 'transaction_reference' => $payment->transaction_reference,
-                'metadata' => $payment->metadata,
+                'metadata' => $this->when($request->user()?->hasRole(['owner', 'admin']), $payment->metadata),
                 'paid_at' => $payment->paid_at?->toISOString(),
             ])),
             'notes' => $this->notes,
