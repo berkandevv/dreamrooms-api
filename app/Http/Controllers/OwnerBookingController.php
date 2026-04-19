@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\BookingResource;
 use App\Models\Booking;
+use App\Models\Payment;
 use App\Models\RoomTypeAvailability;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
@@ -82,6 +83,36 @@ class OwnerBookingController extends Controller
         return new BookingResource($booking);
     }
 
+    public function payments(Request $request, int $bookingId)
+    {
+        $validated = $request->validate([
+            'provider' => ['required', 'string', 'in:stripe,paypal,manual'],
+            'amount' => ['required', 'numeric', 'min:0.01'],
+            'currency' => ['nullable', 'string', 'size:3'],
+            'status' => ['nullable', 'string', 'in:pending,authorized,paid,failed,refunded,partially_refunded'],
+            'transaction_reference' => ['nullable', 'string', 'max:100'],
+            'metadata' => ['nullable', 'array'],
+        ]);
+
+        $booking = DB::transaction(fn (): Booking => $this->registerPayment(
+            $bookingId,
+            $request->user()->id,
+            $validated,
+        ));
+
+        $booking->load([
+            'user:id,name,email',
+            'hotel:id,name,slug',
+            'roomType:id,name',
+            'guests',
+            'payments',
+        ]);
+
+        return (new BookingResource($booking))
+            ->response()
+            ->setStatusCode(201);
+    }
+
     private function changeBookingStatus(int $bookingId, array $validated): Booking
     {
         // Cambia el estado respetando el propietario del hotel y las transiciones normales de reserva
@@ -130,6 +161,72 @@ class OwnerBookingController extends Controller
         throw ValidationException::withMessages([
             'status' => ["Cannot change booking status from {$currentStatus} to {$newStatus}."],
         ]);
+    }
+
+    private function registerPayment(int $bookingId, int $ownerUserId, array $validated): Booking
+    {
+        // Registra pagos solo sobre reservas de hoteles del owner autenticado
+        $booking = Booking::query()
+            ->whereKey($bookingId)
+            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $ownerUserId))
+            ->with('payments')
+            ->lockForUpdate()
+            ->firstOrFail();
+
+        if ($booking->status === 'cancelled') {
+            throw ValidationException::withMessages([
+                'booking' => ['Cancelled bookings cannot receive payments.'],
+            ]);
+        }
+
+        $paymentStatus = $validated['status'] ?? 'paid';
+        $amount = round((float) $validated['amount'], 2);
+        $paidAmount = (float) Payment::query()
+            ->where('booking_id', $booking->id)
+            ->where('status', 'paid')
+            ->sum('amount');
+        $remainingAmount = round((float) $booking->total_amount - $paidAmount, 2);
+
+        if ($paymentStatus === 'paid' && $amount > $remainingAmount) {
+            throw ValidationException::withMessages([
+                'amount' => ['The payment amount cannot exceed the remaining booking total.'],
+            ]);
+        }
+
+        Payment::query()->create([
+            'booking_id' => $booking->id,
+            'provider' => $validated['provider'],
+            'amount' => $amount,
+            'currency' => strtoupper($validated['currency'] ?? $booking->currency),
+            'status' => $paymentStatus,
+            'transaction_reference' => $validated['transaction_reference'] ?? null,
+            'paid_at' => $paymentStatus === 'paid' ? now() : null,
+            'metadata' => $validated['metadata'] ?? null,
+        ]);
+
+        $this->refreshBookingPaymentStatus($booking->id, (float) $booking->total_amount, $paymentStatus);
+
+        return Booking::query()->findOrFail($bookingId);
+    }
+
+    private function refreshBookingPaymentStatus(int $bookingId, float $totalAmount, string $latestPaymentStatus): void
+    {
+        // Sincroniza el estado agregado de pago usando los pagos confirmados
+        $paidAmount = (float) Payment::query()
+            ->where('booking_id', $bookingId)
+            ->where('status', 'paid')
+            ->sum('amount');
+
+        $paymentStatus = match (true) {
+            $paidAmount >= $totalAmount => 'paid',
+            $paidAmount > 0 => 'partial',
+            $latestPaymentStatus === 'failed' => 'failed',
+            default => 'pending',
+        };
+
+        Booking::query()
+            ->whereKey($bookingId)
+            ->update(['payment_status' => $paymentStatus]);
     }
 
     private function restoreAvailability(Booking $booking): void

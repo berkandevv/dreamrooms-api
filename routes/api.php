@@ -36,7 +36,6 @@ Route::middleware(['auth:sanctum', 'role:customer,admin'])->group(function (): v
     Route::get('/bookings', [BookingController::class, 'index']);
     Route::post('/bookings', [BookingController::class, 'store']);
     Route::post('/bookings/{bookingId}/cancel', [BookingController::class, 'cancel']);
-    Route::post('/bookings/{bookingId}/payments', [BookingController::class, 'payments']);
     Route::post('/bookings/{bookingId}/review', [BookingController::class, 'review']);
     Route::get('/bookings/{bookingId}', [BookingController::class, 'show']);
 
@@ -46,6 +45,7 @@ Route::middleware(['auth:sanctum', 'role:customer,admin'])->group(function (): v
 // Área de propietario: solo accede a hoteles, habitaciones y reservas de sus hoteles
 Route::middleware(['auth:sanctum', 'role:owner,admin'])->group(function (): void {
     Route::get('/owner/bookings', [OwnerBookingController::class, 'index']);
+    Route::post('/owner/bookings/{bookingId}/payments', [OwnerBookingController::class, 'payments']);
     Route::put('/owner/bookings/{bookingId}/status', [OwnerBookingController::class, 'updateStatus']);
     Route::get('/owner/bookings/{bookingId}', [OwnerBookingController::class, 'show']);
     Route::get('/owner/hotels', [OwnerHotelController::class, 'index']);
