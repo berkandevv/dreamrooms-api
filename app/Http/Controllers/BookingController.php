@@ -151,7 +151,7 @@ class BookingController extends Controller
         $stayDates = $this->buildStayDates($checkIn, $checkOut);
 
         $roomType = $this->findBookableRoomType($validated['room_type_id']);
-        $this->validateOccupancy($roomType, $validated['adults_count'], $childrenCount);
+        $this->validateOccupancy($roomType, $validated['adults_count'], $childrenCount, $unitsBooked);
 
         $availability = $this->lockAvailability($roomType, $stayDates);
         $this->validateAvailability($availability, $stayDates, $nights, $unitsBooked);
@@ -249,10 +249,13 @@ class BookingController extends Controller
             ->findOrFail($roomTypeId);
     }
 
-    private function validateOccupancy(RoomType $roomType, int $adultsCount, int $childrenCount): void
+    private function validateOccupancy(RoomType $roomType, int $adultsCount, int $childrenCount, int $unitsBooked): void
     {
         // Comprueba que la ocupación solicitada cabe en este tipo de habitación
-        if ($adultsCount <= $roomType->capacity_adults && $childrenCount <= $roomType->capacity_children) {
+        $maxAdults = $roomType->capacity_adults * $unitsBooked;
+        $maxChildren = $roomType->capacity_children * $unitsBooked;
+
+        if ($adultsCount <= $maxAdults && $childrenCount <= $maxChildren) {
             return;
         }
 
