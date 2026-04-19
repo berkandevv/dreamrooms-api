@@ -30,8 +30,8 @@ class HotelController extends Controller
         // Devuelve el catálogo público de hoteles con los datos necesarios para listados
         $hotels = Hotel::query()
             ->where('status', 'published')
-            ->when($validated['country'] ?? null, fn ($query, $country) => $query->where('country', $country))
-            ->when($validated['city'] ?? null, fn ($query, $city) => $query->where('city', $city))
+            ->when($validated['country'] ?? null, fn ($query, $country) => $query->where('country', 'like', "%{$country}%"))
+            ->when($validated['city'] ?? null, fn ($query, $city) => $query->where('city', 'like', "%{$city}%"))
             ->when($validated['stars'] ?? null, fn ($query, $stars) => $query->where('stars', $stars))
             ->when(isset($validated['pets_allowed']), fn ($query) => $query->where('pets_allowed', $validated['pets_allowed']))
             ->when(isset($validated['smoking_allowed']), fn ($query) => $query->where('smoking_allowed', $validated['smoking_allowed']))
