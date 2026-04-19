@@ -8,6 +8,7 @@ use App\Models\Hotel;
 use App\Models\RoomType;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OwnerRoomTypeController extends Controller
 {
@@ -94,6 +95,55 @@ class OwnerRoomTypeController extends Controller
 
         $availability = $roomType->availability()
             ->whereBetween('date', [$from->toDateString(), $to->toDateString()])
+            ->orderBy('date')
+            ->get();
+
+        return RoomTypeAvailabilityResource::collection($availability);
+    }
+
+    public function availabilityBulk(Request $request, int $roomTypeId)
+    {
+        $validated = $request->validate([
+            'owner_user_id' => ['required', 'integer', 'exists:users,id'],
+            'items' => ['required', 'array', 'min:1'],
+            'items.*.date' => ['required', 'date'],
+            'items.*.available_units' => ['required', 'integer', 'min:0'],
+            'items.*.price' => ['required', 'numeric', 'min:0'],
+            'items.*.status' => ['required', 'string', 'in:open,closed'],
+            'items.*.min_stay_nights' => ['nullable', 'integer', 'min:1'],
+        ]);
+
+        // Crea o actualiza disponibilidad en bloque para una habitación del propietario
+        $roomType = RoomType::query()
+            ->where('id', $roomTypeId)
+            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $validated['owner_user_id']))
+            ->firstOrFail();
+
+        $dates = collect($validated['items'])
+            ->pluck('date')
+            ->map(fn ($date) => CarbonImmutable::parse($date)->toDateString())
+            ->unique()
+            ->values();
+
+        $rows = collect($validated['items'])->map(fn ($item) => [
+            'room_type_id' => $roomType->id,
+            'date' => CarbonImmutable::parse($item['date'])->toDateString(),
+            'available_units' => $item['available_units'],
+            'price' => round((float) $item['price'], 2),
+            'status' => $item['status'],
+            'min_stay_nights' => $item['min_stay_nights'] ?? null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ])->all();
+
+        DB::table('room_type_availabilities')->upsert(
+            $rows,
+            ['room_type_id', 'date'],
+            ['available_units', 'price', 'status', 'min_stay_nights', 'updated_at'],
+        );
+
+        $availability = $roomType->availability()
+            ->whereIn('date', $dates)
             ->orderBy('date')
             ->get();
 
