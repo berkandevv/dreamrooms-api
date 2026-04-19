@@ -128,6 +128,12 @@ class OwnerBookingController extends Controller
             return $booking;
         }
 
+        if ($newStatus === 'confirmed' && $this->bookingExpired($booking)) {
+            throw ValidationException::withMessages([
+                'booking' => ['This booking has expired and cannot be confirmed.'],
+            ]);
+        }
+
         $this->validateStatusTransition($booking->status, $newStatus);
 
         if ($newStatus === 'cancelled') {
@@ -179,6 +185,12 @@ class OwnerBookingController extends Controller
             ]);
         }
 
+        if ($this->bookingExpired($booking)) {
+            throw ValidationException::withMessages([
+                'booking' => ['This booking has expired and cannot receive payments.'],
+            ]);
+        }
+
         $paymentStatus = $validated['status'] ?? 'paid';
         $amount = round((float) $validated['amount'], 2);
         $paidAmount = (float) Payment::query()
@@ -227,6 +239,13 @@ class OwnerBookingController extends Controller
         Booking::query()
             ->whereKey($bookingId)
             ->update(['payment_status' => $paymentStatus]);
+    }
+
+    private function bookingExpired($booking): bool
+    {
+        return $booking->status === 'pending'
+            && $booking->expires_at !== null
+            && $booking->expires_at->isPast();
     }
 
     private function restoreAvailability(Booking $booking): void
