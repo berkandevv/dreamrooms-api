@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\HotelResource;
 use App\Http\Resources\ReviewResource;
 use App\Models\Hotel;
+use Illuminate\Http\Request;
 
 class HotelController extends Controller
 {
@@ -14,11 +15,34 @@ class HotelController extends Controller
      * Returns the public hotel catalog with location, cover image, starting price,
      * average rating, and review count
      */
-    public function index()
+    public function index(Request $request)
     {
+        $validated = $request->validate([
+            'country' => ['nullable', 'string', 'max:100'],
+            'city' => ['nullable', 'string', 'max:100'],
+            'stars' => ['nullable', 'integer', 'min:1', 'max:5'],
+            'pets_allowed' => ['nullable', 'boolean'],
+            'smoking_allowed' => ['nullable', 'boolean'],
+            'min_price' => ['nullable', 'numeric', 'min:0'],
+            'max_price' => ['nullable', 'numeric', 'min:0'],
+        ]);
+
         // Devuelve el catálogo público de hoteles con los datos necesarios para listados
         $hotels = Hotel::query()
             ->where('status', 'published')
+            ->when($validated['country'] ?? null, fn ($query, $country) => $query->where('country', $country))
+            ->when($validated['city'] ?? null, fn ($query, $city) => $query->where('city', $city))
+            ->when($validated['stars'] ?? null, fn ($query, $stars) => $query->where('stars', $stars))
+            ->when(isset($validated['pets_allowed']), fn ($query) => $query->where('pets_allowed', $validated['pets_allowed']))
+            ->when(isset($validated['smoking_allowed']), fn ($query) => $query->where('smoking_allowed', $validated['smoking_allowed']))
+            ->when(
+                isset($validated['min_price']) || isset($validated['max_price']),
+                fn ($query) => $query->whereHas('roomTypes', function ($roomTypeQuery) use ($validated): void {
+                    $roomTypeQuery->where('status', 'active')
+                        ->when(isset($validated['min_price']), fn ($query) => $query->where('base_price', '>=', $validated['min_price']))
+                        ->when(isset($validated['max_price']), fn ($query) => $query->where('base_price', '<=', $validated['max_price']));
+                })
+            )
             ->with('coverImage')
             ->withMin('roomTypes', 'base_price')
             ->withAvg([
