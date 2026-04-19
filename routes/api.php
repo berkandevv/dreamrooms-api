@@ -4,6 +4,7 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\OwnerHotelController;
+use App\Http\Controllers\OwnerRoomTypeController;
 use App\Http\Controllers\RoomTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,7 @@ Route::get('/favorites', [FavoriteController::class, 'index']);
 Route::get('/owner/hotels', [OwnerHotelController::class, 'index']);
 Route::post('/owner/hotels', [OwnerHotelController::class, 'store']);
 Route::put('/owner/hotels/{id}', [OwnerHotelController::class, 'update']);
+Route::get('/owner/hotels/{hotelId}/room-types', [OwnerRoomTypeController::class, 'index']);
 Route::get('/owner/hotels/{id}', [OwnerHotelController::class, 'show']);
 
 Route::get('/user', function (Request $request) {
