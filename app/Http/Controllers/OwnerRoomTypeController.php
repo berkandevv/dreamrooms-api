@@ -32,6 +32,24 @@ class OwnerRoomTypeController extends Controller
         return RoomTypeResource::collection($roomTypes);
     }
 
+    public function store(Request $request, int $hotelId)
+    {
+        $validated = $request->validate($this->roomTypeRules());
+
+        // Crea una habitación dentro de un hotel del propietario indicado
+        $hotel = Hotel::query()
+            ->where('owner_user_id', $validated['owner_user_id'])
+            ->findOrFail($hotelId);
+
+        $roomType = $hotel->roomTypes()->create($this->roomTypePayload($validated));
+        $roomType->load(['images', 'services']);
+        $roomType->loadCount(['availability', 'bookings']);
+
+        return (new RoomTypeResource($roomType))
+            ->response()
+            ->setStatusCode(201);
+    }
+
     public function show(Request $request, int $roomTypeId): RoomTypeResource
     {
         $validated = $request->validate([
@@ -53,5 +71,38 @@ class OwnerRoomTypeController extends Controller
             ->firstOrFail();
 
         return new RoomTypeResource($roomType);
+    }
+
+    private function roomTypeRules(bool $required = true): array
+    {
+        $presence = $required ? 'required' : 'sometimes';
+
+        return [
+            'owner_user_id' => ['required', 'integer', 'exists:users,id'],
+            'name' => [$presence, 'string', 'max:120'],
+            'description' => ['nullable', 'string'],
+            'capacity_adults' => [$presence, 'integer', 'min:1', 'max:255'],
+            'capacity_children' => [$presence, 'integer', 'min:0', 'max:255'],
+            'size_m2' => ['nullable', 'numeric', 'min:0'],
+            'bed_type' => ['nullable', 'string', 'max:100'],
+            'base_price' => [$presence, 'numeric', 'min:0'],
+            'total_units' => [$presence, 'integer', 'min:1', 'max:65535'],
+            'status' => ['nullable', 'string', 'in:active,inactive'],
+        ];
+    }
+
+    private function roomTypePayload(array $validated): array
+    {
+        return [
+            'name' => $validated['name'],
+            'description' => $validated['description'] ?? null,
+            'capacity_adults' => $validated['capacity_adults'],
+            'capacity_children' => $validated['capacity_children'],
+            'size_m2' => $validated['size_m2'] ?? null,
+            'bed_type' => $validated['bed_type'] ?? null,
+            'base_price' => $validated['base_price'],
+            'total_units' => $validated['total_units'],
+            'status' => $validated['status'] ?? 'active',
+        ];
     }
 }
