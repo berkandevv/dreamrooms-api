@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\RoomTypeAvailabilityResource;
 use App\Http\Resources\RoomTypeResource;
 use App\Models\Hotel;
 use App\Models\RoomType;
+use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 
 class OwnerRoomTypeController extends Controller
@@ -73,6 +75,31 @@ class OwnerRoomTypeController extends Controller
         return new RoomTypeResource($roomType);
     }
 
+    public function availability(Request $request, int $roomTypeId)
+    {
+        $validated = $request->validate([
+            'owner_user_id' => ['required', 'integer', 'exists:users,id'],
+            'from' => ['required', 'date'],
+            'to' => ['required', 'date', 'after_or_equal:from'],
+        ]);
+
+        // Devuelve la disponibilidad de una habitación del propietario indicado
+        $roomType = RoomType::query()
+            ->where('id', $roomTypeId)
+            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $validated['owner_user_id']))
+            ->firstOrFail();
+
+        $from = CarbonImmutable::parse($validated['from']);
+        $to = CarbonImmutable::parse($validated['to']);
+
+        $availability = $roomType->availability()
+            ->whereBetween('date', [$from->toDateString(), $to->toDateString()])
+            ->orderBy('date')
+            ->get();
+
+        return RoomTypeAvailabilityResource::collection($availability);
+    }
+
     public function update(Request $request, int $roomTypeId): RoomTypeResource
     {
         $validated = $request->validate($this->roomTypeRules(required: false));
@@ -89,7 +116,6 @@ class OwnerRoomTypeController extends Controller
 
         return new RoomTypeResource($roomType);
     }
-
 
     private function roomTypeRules(bool $required = true): array
     {
