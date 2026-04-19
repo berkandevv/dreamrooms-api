@@ -24,7 +24,7 @@ class HotelController extends Controller
             'pets_allowed' => ['nullable', 'boolean'],
             'smoking_allowed' => ['nullable', 'boolean'],
             'min_price' => ['nullable', 'numeric', 'min:0'],
-            'max_price' => ['nullable', 'numeric', 'min:0'],
+            'max_price' => ['nullable', 'numeric', 'min:0', 'gte:min_price'],
         ]);
 
         // Devuelve el catálogo público de hoteles con los datos necesarios para listados
