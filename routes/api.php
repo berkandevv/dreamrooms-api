@@ -4,6 +4,7 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\OwnerHotelController;
+use App\Http\Controllers\OwnerBookingController;
 use App\Http\Controllers\OwnerRoomTypeController;
 use App\Http\Controllers\RoomTypeController;
 use Illuminate\Http\Request;
@@ -31,6 +32,7 @@ Route::get('/bookings/{bookingId}', [BookingController::class, 'show']);
 Route::get('/favorites', [FavoriteController::class, 'index']);
 
 // Endpoints temporales de propietario hasta activar auth
+Route::get('/owner/bookings', [OwnerBookingController::class, 'index']);
 Route::get('/owner/hotels', [OwnerHotelController::class, 'index']);
 Route::post('/owner/hotels', [OwnerHotelController::class, 'store']);
 Route::put('/owner/hotels/{hotelId}', [OwnerHotelController::class, 'update']);
