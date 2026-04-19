@@ -185,9 +185,11 @@ class OwnerBookingController extends Controller
             ->lockForUpdate()
             ->firstOrFail();
 
-        if ($booking->status === 'cancelled') {
+        $paymentStatus = $validated['status'] ?? 'paid';
+
+        if ($booking->status === 'cancelled' && $paymentStatus !== 'refunded') {
             throw ValidationException::withMessages([
-                'booking' => ['Cancelled bookings cannot receive payments.'],
+                'booking' => ['Cancelled bookings can only receive refunded payments.'],
             ]);
         }
 
@@ -197,7 +199,6 @@ class OwnerBookingController extends Controller
             ]);
         }
 
-        $paymentStatus = $validated['status'] ?? 'paid';
         $amount = round((float) $validated['amount'], 2);
         $paidAmount = (float) Payment::query()
             ->where('booking_id', $booking->id)
