@@ -34,6 +34,18 @@ class DatabaseSeeder extends Seeder
             'password' => 'password',
         ]);
 
+        // Crea un cliente fijo para probar el flujo público y las reservas
+        $customerRole = Role::query()->firstOrCreate(['name' => 'customer']);
+
+        User::query()->firstOrCreate([
+            'email' => 'customer@example.com',
+        ], [
+            'role_id' => $customerRole->id,
+            'name' => 'Demo Customer',
+            'status' => 'active',
+            'password' => 'password',
+        ]);
+
         $hotels = Hotel::query()->where('status', 'published')->get();
 
         if ($hotels->isEmpty()) {
