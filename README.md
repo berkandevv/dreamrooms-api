@@ -19,6 +19,15 @@ Roles actuales:
 - `owner`: propietario que gestiona sus hoteles, habitaciones, disponibilidad, reservas y pagos.
 - `admin`: reservado para uso futuro; el panel admin irá por vistas.
 
+## Usuarios de prueba
+
+Si has ejecutado los seeders, tendrás estas credenciales fijas:
+
+- `owner@example.com` / `password`
+- `customer@example.com` / `password`
+
+Sirven para probar el login y los flujos de propietario y cliente.
+
 ## Documentación de la API
 
 La documentación técnica de la API se genera con Scramble, que expone la especificación OpenAPI compatible con Swagger.
