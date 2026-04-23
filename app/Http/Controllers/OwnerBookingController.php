@@ -13,6 +13,7 @@ use Illuminate\Validation\ValidationException;
 
 class OwnerBookingController extends Controller
 {
+    // Lista las reservas de los hoteles del propietario autenticado
     public function index(Request $request)
     {
         $validated = $request->validate([
@@ -28,13 +29,7 @@ class OwnerBookingController extends Controller
             ->when($validated['hotel_id'] ?? null, fn ($query, $hotelId) => $query->where('hotel_id', $hotelId))
             ->when($validated['status'] ?? null, fn ($query, $status) => $query->where('status', $status))
             ->when($validated['payment_status'] ?? null, fn ($query, $paymentStatus) => $query->where('payment_status', $paymentStatus))
-            ->with([
-                'user:id,name,email',
-                'hotel:id,name,slug',
-                'roomType:id,name',
-                'guests',
-                'payments',
-            ])
+            ->with($this->ownerBookingRelations())
             ->orderByDesc('booked_at')
             ->orderByDesc('id')
             ->get();
@@ -42,6 +37,7 @@ class OwnerBookingController extends Controller
         return BookingResource::collection($bookings);
     }
 
+    // Muestra el detalle de una reserva que pertenece al propietario autenticado
     public function show(Request $request, int $bookingId): BookingResource
     {
         // La reserva debe pertenecer a un hotel del owner autenticado
@@ -50,18 +46,13 @@ class OwnerBookingController extends Controller
         $booking = Booking::query()
             ->whereKey($bookingId)
             ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $ownerUserId))
-            ->with([
-                'user:id,name,email',
-                'hotel:id,name,slug',
-                'roomType:id,name',
-                'guests',
-                'payments',
-            ])
+            ->with($this->ownerBookingRelations())
             ->firstOrFail();
 
         return new BookingResource($booking);
     }
 
+    // Actualiza el estado de una reserva respetando las transiciones permitidas
     public function updateStatus(Request $request, int $bookingId): BookingResource
     {
         $validated = $request->validate([
@@ -72,17 +63,12 @@ class OwnerBookingController extends Controller
 
         $booking = DB::transaction(fn (): Booking => $this->changeBookingStatus($bookingId, $validated));
 
-        $booking->load([
-            'user:id,name,email',
-            'hotel:id,name,slug',
-            'roomType:id,name',
-            'guests',
-            'payments',
-        ]);
+        $this->loadOwnerBookingRelations($booking);
 
         return new BookingResource($booking);
     }
 
+    // Registra un pago sobre una reserva de uno de los hoteles del propietario
     public function payments(Request $request, int $bookingId)
     {
         $validated = $request->validate([
@@ -100,18 +86,34 @@ class OwnerBookingController extends Controller
             $validated,
         ));
 
-        $booking->load([
-            'user:id,name,email',
-            'hotel:id,name,slug',
-            'roomType:id,name',
-            'guests',
-            'payments',
-        ]);
+        $this->loadOwnerBookingRelations($booking);
 
         return (new BookingResource($booking))
             ->response()
             ->setStatusCode(201);
     }
+
+    // Helpers de carga para respuestas de reservas del propietario
+
+    // Devuelve las relaciones necesarias para las reservas del propietario
+    private function ownerBookingRelations(): array
+    {
+        return [
+            'user:id,name,email',
+            'hotel:id,name,slug',
+            'roomType:id,name',
+            'guests',
+            'payments',
+        ];
+    }
+
+    // Carga en memoria las relaciones del detalle de reserva del propietario
+    private function loadOwnerBookingRelations(Booking $booking): void
+    {
+        $booking->load($this->ownerBookingRelations());
+    }
+
+    // Lógica de negocio de reservas del propietario
 
     private function changeBookingStatus(int $bookingId, array $validated): Booking
     {
@@ -166,7 +168,7 @@ class OwnerBookingController extends Controller
             'completed' => [],
         ];
 
-        if (in_array($newStatus, $allowedTransitions[$currentStatus] ?? [], true)) {
+        if (\in_array($newStatus, $allowedTransitions[$currentStatus] ?? [], true)) {
             return;
         }
 
@@ -175,6 +177,7 @@ class OwnerBookingController extends Controller
         ]);
     }
 
+    // Registra el pago y recalcula el estado global de cobro de la reserva
     private function registerPayment(int $bookingId, int $ownerUserId, array $validated): Booking
     {
         // Registra pagos solo sobre reservas de hoteles del owner autenticado
@@ -228,6 +231,7 @@ class OwnerBookingController extends Controller
         return Booking::query()->findOrFail($bookingId);
     }
 
+    // Actualiza el estado agregado de pago según los importes ya cobrados
     private function refreshBookingPaymentStatus(int $bookingId, float $totalAmount, string $latestPaymentStatus): void
     {
         // Sincroniza el estado agregado de pago usando los pagos confirmados
@@ -249,6 +253,7 @@ class OwnerBookingController extends Controller
             ->update(['payment_status' => $paymentStatus]);
     }
 
+    // Devuelve al calendario las unidades cuando una reserva se cancela
     private function restoreAvailability(Booking $booking): void
     {
         $stayDates = $this->buildStayDates(
@@ -263,6 +268,7 @@ class OwnerBookingController extends Controller
             ->increment('available_units', $booking->units_booked);
     }
 
+    // Genera el rango de fechas que ocupa la estancia
     private function buildStayDates(CarbonImmutable $checkIn, CarbonImmutable $checkOut): array
     {
         $stayDates = [];
