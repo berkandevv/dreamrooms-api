@@ -52,57 +52,64 @@ class HotelResource extends JsonResource
                 'url' => $this->coverImage->image_url,
                 'alt_text' => $this->coverImage->alt_text,
             ] : null,
-            'images' => $this->whenLoaded('images', fn () => $this->images->map(fn ($image) => [
-                'id' => $image->id,
-                'url' => $image->image_url,
-                'alt_text' => $image->alt_text,
-                'is_cover' => $image->is_cover,
-                'sort_order' => $image->sort_order,
-            ])),
-            'services' => $this->whenLoaded('services', fn () => $this->services->map(fn ($service) => [
-                'id' => $service->id,
-                'name' => $service->name,
-                'slug' => $service->slug,
-                'icon' => $service->icon,
-                'category' => $service->category,
-                'scope' => $service->scope,
-            ])),
-            'room_types' => $this->whenLoaded('roomTypes', fn () => $this->roomTypes->map(fn ($roomType) => [
-                'id' => $roomType->id,
-                'name' => $roomType->name,
-                'description' => $roomType->description,
-                'capacity_adults' => $roomType->capacity_adults,
-                'capacity_children' => $roomType->capacity_children,
-                'size_m2' => $roomType->size_m2,
-                'bed_type' => $roomType->bed_type,
-                'base_price' => $roomType->base_price,
-                'total_units' => $roomType->total_units,
-                'status' => $roomType->status,
-                'cover_image' => $roomType->relationLoaded('coverImage') && $roomType->coverImage ? [
-                    'id' => $roomType->coverImage->id,
-                    'url' => $roomType->coverImage->image_url,
-                    'alt_text' => $roomType->coverImage->alt_text,
-                ] : null,
-                'images' => $roomType->relationLoaded('images')
-                    ? $roomType->images->map(fn ($image) => [
-                        'id' => $image->id,
-                        'url' => $image->image_url,
-                        'alt_text' => $image->alt_text,
-                        'is_cover' => $image->is_cover,
-                        'sort_order' => $image->sort_order,
-                    ])
-                    : [],
-                'services' => $roomType->relationLoaded('services')
-                    ? $roomType->services->map(fn ($service) => [
-                        'id' => $service->id,
-                        'name' => $service->name,
-                        'slug' => $service->slug,
-                        'icon' => $service->icon,
-                        'category' => $service->category,
-                        'scope' => $service->scope,
-                    ])
-                    : [],
-            ])),
+            'images' => $this->whenLoaded('images', fn () => $this->mapImages($this->images)),
+            'services' => $this->whenLoaded('services', fn () => $this->mapServices($this->services)),
+            'room_types' => $this->whenLoaded('roomTypes', fn () => $this->roomTypes->map(
+                fn ($roomType) => $this->mapRoomType($roomType)
+            )),
+        ];
+    }
+
+    // Transforma la lista de imágenes al formato de respuesta
+    private function mapImages($images)
+    {
+        return $images->map(fn ($image) => [
+            'id' => $image->id,
+            'url' => $image->image_url,
+            'alt_text' => $image->alt_text,
+            'is_cover' => $image->is_cover,
+            'sort_order' => $image->sort_order,
+        ]);
+    }
+
+    // Transforma la lista de servicios al formato de respuesta
+    private function mapServices($services)
+    {
+        return $services->map(fn ($service) => [
+            'id' => $service->id,
+            'name' => $service->name,
+            'slug' => $service->slug,
+            'icon' => $service->icon,
+            'category' => $service->category,
+            'scope' => $service->scope,
+        ]);
+    }
+
+    // Prepara un tipo de habitación con sus relaciones ya formateadas
+    private function mapRoomType($roomType): array
+    {
+        return [
+            'id' => $roomType->id,
+            'name' => $roomType->name,
+            'description' => $roomType->description,
+            'capacity_adults' => $roomType->capacity_adults,
+            'capacity_children' => $roomType->capacity_children,
+            'size_m2' => $roomType->size_m2,
+            'bed_type' => $roomType->bed_type,
+            'base_price' => $roomType->base_price,
+            'total_units' => $roomType->total_units,
+            'status' => $roomType->status,
+            'cover_image' => $roomType->relationLoaded('coverImage') && $roomType->coverImage ? [
+                'id' => $roomType->coverImage->id,
+                'url' => $roomType->coverImage->image_url,
+                'alt_text' => $roomType->coverImage->alt_text,
+            ] : null,
+            'images' => $roomType->relationLoaded('images')
+                ? $this->mapImages($roomType->images)
+                : [],
+            'services' => $roomType->relationLoaded('services')
+                ? $this->mapServices($roomType->services)
+                : [],
         ];
     }
 }

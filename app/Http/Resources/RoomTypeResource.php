@@ -33,21 +33,33 @@ class RoomTypeResource extends JsonResource
                 'url' => $this->coverImage->image_url,
                 'alt_text' => $this->coverImage->alt_text,
             ] : null),
-            'images' => $this->whenLoaded('images', fn () => $this->images->map(fn ($image) => [
-                'id' => $image->id,
-                'url' => $image->image_url,
-                'alt_text' => $image->alt_text,
-                'is_cover' => $image->is_cover,
-                'sort_order' => $image->sort_order,
-            ])),
-            'services' => $this->whenLoaded('services', fn () => $this->services->map(fn ($service) => [
-                'id' => $service->id,
-                'name' => $service->name,
-                'slug' => $service->slug,
-                'icon' => $service->icon,
-                'category' => $service->category,
-                'scope' => $service->scope,
-            ])),
+            'images' => $this->whenLoaded('images', fn () => $this->mapImages($this->images)),
+            'services' => $this->whenLoaded('services', fn () => $this->mapServices($this->services)),
         ];
+    }
+
+    // Transforma la lista de imágenes al formato de respuesta
+    private function mapImages($images)
+    {
+        return $images->map(fn ($image) => [
+            'id' => $image->id,
+            'url' => $image->image_url,
+            'alt_text' => $image->alt_text,
+            'is_cover' => $image->is_cover,
+            'sort_order' => $image->sort_order,
+        ]);
+    }
+
+    // Transforma la lista de servicios al formato de respuesta
+    private function mapServices($services)
+    {
+        return $services->map(fn ($service) => [
+            'id' => $service->id,
+            'name' => $service->name,
+            'slug' => $service->slug,
+            'icon' => $service->icon,
+            'category' => $service->category,
+            'scope' => $service->scope,
+        ]);
     }
 }
