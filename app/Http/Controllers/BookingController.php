@@ -25,11 +25,7 @@ class BookingController extends Controller
     {
         $bookings = Booking::query()
             ->where('user_id', $request->user()->id)
-            ->with([
-                'user:id,name,email',
-                'hotel:id,name,slug',
-                'roomType:id,name',
-            ])
+            ->with($this->bookingListRelations())
             ->orderBy('id')
             ->get();
 
@@ -45,13 +41,7 @@ class BookingController extends Controller
     {
         $booking = Booking::query()
             ->where('user_id', $request->user()->id)
-            ->with([
-                'user:id,name,email',
-                'hotel:id,name,slug',
-                'roomType:id,name',
-                'guests',
-                'payments',
-            ])
+            ->with($this->bookingDetailRelations())
             ->findOrFail($bookingId);
 
         return new BookingResource($booking);
@@ -66,13 +56,7 @@ class BookingController extends Controller
     {
         $booking = DB::transaction(fn (): Booking => $this->cancelBooking($bookingId, $request->user()->id));
 
-        $booking->load([
-            'user:id,name,email',
-            'hotel:id,name,slug',
-            'roomType:id,name',
-            'guests',
-            'payments',
-        ]);
+        $this->loadBookingDetails($booking);
 
         return new BookingResource($booking);
     }
@@ -129,47 +113,119 @@ class BookingController extends Controller
 
         $booking = DB::transaction(fn (): Booking => $this->createBooking($validated));
 
-        $booking->load([
-            'user:id,name,email',
-            'hotel:id,name,slug',
-            'roomType:id,name',
-            'guests',
-            'payments',
-        ]);
+        $this->loadBookingDetails($booking);
 
         return (new BookingResource($booking))
             ->response()
             ->setStatusCode(201);
     }
 
+    // Helpers de carga para respuestas de reservas
+
+    // Devuelve las relaciones necesarias para el listado de reservas
+    private function bookingListRelations(): array
+    {
+        return [
+            'user:id,name,email',
+            'hotel:id,name,slug',
+            'roomType:id,name',
+        ];
+    }
+
+    // Devuelve las relaciones necesarias para el detalle de una reserva
+    private function bookingDetailRelations(): array
+    {
+        return [
+            ...$this->bookingListRelations(),
+            'guests',
+            'payments',
+        ];
+    }
+
+    // Carga en memoria las relaciones del detalle de reserva
+    private function loadBookingDetails(Booking $booking): void
+    {
+        $booking->load($this->bookingDetailRelations());
+    }
+
+    // Orquesta la creación completa de la reserva y sus datos asociados
     private function createBooking(array $validated): Booking
     {
-        $checkIn = CarbonImmutable::parse($validated['check_in']);
-        $checkOut = CarbonImmutable::parse($validated['check_out']);
-        $nights = (int) $checkIn->diffInDays($checkOut);
-        $unitsBooked = $validated['units_booked'] ?? 1;
-        $childrenCount = $validated['children_count'] ?? 0;
-        $stayDates = $this->buildStayDates($checkIn, $checkOut);
+        $stayData = $this->buildStayData($validated);
 
         $roomType = $this->findBookableRoomType($validated['room_type_id']);
-        $this->validateOccupancy($roomType, $validated['adults_count'], $childrenCount, $unitsBooked);
+        $this->validateOccupancy(
+            $roomType,
+            $validated['adults_count'],
+            $stayData['children_count'],
+            $stayData['units_booked'],
+        );
 
-        $availability = $this->lockAvailability($roomType, $stayDates);
-        $this->validateAvailability($availability, $stayDates, $nights, $unitsBooked);
+        $availability = $this->resolveBookingAvailability($roomType, $stayData);
+        $booking = $this->createBookingRecord($validated, $roomType, $stayData, $availability);
 
-        $amounts = $this->calculateAmounts($availability, $unitsBooked);
-        $user = $this->findRegisteredCustomer($validated['user_id']);
-        $booking = $this->persistBooking($validated, $roomType, $user, $checkIn, $checkOut, $nights, $childrenCount, $amounts);
-
-        $this->decrementAvailability($availability, $unitsBooked);
+        $this->decrementAvailability($availability, $stayData['units_booked']);
         $this->createBookingGuests($booking, $validated);
 
         return $booking;
     }
 
+    // Prepara los datos derivados de fechas y ocupación antes de reservar
+    private function buildStayData(array $validated): array
+    {
+        $checkIn = CarbonImmutable::parse($validated['check_in']);
+        $checkOut = CarbonImmutable::parse($validated['check_out']);
+
+        return [
+            'check_in' => $checkIn,
+            'check_out' => $checkOut,
+            'nights' => (int) $checkIn->diffInDays($checkOut),
+            'units_booked' => $validated['units_booked'] ?? 1,
+            'children_count' => $validated['children_count'] ?? 0,
+            'stay_dates' => $this->buildStayDates($checkIn, $checkOut),
+        ];
+    }
+
+    // Bloquea y valida la disponibilidad necesaria para la estancia solicitada
+    private function resolveBookingAvailability(RoomType $roomType, array $stayData): Collection
+    {
+        $availability = $this->lockAvailability($roomType, $stayData['stay_dates']);
+
+        $this->validateAvailability(
+            $availability,
+            $stayData['stay_dates'],
+            $stayData['nights'],
+            $stayData['units_booked'],
+        );
+
+        return $availability;
+    }
+
+    // Crea el registro principal de la reserva con importes y datos snapshot
+    private function createBookingRecord(
+        array $validated,
+        RoomType $roomType,
+        array $stayData,
+        Collection $availability,
+    ): Booking {
+        $amounts = $this->calculateAmounts($availability, $stayData['units_booked']);
+        $user = $this->findRegisteredCustomer($validated['user_id']);
+
+        return $this->persistBooking(
+            $validated,
+            $roomType,
+            $user,
+            $stayData['check_in'],
+            $stayData['check_out'],
+            $stayData['nights'],
+            $stayData['children_count'],
+            $amounts,
+        );
+    }
+
+    // Cancela una reserva activa y devuelve sus unidades al calendario de disponibilidad
     private function cancelBooking(int $id, int $userId): Booking
     {
-        // Cancela una reserva activa y devuelve sus unidades al calendario de disponibilidad
         $booking = Booking::query()
             ->where('user_id', $userId)
             ->lockForUpdate()
@@ -210,9 +266,9 @@ class BookingController extends Controller
         return $booking;
     }
 
+    // Crea una única reseña para reservas completadas
     private function createReview(int $id, int $userId, array $validated)
     {
-        // Crea una única reseña para reservas completadas
         $booking = Booking::query()
             ->where('user_id', $userId)
             ->with('review')
@@ -240,9 +296,9 @@ class BookingController extends Controller
         ]);
     }
 
+    // Busca un tipo de habitación activo dentro de un hotel publicado
     private function findBookableRoomType(int $roomTypeId): RoomType
     {
-        // Busca una habitación activa dentro de un hotel publicado
         return RoomType::query()
             ->with('hotel')
             ->where('status', 'active')
@@ -250,9 +306,9 @@ class BookingController extends Controller
             ->findOrFail($roomTypeId);
     }
 
+    // Comprueba que la ocupación solicitada cabe en las unidades reservadas
     private function validateOccupancy(RoomType $roomType, int $adultsCount, int $childrenCount, int $unitsBooked): void
     {
-        // Comprueba que la ocupación solicitada cabe en este tipo de habitación
         $maxAdults = $roomType->capacity_adults * $unitsBooked;
         $maxChildren = $roomType->capacity_children * $unitsBooked;
 
@@ -265,13 +321,13 @@ class BookingController extends Controller
         ]);
     }
 
+    // Valida que el número de huéspedes coincida con la ocupación enviada
     private function validateGuestsCount(array $validated): void
     {
         if (! isset($validated['guests'])) {
             return;
         }
 
-        // Si se envian huespedes, deben coincidir con la ocupación indicada (adults + children)
         $expectedGuests = $validated['adults_count'] + ($validated['children_count'] ?? 0);
 
         if (\count($validated['guests']) === $expectedGuests) {
@@ -283,9 +339,9 @@ class BookingController extends Controller
         ]);
     }
 
+    // Genera las noches de estancia sin incluir el día de salida
     private function buildStayDates(CarbonImmutable $checkIn, CarbonImmutable $checkOut): array
     {
-        // Genera las noches de estancia; el día de salida no consume disponibilidad
         $stayDates = [];
 
         for ($date = $checkIn; $date->lt($checkOut); $date = $date->addDay()) {
@@ -295,9 +351,9 @@ class BookingController extends Controller
         return $stayDates;
     }
 
+    // Bloquea la disponibilidad para evitar dobles reservas simultáneas
     private function lockAvailability(RoomType $roomType, array $stayDates): Collection
     {
-        // Bloquea las filas de disponibilidad para evitar dobles reservas simultáneas
         return $roomType->availability()
             ->whereIn('date', $stayDates)
             ->lockForUpdate()
@@ -305,9 +361,9 @@ class BookingController extends Controller
             ->keyBy(fn ($day) => $day->date->toDateString());
     }
 
+    // Comprueba que todas las noches estén abiertas y tengan unidades suficientes
     private function validateAvailability(Collection $availability, array $stayDates, int $nights, int $unitsBooked): void
     {
-        // Verifica que todas las noches existen, están abiertas y tienen unidades suficientes
         if ($availability->count() !== $nights) {
             throw ValidationException::withMessages([
                 'check_in' => ['There is no availability for every night in the selected stay.'],
@@ -331,9 +387,9 @@ class BookingController extends Controller
         }
     }
 
+    // Calcula los importes finales a partir del precio diario de la estancia
     private function calculateAmounts(Collection $availability, int $unitsBooked): array
     {
-        // Calcula importes a partir del precio diario de cada noche reservada
         $subtotal = $availability->sum(fn ($day) => (float) $day->price) * $unitsBooked;
         $taxes = round($subtotal * 0.1, 2);
         $discount = 0;
@@ -346,9 +402,9 @@ class BookingController extends Controller
         ];
     }
 
+    // Busca un cliente activo antes de completar la reserva
     private function findRegisteredCustomer(int $userId): User
     {
-        // La reserva solo puede continuar con un cliente registrado y activo
         $user = User::query()
             ->where('status', 'active')
             ->find($userId);
@@ -362,6 +418,7 @@ class BookingController extends Controller
         ]);
     }
 
+    // Guarda la reserva con una copia de nombres e importes en el momento de compra
     private function persistBooking(
         array $validated,
         RoomType $roomType,
@@ -372,7 +429,6 @@ class BookingController extends Controller
         int $childrenCount,
         array $amounts,
     ): Booking {
-        // Guarda la reserva con una copia de nombres e importes (instante snapshot) para evitar inconsistencias si se actualizan datos relacionados posteriormente
         return Booking::query()->create([
             'booking_reference' => $this->generateBookingReference(),
             'user_id' => $user->id,
@@ -402,17 +458,17 @@ class BookingController extends Controller
         ]);
     }
 
+    // Descuenta las unidades reservadas en cada noche de la estancia
     private function decrementAvailability(Collection $availability, int $unitsBooked): void
     {
-        // Descuenta las unidades reservadas en cada noche de la estancia
         foreach ($availability as $day) {
             $day->decrement('available_units', $unitsBooked);
         }
     }
 
+    // Crea los huéspedes asociados a la reserva o un huésped principal por defecto
     private function createBookingGuests(Booking $booking, array $validated): void
     {
-        // Crea los huéspedes enviados o usa el cliente como huésped principal
         $guests = $validated['guests'] ?? [[
             'full_name' => $validated['customer_name'],
             'is_primary' => true,
@@ -429,9 +485,9 @@ class BookingController extends Controller
         }
     }
 
+    // Genera una referencia única y corta para identificar la reserva
     private function generateBookingReference(): string
     {
-        // Genera una referencia corta y única para identificar la reserva
         do {
             $reference = strtoupper(Str::random(10));
         } while (Booking::query()->where('booking_reference', $reference)->exists());
