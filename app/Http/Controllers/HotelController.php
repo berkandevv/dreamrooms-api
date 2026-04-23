@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\HotelResource;
 use App\Http\Resources\ReviewResource;
 use App\Models\Hotel;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class HotelController extends Controller
@@ -28,7 +29,7 @@ class HotelController extends Controller
         ]);
 
         // Devuelve el catálogo público de hoteles con los datos necesarios para listados
-        $hotels = Hotel::query()
+        $query = Hotel::query()
             ->where('status', 'published')
             ->when($validated['country'] ?? null, fn ($query, $country) => $query->where('country', 'like', "%{$country}%"))
             ->when($validated['city'] ?? null, fn ($query, $city) => $query->where('city', 'like', "%{$city}%"))
@@ -37,22 +38,13 @@ class HotelController extends Controller
             ->when(isset($validated['smoking_allowed']), fn ($query) => $query->where('smoking_allowed', $validated['smoking_allowed']))
             ->when(
                 isset($validated['min_price']) || isset($validated['max_price']),
-                fn ($query) => $query->whereHas('roomTypes', function ($roomTypeQuery) use ($validated): void {
-                    $roomTypeQuery->where('status', 'active')
-                        ->when(isset($validated['min_price']), fn ($query) => $query->where('base_price', '>=', $validated['min_price']))
-                        ->when(isset($validated['max_price']), fn ($query) => $query->where('base_price', '<=', $validated['max_price']));
-                })
+                fn (Builder $query) => $this->applyRoomTypePriceFilter($query, $validated)
             )
-            ->with('coverImage')
-            ->withMin([
-                'roomTypes' => fn ($query) => $query->where('status', 'active'),
-            ], 'base_price')
-            ->withAvg([
-                'reviews as average_rating' => fn ($query) => $query->where('status', 'published'),
-            ], 'rating')
-            ->withCount([
-                'reviews as reviews_count' => fn ($query) => $query->where('status', 'published'),
-            ])
+            ->with($this->hotelListRelations());
+
+        $this->applyHotelSummaryMetrics($query);
+
+        $hotels = $query
             ->orderBy('id')
             ->get();
 
@@ -68,28 +60,14 @@ class HotelController extends Controller
     public function show(string $slug): HotelResource
     {
         // Devuelve el detalle público de un hotel publicado por su slug
-        $hotel = Hotel::query()
+        $query = Hotel::query()
             ->where('status', 'published')
             ->where('slug', $slug)
-            ->with([
-                'coverImage',
-                'images' => fn ($query) => $query->orderBy('sort_order'),
-                'services' => fn ($query) => $query->where('is_active', true)->orderBy('name'),
-                'roomTypes' => fn ($query) => $query->where('status', 'active')->orderBy('base_price'),
-                'roomTypes.coverImage',
-                'roomTypes.images' => fn ($query) => $query->orderByDesc('is_cover')->orderBy('sort_order'),
-                'roomTypes.services' => fn ($query) => $query->where('is_active', true)->orderBy('name'),
-            ])
-            ->withMin([
-                'roomTypes' => fn ($query) => $query->where('status', 'active'),
-            ], 'base_price')
-            ->withAvg([
-                'reviews as average_rating' => fn ($query) => $query->where('status', 'published'),
-            ], 'rating')
-            ->withCount([
-                'reviews as reviews_count' => fn ($query) => $query->where('status', 'published'),
-            ])
-            ->firstOrFail();
+            ->with($this->hotelDetailRelations());
+
+        $this->applyHotelSummaryMetrics($query);
+
+        $hotel = $query->firstOrFail();
 
         return new HotelResource($hotel);
     }
@@ -114,5 +92,59 @@ class HotelController extends Controller
             ->get();
 
         return ReviewResource::collection($reviews);
+    }
+
+    // Helpers de consulta para el catálogo público de hoteles
+
+    // Devuelve las relaciones necesarias para el listado público de hoteles
+    private function hotelListRelations(): array
+    {
+        return ['coverImage'];
+    }
+
+    // Devuelve las relaciones necesarias para el detalle público de un hotel
+    private function hotelDetailRelations(): array
+    {
+        return [
+            'coverImage',
+            'images' => fn ($query) => $query->orderBy('sort_order'),
+            'services' => fn ($query) => $query->where('is_active', true)->orderBy('name'),
+            'roomTypes' => fn ($query) => $query->where('status', 'active')->orderBy('base_price'),
+            'roomTypes.coverImage',
+            'roomTypes.images' => fn ($query) => $query->orderByDesc('is_cover')->orderBy('sort_order'),
+            'roomTypes.services' => fn ($query) => $query->where('is_active', true)->orderBy('name'),
+        ];
+    }
+
+    // Añade al query las métricas resumen que usan los resources de hotel
+    private function applyHotelSummaryMetrics(Builder $query): void
+    {
+        $query
+            ->withMin([
+                'roomTypes' => fn ($roomTypeQuery) => $roomTypeQuery->where('status', 'active'),
+            ], 'base_price')
+            ->withAvg([
+                'reviews as average_rating' => fn ($reviewQuery) => $reviewQuery->where('status', 'published'),
+            ], 'rating')
+            ->withCount([
+                'reviews as reviews_count' => fn ($reviewQuery) => $reviewQuery->where('status', 'published'),
+            ]);
+    }
+
+    // Aplica el filtro de precio usando solo tipos de habitación activos
+    private function applyRoomTypePriceFilter(Builder $query, array $validated): void
+    {
+        $query->whereHas('roomTypes', function (Builder $roomTypeQuery) use ($validated): void {
+            $roomTypeQuery
+                ->where('status', 'active')
+                ->when(
+                    isset($validated['min_price']),
+                    fn (Builder $priceQuery) => $priceQuery->where('base_price', '>=', $validated['min_price'])
+                )
+                ->when(
+                    isset($validated['max_price']),
+                    fn (Builder $priceQuery) => $priceQuery->where('base_price', '<=', $validated['max_price'])
+                );
+        });
     }
 }
