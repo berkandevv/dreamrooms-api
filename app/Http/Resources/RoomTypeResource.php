@@ -28,6 +28,11 @@ class RoomTypeResource extends JsonResource
             'status' => $this->status,
             'availability_count' => $this->whenCounted('availability'),
             'bookings_count' => $this->whenCounted('bookings'),
+            'cover_image' => $this->whenLoaded('coverImage', fn () => $this->coverImage ? [
+                'id' => $this->coverImage->id,
+                'url' => $this->coverImage->image_url,
+                'alt_text' => $this->coverImage->alt_text,
+            ] : null),
             'images' => $this->whenLoaded('images', fn () => $this->images->map(fn ($image) => [
                 'id' => $image->id,
                 'url' => $image->image_url,

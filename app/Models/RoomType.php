@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class RoomType extends Model
 {
@@ -41,6 +42,13 @@ class RoomType extends Model
     public function images(): HasMany
     {
         return $this->hasMany(RoomTypeImage::class);
+    }
+
+    public function coverImage(): HasOne
+    {
+        return $this->hasOne(RoomTypeImage::class)
+            ->where('is_cover', true)
+            ->orderBy('sort_order');
     }
 
     public function services(): BelongsToMany

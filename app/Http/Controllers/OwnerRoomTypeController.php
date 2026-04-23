@@ -23,10 +23,11 @@ class OwnerRoomTypeController extends Controller
 
         $roomTypes = $hotel->roomTypes()
             ->with([
+                'coverImage',
                 'images' => fn ($query) => $query->orderByDesc('is_cover')->orderBy('sort_order'),
                 'services' => fn ($query) => $query->orderBy('name'),
             ])
-            ->withCount('bookings')
+            ->withCount(['availability', 'bookings'])
             ->orderBy('id')
             ->get();
 
@@ -44,7 +45,7 @@ class OwnerRoomTypeController extends Controller
             ->findOrFail($hotelId);
 
         $roomType = $hotel->roomTypes()->create($this->roomTypePayload($validated));
-        $roomType->load(['images', 'services']);
+        $roomType->load(['coverImage', 'images', 'services']);
         $roomType->loadCount(['availability', 'bookings']);
 
         return (new RoomTypeResource($roomType))
@@ -61,6 +62,7 @@ class OwnerRoomTypeController extends Controller
             ->where('id', $roomTypeId)
             ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $ownerUserId))
             ->with([
+                'coverImage',
                 'images' => fn ($query) => $query->orderByDesc('is_cover')->orderBy('sort_order'),
                 'services' => fn ($query) => $query->orderBy('name'),
             ])
@@ -159,7 +161,7 @@ class OwnerRoomTypeController extends Controller
             ->firstOrFail();
 
         $roomType->update($this->roomTypePayload($validated, $roomType));
-        $roomType->load(['images', 'services']);
+        $roomType->load(['coverImage', 'images', 'services']);
         $roomType->loadCount(['availability', 'bookings']);
 
         return new RoomTypeResource($roomType);

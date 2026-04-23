@@ -78,6 +78,11 @@ class HotelResource extends JsonResource
                 'base_price' => $roomType->base_price,
                 'total_units' => $roomType->total_units,
                 'status' => $roomType->status,
+                'cover_image' => $roomType->relationLoaded('coverImage') && $roomType->coverImage ? [
+                    'id' => $roomType->coverImage->id,
+                    'url' => $roomType->coverImage->image_url,
+                    'alt_text' => $roomType->coverImage->alt_text,
+                ] : null,
                 'images' => $roomType->relationLoaded('images')
                     ? $roomType->images->map(fn ($image) => [
                         'id' => $image->id,

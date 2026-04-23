@@ -47,6 +47,7 @@ class OwnerHotelController extends Controller
                 'images' => fn ($query) => $query->orderBy('sort_order'),
                 'services' => fn ($query) => $query->orderBy('name'),
                 'roomTypes' => fn ($query) => $query->orderBy('id'),
+                'roomTypes.coverImage',
                 'roomTypes.images' => fn ($query) => $query->orderByDesc('is_cover')->orderBy('sort_order'),
                 'roomTypes.services' => fn ($query) => $query->orderBy('name'),
             ])

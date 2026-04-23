@@ -76,6 +76,7 @@ class HotelController extends Controller
                 'images' => fn ($query) => $query->orderBy('sort_order'),
                 'services' => fn ($query) => $query->where('is_active', true)->orderBy('name'),
                 'roomTypes' => fn ($query) => $query->where('status', 'active')->orderBy('base_price'),
+                'roomTypes.coverImage',
                 'roomTypes.images' => fn ($query) => $query->orderByDesc('is_cover')->orderBy('sort_order'),
                 'roomTypes.services' => fn ($query) => $query->where('is_active', true)->orderBy('name'),
             ])
