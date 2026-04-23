@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class OwnerRoomTypeController extends Controller
 {
+    // Lista los tipos de habitación de un hotel del propietario autenticado
     public function index(Request $request, int $hotelId)
     {
         // Las habitaciones se listan solo si el hotel pertenece al owner autenticado
@@ -22,18 +23,15 @@ class OwnerRoomTypeController extends Controller
             ->findOrFail($hotelId);
 
         $roomTypes = $hotel->roomTypes()
-            ->with([
-                'coverImage',
-                'images' => fn ($query) => $query->orderByDesc('is_cover')->orderBy('sort_order'),
-                'services' => fn ($query) => $query->orderBy('name'),
-            ])
-            ->withCount(['availability', 'bookings'])
+            ->with($this->roomTypeRelations())
+            ->withCount($this->roomTypeCounts())
             ->orderBy('id')
             ->get();
 
         return RoomTypeResource::collection($roomTypes);
     }
 
+    // Crea un tipo de habitación dentro de un hotel del propietario autenticado
     public function store(Request $request, int $hotelId)
     {
         $validated = $request->validate($this->roomTypeRules());
@@ -45,14 +43,14 @@ class OwnerRoomTypeController extends Controller
             ->findOrFail($hotelId);
 
         $roomType = $hotel->roomTypes()->create($this->roomTypePayload($validated));
-        $roomType->load(['coverImage', 'images', 'services']);
-        $roomType->loadCount(['availability', 'bookings']);
+        $this->loadRoomTypeDetails($roomType);
 
         return (new RoomTypeResource($roomType))
             ->response()
             ->setStatusCode(201);
     }
 
+    // Muestra el detalle de un tipo de habitación del propietario autenticado
     public function show(Request $request, int $roomTypeId): RoomTypeResource
     {
         // Evita consultar habitaciones de hoteles de otros propietarios
@@ -61,20 +59,14 @@ class OwnerRoomTypeController extends Controller
         $roomType = RoomType::query()
             ->where('id', $roomTypeId)
             ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $ownerUserId))
-            ->with([
-                'coverImage',
-                'images' => fn ($query) => $query->orderByDesc('is_cover')->orderBy('sort_order'),
-                'services' => fn ($query) => $query->orderBy('name'),
-            ])
-            ->withCount([
-                'availability',
-                'bookings',
-            ])
+            ->with($this->roomTypeRelations())
+            ->withCount($this->roomTypeCounts())
             ->firstOrFail();
 
         return new RoomTypeResource($roomType);
     }
 
+    // Devuelve la disponibilidad de un tipo de habitación del propietario
     public function availability(Request $request, int $roomTypeId)
     {
         $validated = $request->validate([
@@ -100,6 +92,7 @@ class OwnerRoomTypeController extends Controller
         return RoomTypeAvailabilityResource::collection($availability);
     }
 
+    // Actualiza en bloque la disponibilidad y precios de varias fechas
     public function availabilityBulk(Request $request, int $roomTypeId)
     {
         $validated = $request->validate([
@@ -149,6 +142,7 @@ class OwnerRoomTypeController extends Controller
         return RoomTypeAvailabilityResource::collection($availability);
     }
 
+    // Actualiza los datos base de un tipo de habitación del propietario
     public function update(Request $request, int $roomTypeId): RoomTypeResource
     {
         $validated = $request->validate($this->roomTypeRules(required: false));
@@ -161,12 +155,12 @@ class OwnerRoomTypeController extends Controller
             ->firstOrFail();
 
         $roomType->update($this->roomTypePayload($validated, $roomType));
-        $roomType->load(['coverImage', 'images', 'services']);
-        $roomType->loadCount(['availability', 'bookings']);
+        $this->loadRoomTypeDetails($roomType);
 
         return new RoomTypeResource($roomType);
     }
 
+    // Reglas de validación compartidas para crear y actualizar habitaciones
     private function roomTypeRules(bool $required = true): array
     {
         $presence = $required ? 'required' : 'sometimes';
@@ -184,6 +178,32 @@ class OwnerRoomTypeController extends Controller
         ];
     }
 
+    // Helpers de carga para respuestas de tipos de habitación
+
+    // Devuelve las relaciones necesarias para responder con un tipo de habitación completo
+    private function roomTypeRelations(): array
+    {
+        return [
+            'coverImage',
+            'images' => fn ($query) => $query->orderByDesc('is_cover')->orderBy('sort_order'),
+            'services' => fn ($query) => $query->orderBy('name'),
+        ];
+    }
+
+    // Devuelve los contadores que se cargan junto al tipo de habitación
+    private function roomTypeCounts(): array
+    {
+        return ['availability', 'bookings'];
+    }
+
+    // Carga en memoria las relaciones y contadores del detalle de habitación
+    private function loadRoomTypeDetails(RoomType $roomType): void
+    {
+        $roomType->load($this->roomTypeRelations());
+        $roomType->loadCount($this->roomTypeCounts());
+    }
+
+    // Prepara solo los campos permitidos para guardar el tipo de habitación
     private function roomTypePayload(array $validated, ?RoomType $roomType = null): array
     {
         return collect([
