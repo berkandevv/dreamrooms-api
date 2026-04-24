@@ -9,6 +9,7 @@ use App\Models\RoomType;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class OwnerRoomTypeController extends Controller
 {
@@ -111,6 +112,8 @@ class OwnerRoomTypeController extends Controller
             ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $ownerUserId))
             ->firstOrFail();
 
+        $this->validateAvailableUnits($validated['items'], $roomType->total_units);
+
         $dates = collect($validated['items'])
             ->pluck('date')
             ->map(fn ($date) => CarbonImmutable::parse($date)->toDateString())
@@ -140,6 +143,20 @@ class OwnerRoomTypeController extends Controller
             ->get();
 
         return RoomTypeAvailabilityResource::collection($availability);
+    }
+
+    // Evita guardar más disponibilidad diaria que habitaciones reales tiene el tipo
+    private function validateAvailableUnits(array $items, int $totalUnits): void
+    {
+        foreach ($items as $index => $item) {
+            if ($item['available_units'] <= $totalUnits) {
+                continue;
+            }
+
+            throw ValidationException::withMessages([
+                "items.{$index}.available_units" => ["Available units cannot be greater than total units ({$totalUnits})."],
+            ]);
+        }
     }
 
     // Actualiza los datos base de un tipo de habitación del propietario
