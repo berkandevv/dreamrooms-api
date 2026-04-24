@@ -6,6 +6,7 @@ use App\Http\Resources\BookingResource;
 use App\Http\Resources\ReviewResource;
 use App\Models\Booking;
 use App\Models\RoomType;
+use App\Models\RoomTypeAvailability;
 use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
@@ -254,9 +255,13 @@ class BookingController extends Controller
             ->lockForUpdate()
             ->get();
 
-        foreach ($availability as $day) {
-            $day->increment('available_units', $booking->units_booked);
-        }
+        $availability->each(function (RoomTypeAvailability $day) use ($booking): void {
+            $day->available_units = min(
+                $day->available_units + $booking->units_booked,
+                $booking->roomType->total_units,
+            );
+            $day->save();
+        });
 
         $booking->forceFill([
             'status' => 'cancelled',

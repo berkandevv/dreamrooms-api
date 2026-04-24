@@ -261,11 +261,19 @@ class OwnerBookingController extends Controller
             CarbonImmutable::parse($booking->check_out),
         );
 
-        RoomTypeAvailability::query()
+        $availability = RoomTypeAvailability::query()
             ->where('room_type_id', $booking->room_type_id)
             ->whereIn('date', $stayDates)
             ->lockForUpdate()
-            ->increment('available_units', $booking->units_booked);
+            ->get();
+
+        $availability->each(function (RoomTypeAvailability $day) use ($booking): void {
+            $day->available_units = min(
+                $day->available_units + $booking->units_booked,
+                $booking->roomType->total_units,
+            );
+            $day->save();
+        });
     }
 
     // Genera el rango de fechas que ocupa la estancia
