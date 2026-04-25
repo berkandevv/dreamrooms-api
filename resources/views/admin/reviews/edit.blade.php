@@ -2,30 +2,11 @@
     <div class="py-6 bg-gradient-to-br from-sky-50 via-cyan-50 to-white">
         <div
             class="max-w-4xl mx-auto sm:px-6 lg:px-8 space-y-6"
-            x-data="{
-                confirm: {
-                    open: false,
-                    title: '',
-                    message: '',
-                    onConfirm: () => {},
-                },
-                askSave() {
-                    this.confirm = {
-                        open: true,
-                        title: 'Save changes?',
-                        message: 'This will update the review.',
-                        onConfirm: () => this.$refs.form.submit(),
-                    };
-                },
-                askCancel() {
-                    this.confirm = {
-                        open: true,
-                        title: 'Discard changes?',
-                        message: 'You will return to the reviews list and unsaved changes will be lost.',
-                        onConfirm: () => window.location.href = '{{ route('admin.reviews.index') }}',
-                    };
-                },
-            }"
+            x-data="confirmableForm({
+                saveMessage: 'This will update the review.',
+                cancelMessage: 'You will return to the reviews list and unsaved changes will be lost.',
+                cancelUrl: @js(route('admin.reviews.index')),
+            })"
         >
             @if (session('status') === 'review-updated')
                 <div class="bg-white/90 border border-green-200 text-green-700 px-4 py-3 rounded-md shadow-sm">

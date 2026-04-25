@@ -2,30 +2,13 @@
     <div class="py-6 bg-gradient-to-br from-sky-50 via-cyan-50 to-white">
         <div
             class="max-w-4xl mx-auto sm:px-6 lg:px-8 space-y-6"
-            x-data="{
-                confirm: {
-                    open: false,
-                    title: '',
-                    message: '',
-                    onConfirm: () => {},
-                },
-                askSave() {
-                    this.confirm = {
-                        open: true,
-                        title: 'Create service?',
-                        message: 'This will add a new service to the catalog.',
-                        onConfirm: () => this.$refs.form.submit(),
-                    };
-                },
-                askCancel() {
-                    this.confirm = {
-                        open: true,
-                        title: 'Discard service?',
-                        message: 'You will return to the services list and unsaved changes will be lost.',
-                        onConfirm: () => window.location.href = '{{ route('admin.services.index') }}',
-                    };
-                },
-            }"
+            x-data="confirmableForm({
+                saveTitle: 'Create service?',
+                saveMessage: 'This will add a new service to the catalog.',
+                cancelTitle: 'Discard service?',
+                cancelMessage: 'You will return to the services list and unsaved changes will be lost.',
+                cancelUrl: @js(route('admin.services.index')),
+            })"
         >
             <div class="bg-white/90 border border-sky-100 shadow-sm sm:rounded-2xl">
                 <form x-ref="form" method="POST" action="{{ route('admin.services.store') }}" class="p-6 space-y-6" @submit.prevent="askSave()">

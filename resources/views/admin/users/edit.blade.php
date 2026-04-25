@@ -8,30 +8,11 @@
     <div class="py-8">
         <div
             class="max-w-3xl mx-auto sm:px-6 lg:px-8 space-y-6"
-            x-data="{
-                confirm: {
-                    open: false,
-                    title: '',
-                    message: '',
-                    onConfirm: () => {},
-                },
-                askSave() {
-                    this.confirm = {
-                        open: true,
-                        title: 'Save changes?',
-                        message: 'This will update the user information.',
-                        onConfirm: () => this.$refs.form.submit(),
-                    };
-                },
-                askCancel() {
-                    this.confirm = {
-                        open: true,
-                        title: 'Discard changes?',
-                        message: 'You will return to the users list and unsaved changes will be lost.',
-                        onConfirm: () => window.location.href = '{{ route('admin.users.index') }}',
-                    };
-                },
-            }"
+            x-data="confirmableForm({
+                saveMessage: 'This will update the user information.',
+                cancelMessage: 'You will return to the users list and unsaved changes will be lost.',
+                cancelUrl: @js(route('admin.users.index')),
+            })"
         >
             @if (session('status') === 'user-updated')
                 <div class="bg-white border border-green-200 text-green-700 px-4 py-3 rounded-md shadow-sm">
