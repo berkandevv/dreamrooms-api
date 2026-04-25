@@ -17,7 +17,7 @@ Roles actuales:
 
 - `customer`: cliente que reserva, consulta sus reservas y gestiona favoritos.
 - `owner`: propietario que gestiona sus hoteles, habitaciones, disponibilidad, reservas y pagos.
-- `admin`: reservado para uso futuro; el panel admin irá por vistas.
+- `admin`: administrador para el panel web Laravel. No puede iniciar sesión por la API ni usar el flujo del frontend React.
 
 ## Usuarios de prueba
 
@@ -25,8 +25,9 @@ Si has ejecutado los seeders, tendrás estas credenciales fijas:
 
 - `owner@example.com` / `password`
 - `customer@example.com` / `password`
+- `admin@dreamrooms.com` / `12345678` para el panel web Laravel
 
-Sirven para probar el login y los flujos de propietario y cliente.
+`owner@example.com` y `customer@example.com` sirven para probar el login de API y los flujos del frontend React. El usuario admin queda fuera de la API pública de autenticación.
 
 ## Documentación de la API
 
@@ -41,6 +42,27 @@ GET /docs/swagger   # vista Swagger del proyecto
 ```
 
 `/docs/api` permite consultar la documentación visual generada por Scramble, `/docs/api.json` devuelve la especificación OpenAPI en formato JSON y `/docs/swagger` muestra la vista Swagger definida en el proyecto.
+
+---
+
+# Panel admin web
+
+El panel admin usa autenticación web de Laravel Breeze y requiere un usuario con rol `admin`.
+
+Rutas principales:
+
+```http
+GET /dashboard
+GET /admin/users
+GET /admin/hotels
+GET /admin/room-types
+GET /admin/availability
+GET /admin/bookings
+GET /admin/reviews
+GET /admin/services
+```
+
+Desde `/dashboard`, un usuario admin se redirige a `/admin/users`.
 
 ---
 
@@ -66,7 +88,9 @@ Respuesta: usuario, rol `customer`, `token` y `token_type`.
 
 ## 1.2 `POST /api/auth/login`
 
-Inicia sesión con email y contraseña. Solo devuelve token si el usuario está `active`.
+Inicia sesión con email y contraseña. Solo devuelve token si el usuario está `active` y su rol es `customer` u `owner`.
+
+Los usuarios `admin` no pueden iniciar sesión por esta ruta; el panel admin usa la autenticación web de Laravel.
 
 Body:
 
@@ -236,17 +260,30 @@ Todas estas rutas requieren token Sanctum y rol `owner`.
 
 El propietario siempre se obtiene desde el token. No se acepta `owner_user_id` desde query o body.
 
-## 5.1 `GET /api/owner/hotels`
+## 5.1 `GET /api/owner/services`
+
+Devuelve el catálogo de servicios activos que se pueden asociar a hoteles o tipos de habitación.
+
+Filtro opcional:
+
+```http
+scope=hotel
+scope=room_type
+```
+
+Si se envía `scope`, también se incluyen servicios con scope `both`.
+
+## 5.2 `GET /api/owner/hotels`
 
 Devuelve los hoteles del propietario autenticado.
 
-## 5.2 `GET /api/owner/hotels/{hotelId}`
+## 5.3 `GET /api/owner/hotels/{hotelId}`
 
 Devuelve el detalle de un hotel del propietario autenticado.
 
 El `{hotelId}` es el id del hotel.
 
-## 5.3 `POST /api/owner/hotels`
+## 5.4 `POST /api/owner/hotels`
 
 Crea un hotel asociado al propietario autenticado.
 
@@ -278,7 +315,7 @@ Campos opcionales habituales:
 - `smoking_allowed`
 - `status`: `draft`, `published`, `inactive`
 
-## 5.4 `PUT /api/owner/hotels/{hotelId}`
+## 5.5 `PUT /api/owner/hotels/{hotelId}`
 
 Actualiza un hotel del propietario autenticado.
 
@@ -461,4 +498,5 @@ Si no se envía `status`, se usa `paid` por defecto.
 - El catálogo y la disponibilidad pública no requieren login.
 - Reservas de cliente, favoritos y reseñas requieren token de cliente.
 - Endpoints owner requieren token de propietario.
+- El rol admin no puede iniciar sesión por `/api/auth/login` ni acceder a las rutas privadas de cliente/propietario por API.
 - La API no acepta `user_id` ni `owner_user_id` para decidir permisos en endpoints privados.
