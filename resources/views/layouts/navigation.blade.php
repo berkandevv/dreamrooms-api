@@ -16,6 +16,9 @@
                         <x-nav-link :href="route('admin.hotels.index')" :active="request()->routeIs('admin.hotels.*')">
                             {{ __('Hotels') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.room-types.index')" :active="request()->routeIs('admin.room-types.*')">
+                            {{ __('Room Types') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                             {{ __('Users') }}
                         </x-nav-link>
@@ -79,6 +82,9 @@
             @if (Auth::user()->hasRole('admin'))
                 <x-responsive-nav-link :href="route('admin.hotels.index')" :active="request()->routeIs('admin.hotels.*')">
                     {{ __('Hotels') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.room-types.index')" :active="request()->routeIs('admin.room-types.*')">
+                    {{ __('Room Types') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                     {{ __('Users') }}

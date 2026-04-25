@@ -83,9 +83,14 @@
                                         <td class="py-2 pr-4 text-slate-600">{{ $hotel->room_types_count }}</td>
                                         <td class="py-2 pr-4 text-slate-600">{{ $hotel->bookings_count }}</td>
                                         <td class="py-2 pr-4 text-right">
-                                            <a href="{{ route('admin.hotels.edit', $hotel) }}" class="inline-flex items-center px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-white bg-blue-900 rounded-md hover:bg-blue-800">
-                                                Edit
-                                            </a>
+                                            <div class="inline-flex items-center gap-2">
+                                                <a href="{{ route('admin.room-types.index', ['hotel_id' => $hotel->id]) }}" class="inline-flex items-center px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-blue-900 bg-blue-50 rounded-md hover:bg-blue-100">
+                                                    Rooms
+                                                </a>
+                                                <a href="{{ route('admin.hotels.edit', $hotel) }}" class="inline-flex items-center px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-white bg-blue-900 rounded-md hover:bg-blue-800">
+                                                    Edit
+                                                </a>
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty
