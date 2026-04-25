@@ -57,7 +57,7 @@ class AuthController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        // Genera un token solo para usuarios activos con credenciales válidas
+        // Genera un token solo para usuarios API activos con credenciales válidas
         $user = User::query()
             ->with('role')
             ->where('email', $validated['email'])
@@ -73,6 +73,10 @@ class AuthController extends Controller
             throw ValidationException::withMessages([
                 'email' => ['This user account is not active.'],
             ]);
+        }
+
+        if ($user->hasRole('admin')) {
+            abort(403, 'Admin users cannot authenticate through the API.');
         }
 
         return response()->json([

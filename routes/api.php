@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 
-// Sesión autenticada: cualquier usuario activo con token Sanctum
+// Sesión autenticada: usuarios API activos con token Sanctum
 Route::middleware('auth:sanctum')->group(function (): void {
     Route::get('/auth/me', [AuthController::class, 'me']);
     Route::post('/auth/logout', [AuthController::class, 'logout']);
@@ -30,7 +30,7 @@ Route::get('/hotels/{slug}/reviews', [HotelController::class, 'reviews']);
 Route::get('/room-types/{roomTypeId}/availability', [RoomTypeController::class, 'availability']);
 
 // Área de cliente: reservas y favoritos siempre usan el usuario del token
-Route::middleware(['auth:sanctum', 'role:customer,admin'])->group(function (): void {
+Route::middleware(['auth:sanctum', 'role:customer'])->group(function (): void {
     Route::post('/hotels/{hotelId}/favorite', [FavoriteController::class, 'store']);
     Route::delete('/hotels/{hotelId}/favorite', [FavoriteController::class, 'destroy']);
 
@@ -44,7 +44,7 @@ Route::middleware(['auth:sanctum', 'role:customer,admin'])->group(function (): v
 });
 
 // Área de propietario: solo accede a hoteles, habitaciones y reservas de sus hoteles
-Route::middleware(['auth:sanctum', 'role:owner,admin'])->group(function (): void {
+Route::middleware(['auth:sanctum', 'role:owner'])->group(function (): void {
     Route::get('/owner/services', [OwnerServiceController::class, 'index']);
     Route::get('/owner/bookings', [OwnerBookingController::class, 'index']);
     Route::post('/owner/bookings/{bookingId}/payments', [OwnerBookingController::class, 'payments']);
