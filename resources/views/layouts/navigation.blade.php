@@ -25,6 +25,9 @@
                         <x-nav-link :href="route('admin.availability.index')" :active="request()->routeIs('admin.availability.*')">
                             {{ __('Availability') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.bookings.index')" :active="request()->routeIs('admin.bookings.*')">
+                            {{ __('Bookings') }}
+                        </x-nav-link>
                     @else
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
@@ -94,6 +97,9 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.availability.index')" :active="request()->routeIs('admin.availability.*')">
                     {{ __('Availability') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.bookings.index')" :active="request()->routeIs('admin.bookings.*')">
+                    {{ __('Bookings') }}
                 </x-responsive-nav-link>
             @else
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">

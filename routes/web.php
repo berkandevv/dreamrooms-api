@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\HotelController as AdminHotelController;
 use App\Http\Controllers\Admin\AvailabilityController as AdminAvailabilityController;
+use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Admin\RoomTypeController as AdminRoomTypeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,10 @@ Route::middleware(['auth', 'role:admin'])
         Route::resource('hotels', AdminHotelController::class)->only(['index', 'edit', 'update']);
         Route::resource('room-types', AdminRoomTypeController::class)->only(['index', 'edit', 'update']);
         Route::resource('availability', AdminAvailabilityController::class)->only(['index', 'edit', 'update']);
+        Route::get('bookings', [AdminBookingController::class, 'index'])->name('bookings.index');
+        Route::get('bookings/{booking}', [AdminBookingController::class, 'show'])->name('bookings.show');
+        Route::patch('bookings/{booking}/status', [AdminBookingController::class, 'updateStatus'])->name('bookings.status');
+        Route::post('bookings/{booking}/payments', [AdminBookingController::class, 'storePayment'])->name('bookings.payments.store');
         Route::resource('users', AdminUserController::class)->only(['index', 'edit', 'update']);
     });
 
