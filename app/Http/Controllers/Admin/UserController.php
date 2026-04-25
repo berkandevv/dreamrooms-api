@@ -53,7 +53,7 @@ class UserController extends Controller
 
         return view('admin.users.edit', [
             'user' => $user->load('role'),
-            'roles' => Role::query()->orderBy('name')->get(),
+            'roles' => $this->assignableRoles(),
             'statuses' => $this->statuses(),
         ]);
     }
@@ -66,7 +66,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:150'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:150', Rule::unique('users', 'email')->ignore($user->id)],
             'phone' => ['nullable', 'string', 'max:30'],
-            'role_id' => ['required', 'integer', 'exists:roles,id'],
+            'role_id' => ['required', 'integer', Rule::in($this->assignableRoleIds())],
             'status' => ['required', Rule::in($this->statuses())],
             'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
         ]);
@@ -91,6 +91,21 @@ class UserController extends Controller
     private function statuses(): array
     {
         return ['active', 'inactive', 'suspended'];
+    }
+
+    private function assignableRoles()
+    {
+        return Role::query()
+            ->whereIn('name', ['owner', 'customer'])
+            ->orderBy('name')
+            ->get();
+    }
+
+    private function assignableRoleIds(): array
+    {
+        return $this->assignableRoles()
+            ->pluck('id')
+            ->all();
     }
 
     private function ensureManageable(User $user): void
