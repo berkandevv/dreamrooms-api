@@ -111,6 +111,7 @@ class BookingController extends Controller
         ]);
         $validated['user_id'] = $request->user()->id;
         $this->validateGuestsCount($validated);
+        $this->expirePendingBookings();
 
         $booking = DB::transaction(fn (): Booking => $this->createBooking($validated));
 
@@ -244,24 +245,7 @@ class BookingController extends Controller
             ]);
         }
 
-        $stayDates = $this->buildStayDates(
-            CarbonImmutable::parse($booking->check_in),
-            CarbonImmutable::parse($booking->check_out),
-        );
-
-        $availability = $booking->roomType
-            ->availability()
-            ->whereIn('date', $stayDates)
-            ->lockForUpdate()
-            ->get();
-
-        $availability->each(function (RoomTypeAvailability $day) use ($booking): void {
-            $day->available_units = min(
-                $day->available_units + $booking->units_booked,
-                $booking->roomType->total_units,
-            );
-            $day->save();
-        });
+        $this->restoreBookingAvailability($booking);
 
         $booking->forceFill([
             'status' => 'cancelled',
@@ -309,6 +293,58 @@ class BookingController extends Controller
             ->where('status', 'active')
             ->whereHas('hotel', fn ($query) => $query->where('status', 'published'))
             ->findOrFail($roomTypeId);
+    }
+
+    // Cancela reservas pendientes caducadas antes de intentar crear una reserva nueva
+    private function expirePendingBookings(): void
+    {
+        Booking::query()
+            ->where('status', 'pending')
+            ->whereNotNull('expires_at')
+            ->where('expires_at', '<=', now())
+            ->pluck('id')
+            ->each(function (int $bookingId): void {
+                DB::transaction(function () use ($bookingId): void {
+                    $booking = Booking::query()
+                        ->with('roomType')
+                        ->lockForUpdate()
+                        ->find($bookingId);
+
+                    if (! $booking || $booking->status !== 'pending') {
+                        return;
+                    }
+
+                    $this->restoreBookingAvailability($booking);
+
+                    $booking->forceFill([
+                        'status' => 'cancelled',
+                        'cancelled_at' => now(),
+                    ])->save();
+                });
+            });
+    }
+
+    // Devuelve las unidades de una reserva al calendario de disponibilidad
+    private function restoreBookingAvailability(Booking $booking): void
+    {
+        $stayDates = $this->buildStayDates(
+            CarbonImmutable::parse($booking->check_in),
+            CarbonImmutable::parse($booking->check_out),
+        );
+
+        $availability = $booking->roomType
+            ->availability()
+            ->whereIn('date', $stayDates)
+            ->lockForUpdate()
+            ->get();
+
+        $availability->each(function (RoomTypeAvailability $day) use ($booking): void {
+            $day->available_units = min(
+                $day->available_units + $booking->units_booked,
+                $booking->roomType->total_units,
+            );
+            $day->save();
+        });
     }
 
     // Comprueba que la ocupación solicitada cabe en las unidades reservadas
