@@ -12,6 +12,7 @@ use App\Models\RoomTypeAvailability;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,6 +23,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $adminRole = Role::query()->firstOrCreate(['name' => 'admin']);
+
+        User::query()->updateOrCreate([
+            'email' => 'admin@dreamrooms.com',
+        ], [
+            'role_id' => $adminRole->id,
+            'name' => 'admin',
+            'phone' => '000000000',
+            'status' => 'active',
+            'email_verified_at' => now(),
+            'password' => Hash::make('12345678'),
+        ]);
+
         // Crea un propietario reutilizable para asociar los hoteles de demo
         $ownerRole = Role::query()->firstOrCreate(['name' => 'owner']);
 

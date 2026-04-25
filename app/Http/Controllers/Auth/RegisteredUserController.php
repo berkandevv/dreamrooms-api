@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -36,9 +37,13 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $customerRole = Role::query()->firstOrCreate(['name' => 'customer']);
+
         $user = User::create([
+            'role_id' => $customerRole->id,
             'name' => $request->name,
             'email' => $request->email,
+            'status' => 'active',
             'password' => Hash::make($request->password),
         ]);
 
