@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\BookingResource;
 use App\Http\Resources\ReviewResource;
 use App\Models\Booking;
@@ -305,6 +306,7 @@ class BookingController extends Controller
             ->pluck('id')
             ->each(function (int $bookingId): void {
                 DB::transaction(function () use ($bookingId): void {
+                    /** @var Booking|null $booking */
                     $booking = Booking::query()
                         ->with('roomType')
                         ->lockForUpdate()

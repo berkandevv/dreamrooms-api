@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BookingController;
-use App\Http\Controllers\FavoriteController;
-use App\Http\Controllers\HotelController;
-use App\Http\Controllers\OwnerBookingController;
-use App\Http\Controllers\OwnerHotelController;
-use App\Http\Controllers\OwnerRoomTypeController;
-use App\Http\Controllers\OwnerServiceController;
-use App\Http\Controllers\RoomTypeController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BookingController;
+use App\Http\Controllers\Api\FavoriteController;
+use App\Http\Controllers\Api\HotelController;
+use App\Http\Controllers\Api\OwnerBookingController;
+use App\Http\Controllers\Api\OwnerHotelController;
+use App\Http\Controllers\Api\OwnerRoomTypeController;
+use App\Http\Controllers\Api\OwnerServiceController;
+use App\Http\Controllers\Api\RoomTypeController;
 use Illuminate\Support\Facades\Route;
 
 // Autenticación pública: no requiere token
