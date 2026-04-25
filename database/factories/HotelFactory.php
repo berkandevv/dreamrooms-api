@@ -35,6 +35,8 @@ class HotelFactory extends Factory
             'check_in_time' => '15:00:00',
             'check_out_time' => '11:00:00',
             'cancellation_policy' => fake()->sentence(),
+            'tax_rate_percent' => 10,
+            'discount_rate_percent' => 0,
             'pets_allowed' => fake()->boolean(35),
             'smoking_allowed' => false,
             'status' => 'published',

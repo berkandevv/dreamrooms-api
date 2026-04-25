@@ -209,7 +209,7 @@ class BookingController extends Controller
         array $stayData,
         Collection $availability,
     ): Booking {
-        $amounts = $this->calculateAmounts($availability, $stayData['units_booked']);
+        $amounts = $this->calculateAmounts($availability, $roomType, $stayData['units_booked']);
         $user = $this->findRegisteredCustomer($validated['user_id']);
 
         return $this->persistBooking(
@@ -393,11 +393,11 @@ class BookingController extends Controller
     }
 
     // Calcula los importes finales a partir del precio diario de la estancia
-    private function calculateAmounts(Collection $availability, int $unitsBooked): array
+    private function calculateAmounts(Collection $availability, RoomType $roomType, int $unitsBooked): array
     {
         $subtotal = $availability->sum(fn ($day) => (float) $day->price) * $unitsBooked;
-        $taxes = round($subtotal * 0.1, 2);
-        $discount = 0;
+        $taxes = round($subtotal * ((float) $roomType->hotel->tax_rate_percent / 100), 2);
+        $discount = round($subtotal * ((float) $roomType->hotel->discount_rate_percent / 100), 2);
 
         return [
             'subtotal' => round($subtotal, 2),

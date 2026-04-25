@@ -31,6 +31,8 @@ return new class extends Migration
             $table->time('check_in_time')->nullable();
             $table->time('check_out_time')->nullable();
             $table->text('cancellation_policy')->nullable();
+            $table->decimal('tax_rate_percent', 5, 2)->default(10);
+            $table->decimal('discount_rate_percent', 5, 2)->default(0);
             $table->boolean('pets_allowed')->default(false);
             $table->boolean('smoking_allowed')->default(false);
             $table->enum('status', ['draft', 'published', 'inactive']);
@@ -38,6 +40,8 @@ return new class extends Migration
         });
 
         DB::statement('ALTER TABLE hotels ADD CONSTRAINT chk_hotels_stars CHECK (stars BETWEEN 1 AND 5)');
+        DB::statement('ALTER TABLE hotels ADD CONSTRAINT chk_hotels_tax_rate_percent CHECK (tax_rate_percent BETWEEN 0 AND 100)');
+        DB::statement('ALTER TABLE hotels ADD CONSTRAINT chk_hotels_discount_rate_percent CHECK (discount_rate_percent BETWEEN 0 AND 100)');
     }
 
     /**

@@ -31,6 +31,8 @@ class Hotel extends Model
         'check_in_time',
         'check_out_time',
         'cancellation_policy',
+        'tax_rate_percent',
+        'discount_rate_percent',
         'pets_allowed',
         'smoking_allowed',
         'status',
@@ -43,6 +45,8 @@ class Hotel extends Model
             'longitude' => 'decimal:7',
             'check_in_time' => 'datetime:H:i:s',
             'check_out_time' => 'datetime:H:i:s',
+            'tax_rate_percent' => 'decimal:2',
+            'discount_rate_percent' => 'decimal:2',
             'pets_allowed' => 'boolean',
             'smoking_allowed' => 'boolean',
         ];
