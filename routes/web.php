@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\HotelController as AdminHotelController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,7 @@ Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function (): void {
+        Route::resource('hotels', AdminHotelController::class)->only(['index', 'edit', 'update']);
         Route::resource('users', AdminUserController::class)->only(['index', 'edit', 'update']);
     });
 
