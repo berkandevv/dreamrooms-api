@@ -99,6 +99,7 @@ class BookingController extends Controller
 
     private function changeBookingStatus(int $bookingId, string $newStatus): Booking
     {
+        /** @var Booking $booking */
         $booking = Booking::query()
             ->whereKey($bookingId)
             ->with('roomType')
@@ -140,6 +141,7 @@ class BookingController extends Controller
 
     private function registerPayment(int $bookingId, array $validated): void
     {
+        /** @var Booking $booking */
         $booking = Booking::query()
             ->whereKey($bookingId)
             ->lockForUpdate()
