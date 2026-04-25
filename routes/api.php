@@ -7,6 +7,7 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\OwnerBookingController;
 use App\Http\Controllers\OwnerHotelController;
 use App\Http\Controllers\OwnerRoomTypeController;
+use App\Http\Controllers\OwnerServiceController;
 use App\Http\Controllers\RoomTypeController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +45,7 @@ Route::middleware(['auth:sanctum', 'role:customer,admin'])->group(function (): v
 
 // Área de propietario: solo accede a hoteles, habitaciones y reservas de sus hoteles
 Route::middleware(['auth:sanctum', 'role:owner,admin'])->group(function (): void {
+    Route::get('/owner/services', [OwnerServiceController::class, 'index']);
     Route::get('/owner/bookings', [OwnerBookingController::class, 'index']);
     Route::post('/owner/bookings/{bookingId}/payments', [OwnerBookingController::class, 'payments']);
     Route::put('/owner/bookings/{bookingId}/status', [OwnerBookingController::class, 'updateStatus']);

@@ -9,6 +9,7 @@ use App\Models\RoomType;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class OwnerRoomTypeController extends Controller
@@ -44,6 +45,7 @@ class OwnerRoomTypeController extends Controller
             ->findOrFail($hotelId);
 
         $roomType = $hotel->roomTypes()->create($this->roomTypePayload($validated));
+        $this->syncServices($roomType, $validated);
         $this->loadRoomTypeDetails($roomType);
 
         return (new RoomTypeResource($roomType))
@@ -172,6 +174,7 @@ class OwnerRoomTypeController extends Controller
             ->firstOrFail();
 
         $roomType->update($this->roomTypePayload($validated, $roomType));
+        $this->syncServices($roomType, $validated);
         $this->loadRoomTypeDetails($roomType);
 
         return new RoomTypeResource($roomType);
@@ -192,7 +195,24 @@ class OwnerRoomTypeController extends Controller
             'base_price' => [$presence, 'numeric', 'min:0'],
             'total_units' => [$presence, 'integer', 'min:1', 'max:65535'],
             'status' => ['nullable', 'string', 'in:active,inactive'],
+            'service_ids' => ['sometimes', 'array'],
+            'service_ids.*' => [
+                'integer',
+                'distinct',
+                Rule::exists('services', 'id')->where(fn ($query) => $query
+                    ->where('is_active', true)
+                    ->whereIn('scope', ['room_type', 'both'])),
+            ],
         ];
+    }
+
+    private function syncServices(RoomType $roomType, array $validated): void
+    {
+        if (! array_key_exists('service_ids', $validated)) {
+            return;
+        }
+
+        $roomType->services()->sync($validated['service_ids']);
     }
 
     // Helpers de carga para respuestas de tipos de habitación

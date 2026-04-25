@@ -9,10 +9,12 @@ use App\Models\HotelImage;
 use App\Models\Role;
 use App\Models\RoomType;
 use App\Models\RoomTypeAvailability;
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -60,6 +62,31 @@ class DatabaseSeeder extends Seeder
             'password' => 'password',
         ]);
 
+        $serviceCatalog = [
+            ['name' => 'Free WiFi', 'icon' => 'wifi', 'category' => 'General', 'scope' => 'both'],
+            ['name' => 'Breakfast included', 'icon' => 'coffee', 'category' => 'Food', 'scope' => 'hotel'],
+            ['name' => 'Parking', 'icon' => 'car', 'category' => 'Transport', 'scope' => 'hotel'],
+            ['name' => 'Airport shuttle', 'icon' => 'bus', 'category' => 'Transport', 'scope' => 'hotel'],
+            ['name' => 'Swimming pool', 'icon' => 'waves', 'category' => 'Wellness', 'scope' => 'hotel'],
+            ['name' => 'Spa', 'icon' => 'sparkles', 'category' => 'Wellness', 'scope' => 'hotel'],
+            ['name' => 'Gym', 'icon' => 'dumbbell', 'category' => 'Wellness', 'scope' => 'hotel'],
+            ['name' => 'Restaurant', 'icon' => 'utensils', 'category' => 'Food', 'scope' => 'hotel'],
+            ['name' => 'Air conditioning', 'icon' => 'snowflake', 'category' => 'Room', 'scope' => 'both'],
+            ['name' => 'Balcony', 'icon' => 'door-open', 'category' => 'Room', 'scope' => 'room_type'],
+            ['name' => 'Sea view', 'icon' => 'ship', 'category' => 'Room', 'scope' => 'room_type'],
+            ['name' => 'Private bathroom', 'icon' => 'bath', 'category' => 'Room', 'scope' => 'room_type'],
+            ['name' => 'Kitchenette', 'icon' => 'cooking-pot', 'category' => 'Room', 'scope' => 'room_type'],
+            ['name' => 'Work desk', 'icon' => 'briefcase-business', 'category' => 'Room', 'scope' => 'room_type'],
+        ];
+
+        collect($serviceCatalog)->each(function (array $service): void {
+            $slug = Str::slug($service['name']);
+
+            Service::query()->where('slug', $slug)->exists()
+                ? Service::query()->where('slug', $slug)->update($service + ['is_active' => true])
+                : Service::factory()->create($service + ['slug' => $slug, 'is_active' => true]);
+        });
+
         $hotels = Hotel::query()->where('status', 'published')->get();
 
         if ($hotels->isEmpty()) {
@@ -73,6 +100,33 @@ class DatabaseSeeder extends Seeder
                     'owner_user_id' => $owner->id,
                 ]);
         }
+
+        $hotelServiceIds = Service::query()
+            ->where('is_active', true)
+            ->whereIn('scope', ['hotel', 'both'])
+            ->pluck('id');
+
+        $roomTypeServiceIds = Service::query()
+            ->where('is_active', true)
+            ->whereIn('scope', ['room_type', 'both'])
+            ->pluck('id');
+
+        $hotels->each(function (Hotel $hotel) use ($hotelServiceIds, $roomTypeServiceIds): void {
+            if ($hotel->services()->doesntExist() && $hotelServiceIds->isNotEmpty()) {
+                $hotel->services()->syncWithoutDetaching($hotelServiceIds->shuffle()->take(4)->all());
+            }
+
+            $hotel->roomTypes()
+                ->whereDoesntHave('services')
+                ->get()
+                ->each(function (RoomType $roomType) use ($roomTypeServiceIds): void {
+                    if ($roomTypeServiceIds->isEmpty()) {
+                        return;
+                    }
+
+                    $roomType->services()->syncWithoutDetaching($roomTypeServiceIds->shuffle()->take(3)->all());
+                });
+        });
 
         // Añade reseñas de demo respetando la relación obligatoria con reservas
         $hotels->each(function (Hotel $hotel): void {

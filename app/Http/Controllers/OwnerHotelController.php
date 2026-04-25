@@ -6,6 +6,7 @@ use App\Http\Resources\HotelResource;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class OwnerHotelController extends Controller
 {
@@ -75,7 +76,11 @@ class OwnerHotelController extends Controller
 
         $hotel = Hotel::query()->create($this->hotelPayload($validated));
 
-        $hotel->load('coverImage');
+        $this->syncServices($hotel, $validated);
+        $hotel->load([
+            'coverImage',
+            'services' => fn ($query) => $query->orderBy('name'),
+        ]);
 
         return (new HotelResource($hotel))
             ->response()
@@ -99,7 +104,11 @@ class OwnerHotelController extends Controller
         }
 
         $hotel->update($payload);
-        $hotel->load('coverImage');
+        $this->syncServices($hotel, $validated);
+        $hotel->load([
+            'coverImage',
+            'services' => fn ($query) => $query->orderBy('name'),
+        ]);
 
         return new HotelResource($hotel);
     }
@@ -129,7 +138,24 @@ class OwnerHotelController extends Controller
             'pets_allowed' => ['nullable', 'boolean'],
             'smoking_allowed' => ['nullable', 'boolean'],
             'status' => ['nullable', 'string', 'in:draft,published,inactive'],
+            'service_ids' => ['sometimes', 'array'],
+            'service_ids.*' => [
+                'integer',
+                'distinct',
+                Rule::exists('services', 'id')->where(fn ($query) => $query
+                    ->where('is_active', true)
+                    ->whereIn('scope', ['hotel', 'both'])),
+            ],
         ];
+    }
+
+    private function syncServices(Hotel $hotel, array $validated): void
+    {
+        if (! array_key_exists('service_ids', $validated)) {
+            return;
+        }
+
+        $hotel->services()->sync($validated['service_ids']);
     }
 
     private function hotelPayload(array $validated, ?Hotel $hotel = null): array
