@@ -161,6 +161,18 @@ class OwnerRoomTypeController extends Controller
         }
     }
 
+    // Evita bajar las unidades totales por debajo de la disponibilidad ya creada.
+    private function validateTotalUnits(RoomType $roomType, int $totalUnits): void
+    {
+        $maxAvailableUnits = (int) $roomType->availability()->max('available_units');
+
+        if ($maxAvailableUnits > $totalUnits) {
+            throw ValidationException::withMessages([
+                'total_units' => ["Total units cannot be lower than existing availability ({$maxAvailableUnits})."],
+            ]);
+        }
+    }
+
     // Actualiza los datos base de un tipo de habitación del propietario
     public function update(Request $request, int $roomTypeId): RoomTypeResource
     {
@@ -172,6 +184,10 @@ class OwnerRoomTypeController extends Controller
             ->where('id', $roomTypeId)
             ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $ownerUserId))
             ->firstOrFail();
+
+        if (isset($validated['total_units'])) {
+            $this->validateTotalUnits($roomType, (int) $validated['total_units']);
+        }
 
         $roomType->update($this->roomTypePayload($validated, $roomType));
         $this->syncServices($roomType, $validated);
