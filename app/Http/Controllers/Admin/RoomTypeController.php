@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Hotel;
 use App\Models\RoomType;
 use Illuminate\Http\RedirectResponse;
