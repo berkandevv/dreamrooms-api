@@ -31,6 +31,9 @@
                         <x-nav-link :href="route('admin.reviews.index')" :active="request()->routeIs('admin.reviews.*')">
                             {{ __('Reviews') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.services.index')" :active="request()->routeIs('admin.services.*')">
+                            {{ __('Services') }}
+                        </x-nav-link>
                     @else
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
@@ -106,6 +109,9 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.reviews.index')" :active="request()->routeIs('admin.reviews.*')">
                     {{ __('Reviews') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.services.index')" :active="request()->routeIs('admin.services.*')">
+                    {{ __('Services') }}
                 </x-responsive-nav-link>
             @else
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">

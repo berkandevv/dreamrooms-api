@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\HotelController as AdminHotelController;
 use App\Http\Controllers\Admin\AvailabilityController as AdminAvailabilityController;
 use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
+use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Admin\RoomTypeController as AdminRoomTypeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,7 @@ Route::middleware(['auth', 'role:admin'])
         Route::patch('bookings/{booking}/status', [AdminBookingController::class, 'updateStatus'])->name('bookings.status');
         Route::post('bookings/{booking}/payments', [AdminBookingController::class, 'storePayment'])->name('bookings.payments.store');
         Route::resource('reviews', AdminReviewController::class)->only(['index', 'edit', 'update']);
+        Route::resource('services', AdminServiceController::class)->only(['index', 'create', 'store', 'edit', 'update']);
         Route::resource('users', AdminUserController::class)->only(['index', 'edit', 'update']);
     });
 
