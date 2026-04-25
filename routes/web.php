@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\HotelController as AdminHotelController;
+use App\Http\Controllers\Admin\AvailabilityController as AdminAvailabilityController;
 use App\Http\Controllers\Admin\RoomTypeController as AdminRoomTypeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,7 @@ Route::middleware(['auth', 'role:admin'])
     ->group(function (): void {
         Route::resource('hotels', AdminHotelController::class)->only(['index', 'edit', 'update']);
         Route::resource('room-types', AdminRoomTypeController::class)->only(['index', 'edit', 'update']);
+        Route::resource('availability', AdminAvailabilityController::class)->only(['index', 'edit', 'update']);
         Route::resource('users', AdminUserController::class)->only(['index', 'edit', 'update']);
     });
 
