@@ -67,6 +67,31 @@
                         </div>
                     </div>
 
+                    <div class="rounded-lg border border-sky-100 bg-sky-50 p-4">
+                        <div class="text-xs font-semibold uppercase tracking-widest text-sky-900">Booking Dates</div>
+                        <div class="mt-2 grid grid-cols-1 gap-3 text-sm sm:grid-cols-2 lg:grid-cols-4">
+                            <div>
+                                <div class="font-medium text-slate-900">Booked at</div>
+                                <div class="text-slate-600">{{ $booking->booked_at?->toDateTimeString() ?? '-' }}</div>
+                            </div>
+
+                            <div>
+                                <div class="font-medium text-slate-900">Expires at</div>
+                                <div class="text-slate-600">{{ $booking->expires_at?->toDateTimeString() ?? '-' }}</div>
+                            </div>
+
+                            <div>
+                                <div class="font-medium text-slate-900">Confirmed at</div>
+                                <div class="text-slate-600">{{ $booking->confirmed_at?->toDateTimeString() ?? '-' }}</div>
+                            </div>
+
+                            <div>
+                                <div class="font-medium text-slate-900">Cancelled at</div>
+                                <div class="text-slate-600">{{ $booking->cancelled_at?->toDateTimeString() ?? '-' }}</div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
                         <form x-ref="statusForm" method="POST" action="{{ route('admin.bookings.status', $booking) }}" class="rounded-lg border border-slate-200 p-4 space-y-4" @submit.prevent="askStatus()">
                             @csrf
