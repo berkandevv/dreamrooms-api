@@ -4,18 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Booking;
 use App\Models\Hotel;
-use App\Models\Payment;
-use App\Models\RoomTypeAvailability;
-use Carbon\CarbonImmutable;
+use App\Services\BookingService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class BookingController extends Controller
 {
+    private readonly BookingService $bookings;
+
+    public function __construct(BookingService $bookings)
+    {
+        $this->bookings = $bookings;
+    }
+
     public function index(Request $request): View
     {
         $search = $request->string('q')->toString();
@@ -74,7 +77,7 @@ class BookingController extends Controller
             'status' => ['required', Rule::in($this->statuses())],
         ]);
 
-        DB::transaction(fn () => $this->changeBookingStatus($booking->id, $validated['status']));
+        $this->bookings->changeStatus($booking->id, $validated['status']);
 
         return redirect()
             ->route('admin.bookings.show', $booking)
@@ -89,172 +92,11 @@ class BookingController extends Controller
             'transaction_reference' => ['nullable', 'string', 'max:100'],
         ]);
 
-        DB::transaction(fn () => $this->registerPayment($booking->id, $validated));
+        $this->bookings->registerPayment($booking->id, $validated);
 
         return redirect()
             ->route('admin.bookings.show', $booking)
             ->with('status', 'payment-created');
-    }
-
-    private function changeBookingStatus(int $bookingId, string $newStatus): Booking
-    {
-        /** @var Booking $booking */
-        $booking = Booking::query()
-            ->whereKey($bookingId)
-            ->with('roomType')
-            ->lockForUpdate()
-            ->firstOrFail();
-
-        if ($booking->status === $newStatus) {
-            return $booking;
-        }
-
-        if ($newStatus === 'confirmed' && $booking->status === 'pending' && $booking->expires_at !== null && $booking->expires_at->isPast()) {
-            throw ValidationException::withMessages([
-                'status' => ['This booking has expired and cannot be confirmed.'],
-            ]);
-        }
-
-        if ($newStatus === 'completed' && $booking->payment_status !== 'paid') {
-            throw ValidationException::withMessages([
-                'status' => ['Only paid bookings can be completed.'],
-            ]);
-        }
-
-        $this->validateStatusTransition($booking->status, $newStatus);
-
-        if ($newStatus === 'cancelled') {
-            $this->restoreAvailability($booking);
-        }
-
-        $booking->forceFill([
-            'status' => $newStatus,
-            'confirmed_at' => in_array($newStatus, ['confirmed', 'completed'], true)
-                ? ($booking->confirmed_at ?? now())
-                : $booking->confirmed_at,
-            'cancelled_at' => $newStatus === 'cancelled' ? now() : $booking->cancelled_at,
-        ])->save();
-
-        return $booking;
-    }
-
-    private function registerPayment(int $bookingId, array $validated): void
-    {
-        /** @var Booking $booking */
-        $booking = Booking::query()
-            ->whereKey($bookingId)
-            ->lockForUpdate()
-            ->firstOrFail();
-
-        $paymentStatus = $validated['status'];
-
-        if ($booking->status === 'cancelled' && $paymentStatus !== 'refunded') {
-            throw ValidationException::withMessages([
-                'amount' => ['Cancelled bookings can only receive refunded payments.'],
-            ]);
-        }
-
-        if ($booking->status === 'pending' && $booking->expires_at !== null && $booking->expires_at->isPast()) {
-            throw ValidationException::withMessages([
-                'amount' => ['This booking has expired and cannot receive payments.'],
-            ]);
-        }
-
-        $amount = round((float) $validated['amount'], 2);
-        $paidAmount = (float) Payment::query()
-            ->where('booking_id', $booking->id)
-            ->where('status', 'paid')
-            ->sum('amount');
-        $remainingAmount = round((float) $booking->total_amount - $paidAmount, 2);
-
-        if ($paymentStatus === 'paid' && $amount > $remainingAmount) {
-            throw ValidationException::withMessages([
-                'amount' => ['The payment amount cannot exceed the remaining booking total.'],
-            ]);
-        }
-
-        Payment::query()->create([
-            'booking_id' => $booking->id,
-            'provider' => 'manual',
-            'amount' => $amount,
-            'currency' => $booking->currency,
-            'status' => $paymentStatus,
-            'transaction_reference' => $validated['transaction_reference'] ?? null,
-            'paid_at' => $paymentStatus === 'paid' ? now() : null,
-        ]);
-
-        $this->refreshBookingPaymentStatus($booking->id, (float) $booking->total_amount, $paymentStatus);
-    }
-
-    private function validateStatusTransition(string $currentStatus, string $newStatus): void
-    {
-        $allowedTransitions = [
-            'pending' => ['confirmed', 'cancelled'],
-            'confirmed' => ['completed', 'cancelled'],
-            'cancelled' => [],
-            'completed' => [],
-        ];
-
-        if (in_array($newStatus, $allowedTransitions[$currentStatus] ?? [], true)) {
-            return;
-        }
-
-        throw ValidationException::withMessages([
-            'status' => ["Cannot change booking status from {$currentStatus} to {$newStatus}."],
-        ]);
-    }
-
-    private function restoreAvailability(Booking $booking): void
-    {
-        $stayDates = $this->buildStayDates(
-            CarbonImmutable::parse($booking->check_in),
-            CarbonImmutable::parse($booking->check_out),
-        );
-
-        $availability = RoomTypeAvailability::query()
-            ->where('room_type_id', $booking->room_type_id)
-            ->whereIn('date', $stayDates)
-            ->lockForUpdate()
-            ->get();
-
-        $availability->each(function (RoomTypeAvailability $day) use ($booking): void {
-            $day->available_units = min(
-                $day->available_units + $booking->units_booked,
-                $booking->roomType->total_units,
-            );
-            $day->save();
-        });
-    }
-
-    private function refreshBookingPaymentStatus(int $bookingId, float $totalAmount, string $latestPaymentStatus): void
-    {
-        $paidAmount = (float) Payment::query()
-            ->where('booking_id', $bookingId)
-            ->where('status', 'paid')
-            ->sum('amount');
-
-        $paymentStatus = match (true) {
-            $latestPaymentStatus === 'refunded' => 'refunded',
-            $paidAmount >= $totalAmount => 'paid',
-            $paidAmount > 0 => 'partial',
-            $latestPaymentStatus === 'failed' => 'failed',
-            default => 'pending',
-        };
-
-        Booking::query()
-            ->whereKey($bookingId)
-            ->update(['payment_status' => $paymentStatus]);
-    }
-
-    private function buildStayDates(CarbonImmutable $checkIn, CarbonImmutable $checkOut): array
-    {
-        $stayDates = [];
-
-        for ($date = $checkIn; $date->lt($checkOut); $date = $date->addDay()) {
-            $stayDates[] = $date->toDateString();
-        }
-
-        return $stayDates;
     }
 
     private function hotels()
