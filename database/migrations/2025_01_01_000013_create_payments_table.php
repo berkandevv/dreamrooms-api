@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('provider', ['stripe', 'paypal', 'manual']);
             $table->decimal('amount', 10, 2);
             $table->char('currency', 3);
-            $table->enum('status', ['pending', 'authorized', 'paid', 'failed', 'refunded', 'partially_refunded']);
+            $table->enum('status', ['pending', 'authorized', 'paid', 'failed', 'refunded']);
             $table->string('transaction_reference', 100)->nullable();
             $table->dateTime('paid_at')->nullable();
             $table->json('metadata')->nullable();
