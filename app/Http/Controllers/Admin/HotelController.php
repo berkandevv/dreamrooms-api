@@ -65,6 +65,8 @@ class HotelController extends Controller
             'city' => ['required', 'string', 'max:100'],
             'address' => ['required', 'string', 'max:255'],
             'postal_code' => ['nullable', 'string', 'max:20'],
+            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
+            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
             'contact_email' => ['nullable', 'email', 'max:150'],
             'contact_phone' => ['nullable', 'string', 'max:30'],
             'check_in_time' => ['nullable', 'date_format:H:i'],

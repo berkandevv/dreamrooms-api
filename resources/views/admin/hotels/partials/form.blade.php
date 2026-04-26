@@ -66,6 +66,18 @@
         <x-text-input id="postal_code" name="postal_code" type="text" class="mt-1 block w-full" :value="old('postal_code', $hotel->postal_code)" />
         <x-input-error class="mt-2" :messages="$errors->get('postal_code')" />
     </div>
+
+    <div>
+        <x-input-label for="latitude" value="Latitude" />
+        <x-text-input id="latitude" name="latitude" type="number" min="-90" max="90" step="0.0000001" class="mt-1 block w-full" :value="old('latitude', $hotel->latitude)" />
+        <x-input-error class="mt-2" :messages="$errors->get('latitude')" />
+    </div>
+
+    <div>
+        <x-input-label for="longitude" value="Longitude" />
+        <x-text-input id="longitude" name="longitude" type="number" min="-180" max="180" step="0.0000001" class="mt-1 block w-full" :value="old('longitude', $hotel->longitude)" />
+        <x-input-error class="mt-2" :messages="$errors->get('longitude')" />
+    </div>
 </div>
 
 <div>
