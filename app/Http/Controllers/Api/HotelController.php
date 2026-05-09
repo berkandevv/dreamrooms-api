@@ -13,8 +13,8 @@ class HotelController extends Controller
     /**
      * List published hotels
      *
-     * Returns the public hotel catalog with location, cover image, starting price,
-     * average rating, and review count
+     * Returns the public hotel catalog with location, cover image, services,
+     * starting price, average rating, and review count
      */
     public function index(Request $request)
     {
@@ -99,7 +99,10 @@ class HotelController extends Controller
     // Devuelve las relaciones necesarias para el listado público de hoteles
     private function hotelListRelations(): array
     {
-        return ['coverImage'];
+        return [
+            'coverImage',
+            'services' => fn ($query) => $query->where('is_active', true)->orderBy('name'),
+        ];
     }
 
     // Devuelve las relaciones necesarias para el detalle público de un hotel
