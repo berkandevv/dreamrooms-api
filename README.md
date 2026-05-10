@@ -70,7 +70,7 @@ Desde `/dashboard`, un usuario admin se redirige a `/admin/users`.
 
 ## 1.1 `POST /api/auth/register`
 
-Registra un usuario cliente activo y devuelve token Sanctum.
+Registra un usuario activo y devuelve token Sanctum. `account_type` puede ser `customer` u `owner`; si no se envía, se usa `customer`.
 
 Body:
 
@@ -79,12 +79,13 @@ Body:
   "name": "Cliente Demo",
   "email": "cliente@example.com",
   "phone": "+34600000000",
+  "account_type": "customer",
   "password": "password123",
   "password_confirmation": "password123"
 }
 ```
 
-Respuesta: usuario, rol `customer`, `token` y `token_type`.
+Respuesta: usuario, rol seleccionado, `token` y `token_type`.
 
 ## 1.2 `POST /api/auth/login`
 

@@ -7,15 +7,16 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
     /**
-     * Register a customer account
+     * Register a customer or owner account
      *
-     * Creates an active customer user and returns a bearer token
+     * Creates an active API user and returns a bearer token
      */
     public function register(Request $request)
     {
@@ -24,11 +25,14 @@ class AuthController extends Controller
             'email' => ['required', 'email', 'max:150', 'unique:users,email'],
             'phone' => ['nullable', 'string', 'max:30'],
             'password' => ['required', 'confirmed', Password::min(8)],
+            'account_type' => ['nullable', 'string', Rule::in(['customer', 'owner'])],
         ]);
 
-        // Registra clientes activos; los roles avanzados los gestionaremos cuando activemos auth
+        $accountType = $validated['account_type'] ?? 'customer';
+
+        // Solo permite alta pública de roles API no administrativos.
         $user = User::query()->create([
-            'role_id' => Role::query()->firstOrCreate(['name' => 'customer'])->id,
+            'role_id' => Role::query()->firstOrCreate(['name' => $accountType])->id,
             'name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'] ?? null,
