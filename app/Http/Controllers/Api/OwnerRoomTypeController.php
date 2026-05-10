@@ -103,6 +103,7 @@ class OwnerRoomTypeController extends Controller
             'items.*.date' => ['required', 'date'],
             'items.*.available_units' => ['required', 'integer', 'min:0'],
             'items.*.price' => ['required', 'numeric', 'min:0'],
+            'items.*.currency' => ['nullable', 'string', 'size:3'],
             'items.*.status' => ['required', 'string', 'in:open,closed'],
             'items.*.min_stay_nights' => ['nullable', 'integer', 'min:1'],
         ]);
@@ -127,6 +128,7 @@ class OwnerRoomTypeController extends Controller
             'date' => CarbonImmutable::parse($item['date'])->toDateString(),
             'available_units' => $item['available_units'],
             'price' => round((float) $item['price'], 2),
+            'currency' => strtoupper($item['currency'] ?? $roomType->currency ?? 'EUR'),
             'status' => $item['status'],
             'min_stay_nights' => $item['min_stay_nights'] ?? null,
             'created_at' => now(),
@@ -136,7 +138,7 @@ class OwnerRoomTypeController extends Controller
         DB::table('room_type_availabilities')->upsert(
             $rows,
             ['room_type_id', 'date'],
-            ['available_units', 'price', 'status', 'min_stay_nights', 'updated_at'],
+            ['available_units', 'price', 'currency', 'status', 'min_stay_nights', 'updated_at'],
         );
 
         $availability = $roomType->availability()
@@ -209,6 +211,7 @@ class OwnerRoomTypeController extends Controller
             'size_m2' => ['nullable', 'numeric', 'min:0'],
             'bed_type' => ['nullable', 'string', 'max:100'],
             'base_price' => [$presence, 'numeric', 'min:0'],
+            'currency' => ['nullable', 'string', 'size:3'],
             'total_units' => [$presence, 'integer', 'min:1', 'max:65535'],
             'status' => ['nullable', 'string', 'in:active,inactive'],
             'service_ids' => ['sometimes', 'array'],
@@ -267,6 +270,9 @@ class OwnerRoomTypeController extends Controller
             'size_m2' => $validated['size_m2'] ?? $roomType?->size_m2,
             'bed_type' => $validated['bed_type'] ?? $roomType?->bed_type,
             'base_price' => $validated['base_price'] ?? $roomType?->base_price,
+            'currency' => isset($validated['currency'])
+                ? strtoupper($validated['currency'])
+                : ($roomType?->currency ?? 'EUR'),
             'total_units' => $validated['total_units'] ?? $roomType?->total_units,
             'status' => $validated['status'] ?? $roomType?->status ?? 'active',
         ])->filter(fn ($value) => $value !== null)->all();

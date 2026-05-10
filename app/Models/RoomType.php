@@ -22,6 +22,7 @@ class RoomType extends Model
         'size_m2',
         'bed_type',
         'base_price',
+        'currency',
         'total_units',
         'status',
     ];

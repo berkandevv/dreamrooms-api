@@ -35,7 +35,7 @@ return new class extends Migration
             $table->decimal('taxes_amount', 10, 2);
             $table->decimal('discount_amount', 10, 2);
             $table->decimal('total_amount', 10, 2);
-            $table->char('currency', 3);
+            $table->char('currency', 3)->default('EUR');
             $table->dateTime('booked_at');
             $table->dateTime('expires_at')->nullable();
             $table->dateTime('confirmed_at')->nullable();

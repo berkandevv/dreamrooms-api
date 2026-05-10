@@ -19,6 +19,7 @@ class RoomTypeAvailabilityFactory extends Factory
             'date' => fake()->dateTimeBetween('now', '+3 months')->format('Y-m-d'),
             'available_units' => fake()->numberBetween(0, 10),
             'price' => fake()->randomFloat(2, 70, 420),
+            'currency' => 'EUR',
             'status' => 'open',
             'min_stay_nights' => fake()->randomElement([1, 1, 1, 2, 3]),
         ];

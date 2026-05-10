@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('date');
             $table->unsignedSmallInteger('available_units');
             $table->decimal('price', 10, 2);
+            $table->char('currency', 3)->default('EUR');
             $table->enum('status', ['open', 'closed']);
             $table->unsignedSmallInteger('min_stay_nights')->nullable();
             $table->timestamps();

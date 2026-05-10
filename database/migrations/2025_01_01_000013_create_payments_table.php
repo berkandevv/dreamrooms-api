@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('booking_id')->constrained('bookings')->cascadeOnDelete();
             $table->enum('provider', ['stripe', 'paypal', 'manual']);
             $table->decimal('amount', 10, 2);
-            $table->char('currency', 3);
+            $table->char('currency', 3)->default('EUR');
             $table->enum('status', ['pending', 'authorized', 'paid', 'failed', 'refunded']);
             $table->string('transaction_reference', 100)->nullable();
             $table->dateTime('paid_at')->nullable();

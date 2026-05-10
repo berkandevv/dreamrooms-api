@@ -7,6 +7,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class RoomTypeResource extends JsonResource
 {
+    private const DEFAULT_PRICE_CURRENCY = 'EUR';
+
+    private const PRICE_CURRENCY_SYMBOL = '€';
+
     /**
      * Transform the resource into an array.
      *
@@ -24,6 +28,8 @@ class RoomTypeResource extends JsonResource
             'size_m2' => $this->size_m2,
             'bed_type' => $this->bed_type,
             'base_price' => $this->base_price,
+            'currency' => $this->currency ?? self::DEFAULT_PRICE_CURRENCY,
+            'currency_symbol' => $this->currencySymbol($this->currency ?? self::DEFAULT_PRICE_CURRENCY),
             'total_units' => $this->total_units,
             'status' => $this->status,
             'availability_count' => $this->whenCounted('availability'),
@@ -36,6 +42,11 @@ class RoomTypeResource extends JsonResource
             'images' => $this->whenLoaded('images', fn () => $this->mapImages($this->images)),
             'services' => $this->whenLoaded('services', fn () => $this->mapServices($this->services)),
         ];
+    }
+
+    private function currencySymbol(?string $currency): ?string
+    {
+        return $currency === self::DEFAULT_PRICE_CURRENCY ? self::PRICE_CURRENCY_SYMBOL : null;
     }
 
     // Transforma la lista de imágenes al formato de respuesta

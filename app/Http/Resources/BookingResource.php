@@ -7,6 +7,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class BookingResource extends JsonResource
 {
+    private const PRICE_CURRENCY_SYMBOLS = [
+        'EUR' => '€',
+    ];
+
     /**
      * Transform the resource into an array.
      *
@@ -47,6 +51,7 @@ class BookingResource extends JsonResource
                 'discount' => $this->discount_amount,
                 'total' => $this->total_amount,
                 'currency' => $this->currency,
+                'currency_symbol' => $this->currencySymbol($this->currency),
             ],
             'user' => $this->whenLoaded('user', fn () => [
                 'id' => $this->user->id,
@@ -66,6 +71,7 @@ class BookingResource extends JsonResource
                 'provider' => $payment->provider,
                 'amount' => $payment->amount,
                 'currency' => $payment->currency,
+                'currency_symbol' => $this->currencySymbol($payment->currency),
                 'status' => $payment->status,
                 'transaction_reference' => $payment->transaction_reference,
                 'metadata' => $this->when($request->user()?->hasRole(['owner', 'admin']), $payment->metadata),
@@ -77,5 +83,14 @@ class BookingResource extends JsonResource
             'confirmed_at' => $this->confirmed_at?->toISOString(),
             'cancelled_at' => $this->cancelled_at?->toISOString(),
         ];
+    }
+
+    private function currencySymbol(?string $currency): ?string
+    {
+        if (! is_string($currency)) {
+            return null;
+        }
+
+        return self::PRICE_CURRENCY_SYMBOLS[$currency] ?? null;
     }
 }

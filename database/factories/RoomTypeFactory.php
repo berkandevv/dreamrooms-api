@@ -23,6 +23,7 @@ class RoomTypeFactory extends Factory
             'size_m2' => fake()->randomFloat(2, 18, 80),
             'bed_type' => fake()->randomElement(['Single bed', 'Double bed', 'Queen bed', 'King bed', 'Twin beds']),
             'base_price' => fake()->randomFloat(2, 70, 420),
+            'currency' => 'EUR',
             'total_units' => fake()->numberBetween(2, 20),
             'status' => 'active',
         ];

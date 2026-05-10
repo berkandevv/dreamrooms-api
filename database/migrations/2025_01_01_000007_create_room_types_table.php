@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('size_m2', 6, 2)->nullable();
             $table->string('bed_type', 100)->nullable();
             $table->decimal('base_price', 10, 2);
+            $table->char('currency', 3)->default('EUR');
             $table->unsignedSmallInteger('total_units');
             $table->enum('status', ['active', 'inactive']);
             $table->timestamps();

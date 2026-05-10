@@ -15,6 +15,7 @@ class RoomTypeAvailability extends Model
         'date',
         'available_units',
         'price',
+        'currency',
         'status',
         'min_stay_nights',
     ];

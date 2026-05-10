@@ -7,6 +7,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class HotelResource extends JsonResource
 {
+    private const DEFAULT_PRICE_CURRENCY = 'EUR';
+
+    private const PRICE_CURRENCY_SYMBOL = '€';
+
     /**
      * Transform the resource into an array.
      *
@@ -41,10 +45,14 @@ class HotelResource extends JsonResource
             'pricing' => [
                 'tax_rate_percent' => $this->tax_rate_percent,
                 'discount_rate_percent' => $this->discount_rate_percent,
+                'currency' => self::DEFAULT_PRICE_CURRENCY,
+                'currency_symbol' => self::PRICE_CURRENCY_SYMBOL,
             ],
             'pets_allowed' => $this->pets_allowed,
             'smoking_allowed' => $this->smoking_allowed,
             'starting_price' => $this->room_types_min_base_price,
+            'currency' => self::DEFAULT_PRICE_CURRENCY,
+            'currency_symbol' => self::PRICE_CURRENCY_SYMBOL,
             'average_rating' => $this->average_rating !== null
                 ? round((float) $this->average_rating, 1)
                 : null,
@@ -101,6 +109,8 @@ class HotelResource extends JsonResource
             'size_m2' => $roomType->size_m2,
             'bed_type' => $roomType->bed_type,
             'base_price' => $roomType->base_price,
+            'currency' => $roomType->currency ?? self::DEFAULT_PRICE_CURRENCY,
+            'currency_symbol' => $this->currencySymbol($roomType->currency ?? self::DEFAULT_PRICE_CURRENCY),
             'total_units' => $roomType->total_units,
             'status' => $roomType->status,
             'cover_image' => $roomType->relationLoaded('coverImage') && $roomType->coverImage ? [
@@ -115,5 +125,10 @@ class HotelResource extends JsonResource
                 ? $this->mapServices($roomType->services)
                 : [],
         ];
+    }
+
+    private function currencySymbol(?string $currency): ?string
+    {
+        return $currency === self::DEFAULT_PRICE_CURRENCY ? self::PRICE_CURRENCY_SYMBOL : null;
     }
 }
