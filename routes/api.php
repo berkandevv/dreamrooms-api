@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\BookingController;
-use App\Http\Controllers\Api\FavoriteController;
+use App\Http\Controllers\Api\CustomerBookingController;
+use App\Http\Controllers\Api\CustomerFavoriteController;
 use App\Http\Controllers\Api\HotelController;
 use App\Http\Controllers\Api\OwnerBookingController;
 use App\Http\Controllers\Api\OwnerHotelController;
@@ -31,16 +31,16 @@ Route::get('/room-types/{roomTypeId}/availability', [RoomTypeController::class, 
 
 // Área de cliente: reservas y favoritos siempre usan el usuario del token
 Route::middleware(['auth:sanctum', 'role:customer'])->group(function (): void {
-    Route::post('/hotels/{hotelId}/favorite', [FavoriteController::class, 'store']);
-    Route::delete('/hotels/{hotelId}/favorite', [FavoriteController::class, 'destroy']);
+    Route::post('/customer/hotels/{hotelId}/favorite', [CustomerFavoriteController::class, 'store']);
+    Route::delete('/customer/hotels/{hotelId}/favorite', [CustomerFavoriteController::class, 'destroy']);
 
-    Route::get('/bookings', [BookingController::class, 'index']);
-    Route::post('/bookings', [BookingController::class, 'store']);
-    Route::post('/bookings/{bookingId}/cancel', [BookingController::class, 'cancel']);
-    Route::post('/bookings/{bookingId}/review', [BookingController::class, 'review']);
-    Route::get('/bookings/{bookingId}', [BookingController::class, 'show']);
+    Route::get('/customer/bookings', [CustomerBookingController::class, 'index']);
+    Route::post('/customer/bookings', [CustomerBookingController::class, 'store']);
+    Route::post('/customer/bookings/{bookingId}/cancel', [CustomerBookingController::class, 'cancel']);
+    Route::post('/customer/bookings/{bookingId}/review', [CustomerBookingController::class, 'review']);
+    Route::get('/customer/bookings/{bookingId}', [CustomerBookingController::class, 'show']);
 
-    Route::get('/favorites', [FavoriteController::class, 'index']);
+    Route::get('/customer/favorites', [CustomerFavoriteController::class, 'index']);
 });
 
 // Área de propietario: solo accede a hoteles, habitaciones y reservas de sus hoteles
