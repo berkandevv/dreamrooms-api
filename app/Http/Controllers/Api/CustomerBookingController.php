@@ -110,7 +110,7 @@ class CustomerBookingController extends Controller
             'guests.*.is_primary' => ['nullable', 'boolean'],
         ]);
         $validated['user_id'] = $request->user()->id;
-        $this->validateGuestsCount($validated);
+        $this->validateGuestsLimit($validated);
         $this->expirePendingBookings();
 
         $booking = DB::transaction(fn (): Booking => $this->createBooking($validated));
@@ -363,8 +363,8 @@ class CustomerBookingController extends Controller
         ]);
     }
 
-    // Valida que el número de huéspedes coincida con la ocupación enviada
-    private function validateGuestsCount(array $validated): void
+    // Valida que la lista opcional de huéspedes no exceda la ocupación enviada
+    private function validateGuestsLimit(array $validated): void
     {
         if (! isset($validated['guests'])) {
             return;
@@ -372,12 +372,12 @@ class CustomerBookingController extends Controller
 
         $expectedGuests = $validated['adults_count'] + ($validated['children_count'] ?? 0);
 
-        if (\count($validated['guests']) === $expectedGuests) {
+        if (\count($validated['guests']) <= $expectedGuests) {
             return;
         }
 
         throw ValidationException::withMessages([
-            'guests' => ['The number of guests must match adults_count plus children_count.'],
+            'guests' => ['The number of guests cannot exceed adults_count plus children_count.'],
         ]);
     }
 
