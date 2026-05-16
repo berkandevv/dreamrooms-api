@@ -7,7 +7,7 @@ use App\Models\Favorite;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
 
-class FavoriteController extends Controller
+class CustomerFavoriteController extends Controller
 {
     public function index(Request $request)
     {

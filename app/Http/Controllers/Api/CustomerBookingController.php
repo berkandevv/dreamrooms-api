@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
-class BookingController extends Controller
+class CustomerBookingController extends Controller
 {
     /**
      * List bookings
