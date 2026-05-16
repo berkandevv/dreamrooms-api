@@ -173,15 +173,15 @@ Todas estas rutas requieren token Sanctum y rol `customer`.
 
 El usuario siempre se obtiene desde el token. No se acepta `user_id` para suplantar usuarios.
 
-## 4.1 `GET /api/bookings`
+## 4.1 `GET /api/customer/bookings`
 
 Devuelve las reservas del cliente autenticado.
 
-## 4.2 `GET /api/bookings/{bookingId}`
+## 4.2 `GET /api/customer/bookings/{bookingId}`
 
 Devuelve el detalle de una reserva del cliente autenticado.
 
-## 4.3 `POST /api/bookings`
+## 4.3 `POST /api/customer/bookings`
 
 Crea una reserva para el cliente autenticado.
 
@@ -218,13 +218,13 @@ La reserva valida:
 - estancia mínima;
 - unidades disponibles.
 
-## 4.4 `POST /api/bookings/{bookingId}/cancel`
+## 4.4 `POST /api/customer/bookings/{bookingId}/cancel`
 
 Cancela una reserva del cliente autenticado.
 
 Si se cancela, restaura unidades en la disponibilidad diaria.
 
-## 4.5 `POST /api/bookings/{bookingId}/review`
+## 4.5 `POST /api/customer/bookings/{bookingId}/review`
 
 Crea una reseña para una reserva completada del cliente autenticado.
 
@@ -239,15 +239,15 @@ Body:
 
 Solo se permite una reseña por reserva.
 
-## 4.6 `GET /api/favorites`
+## 4.6 `GET /api/customer/favorites`
 
 Devuelve los hoteles favoritos del cliente autenticado.
 
-## 4.7 `POST /api/hotels/{hotelId}/favorite`
+## 4.7 `POST /api/customer/hotels/{hotelId}/favorite`
 
 Añade un hotel publicado a favoritos del cliente autenticado.
 
-## 4.8 `DELETE /api/hotels/{hotelId}/favorite`
+## 4.8 `DELETE /api/customer/hotels/{hotelId}/favorite`
 
 Elimina el favorito del cliente autenticado.
 
