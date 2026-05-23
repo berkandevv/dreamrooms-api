@@ -17,11 +17,7 @@ use Illuminate\Validation\ValidationException;
 
 class CustomerBookingController extends Controller
 {
-    /**
-     * List bookings
-     *
-     * Returns the bookings that belong to the authenticated customer
-     */
+    // Lista las reservas del cliente autenticado
     public function index(Request $request)
     {
         $bookings = Booking::query()
@@ -33,11 +29,7 @@ class CustomerBookingController extends Controller
         return BookingResource::collection($bookings);
     }
 
-    /**
-     * Show a booking
-     *
-     * Returns the full details for one of the authenticated customer's bookings
-     */
+    // Muestra el detalle de una reserva del cliente autenticado
     public function show(Request $request, int $bookingId): BookingResource
     {
         $booking = Booking::query()
@@ -48,11 +40,7 @@ class CustomerBookingController extends Controller
         return new BookingResource($booking);
     }
 
-    /**
-     * Cancel a booking
-     *
-     * Cancels an active booking and restores the booked units to availability
-     */
+    // Cancela una reserva activa del cliente y restaura la disponibilidad
     public function cancel(Request $request, int $bookingId): BookingResource
     {
         $booking = DB::transaction(fn (): Booking => $this->cancelBooking($bookingId, $request->user()->id));
@@ -62,11 +50,7 @@ class CustomerBookingController extends Controller
         return new BookingResource($booking);
     }
 
-    /**
-     * Create a booking review
-     *
-     * Creates a single public review for a completed booking
-     */
+    // Crea una reseña pública para una reserva completada
     public function review(Request $request, int $bookingId)
     {
         $validated = $request->validate([
@@ -83,12 +67,7 @@ class CustomerBookingController extends Controller
             ->setStatusCode(201);
     }
 
-    /**
-     * Create a booking
-     *
-     * Creates a booking for an available room type, validates occupancy and dates,
-     * stores optional guests, and assigns it to the authenticated customer
-     */
+    // Crea una reserva para el cliente autenticado validando fechas ocupación e importes
     public function store(Request $request)
     {
         $validated = $request->validate([
