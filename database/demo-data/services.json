@@ -1,0 +1,146 @@
+[
+  {
+    "key": "wifi",
+    "name": "WiFi gratuito",
+    "slug": "wifi-gratuito",
+    "icon": "wifi",
+    "category": "General",
+    "scope": "both",
+    "is_active": true
+  },
+  {
+    "key": "desayuno",
+    "name": "Desayuno incluido",
+    "slug": "desayuno-incluido",
+    "icon": "coffee",
+    "category": "Restauración",
+    "scope": "hotel",
+    "is_active": true
+  },
+  {
+    "key": "parking",
+    "name": "Aparcamiento privado",
+    "slug": "aparcamiento-privado",
+    "icon": "car",
+    "category": "Transporte",
+    "scope": "hotel",
+    "is_active": true
+  },
+  {
+    "key": "traslado",
+    "name": "Traslado al aeropuerto",
+    "slug": "traslado-aeropuerto",
+    "icon": "bus",
+    "category": "Transporte",
+    "scope": "hotel",
+    "is_active": true
+  },
+  {
+    "key": "piscina",
+    "name": "Piscina exterior",
+    "slug": "piscina-exterior",
+    "icon": "waves",
+    "category": "Bienestar",
+    "scope": "hotel",
+    "is_active": true
+  },
+  {
+    "key": "spa",
+    "name": "Spa y circuito termal",
+    "slug": "spa-circuito-termal",
+    "icon": "sparkles",
+    "category": "Bienestar",
+    "scope": "hotel",
+    "is_active": true
+  },
+  {
+    "key": "gimnasio",
+    "name": "Gimnasio",
+    "slug": "gimnasio",
+    "icon": "dumbbell",
+    "category": "Bienestar",
+    "scope": "hotel",
+    "is_active": true
+  },
+  {
+    "key": "restaurante",
+    "name": "Restaurante",
+    "slug": "restaurante",
+    "icon": "utensils",
+    "category": "Restauración",
+    "scope": "hotel",
+    "is_active": true
+  },
+  {
+    "key": "recepcion",
+    "name": "Recepción 24 horas",
+    "slug": "recepcion-24-horas",
+    "icon": "concierge-bell",
+    "category": "General",
+    "scope": "hotel",
+    "is_active": true
+  },
+  {
+    "key": "climatizacion",
+    "name": "Climatización",
+    "slug": "climatizacion",
+    "icon": "snowflake",
+    "category": "Habitación",
+    "scope": "both",
+    "is_active": true
+  },
+  {
+    "key": "balcon",
+    "name": "Balcón privado",
+    "slug": "balcon-privado",
+    "icon": "door-open",
+    "category": "Habitación",
+    "scope": "room_type",
+    "is_active": true
+  },
+  {
+    "key": "vistas_mar",
+    "name": "Vistas al mar",
+    "slug": "vistas-al-mar",
+    "icon": "ship",
+    "category": "Habitación",
+    "scope": "room_type",
+    "is_active": true
+  },
+  {
+    "key": "bano_privado",
+    "name": "Baño privado",
+    "slug": "bano-privado",
+    "icon": "bath",
+    "category": "Habitación",
+    "scope": "room_type",
+    "is_active": true
+  },
+  {
+    "key": "cocina",
+    "name": "Cocina equipada",
+    "slug": "cocina-equipada",
+    "icon": "cooking-pot",
+    "category": "Habitación",
+    "scope": "room_type",
+    "is_active": true
+  },
+  {
+    "key": "escritorio",
+    "name": "Zona de trabajo",
+    "slug": "zona-de-trabajo",
+    "icon": "briefcase-business",
+    "category": "Habitación",
+    "scope": "room_type",
+    "is_active": true
+  },
+  {
+    "key": "familiar",
+    "name": "Habitaciones familiares",
+    "slug": "habitaciones-familiares",
+    "icon": "users",
+    "category": "Habitación",
+    "scope": "both",
+    "is_active": true
+  }
+]

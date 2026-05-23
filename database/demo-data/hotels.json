@@ -1,0 +1,4292 @@
+[
+  {
+    "key": "hotel_01",
+    "owner_key": "owner_01",
+    "name": "Hostal La Muralla",
+    "slug": "hostal-la-muralla",
+    "description": "Hostal La Muralla ofrece una estancia cuidada en Ávila, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 1,
+    "country": "España",
+    "region": "Castilla y León",
+    "city": "Ávila",
+    "address": "Calle San Segundo 18",
+    "postal_code": "05001",
+    "latitude": 40.6567,
+    "longitude": -4.6992,
+    "contact_email": "reservas@hostal-la-muralla.test",
+    "contact_phone": "+34 910000000",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 7 días antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 5,
+    "pets_allowed": true,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "recepcion",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/05/31/17/00/hotel-1427355_960_720.jpg",
+        "alt_text": "Hostal La Muralla en Ávila",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/09/21/09/53/villa-cortine-palace-949547_1280.jpg",
+        "alt_text": "Hostal La Muralla en Ávila",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/08/26/20/30/hotel-1623064_1280.jpg",
+        "alt_text": "Hostal La Muralla en Ávila",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_01_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 0,
+        "size_m2": 21,
+        "bed_type": "Cama doble",
+        "base_price": 58,
+        "currency": "EUR",
+        "total_units": 6,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594_1280.jpg",
+            "alt_text": "Habitación doble confort en Hostal La Muralla",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Habitación doble confort en Hostal La Muralla",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_01_superior",
+        "name": "Habitación familiar",
+        "description": "Habitación amplia para familias o grupos pequeños con equipamiento funcional",
+        "capacity_adults": 2,
+        "capacity_children": 2,
+        "size_m2": 31,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 78,
+        "currency": "EUR",
+        "total_units": 3,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "cocina"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Habitación familiar en Hostal La Muralla",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Habitación familiar en Hostal La Muralla",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_01_premium",
+        "name": "Habitación superior con balcón",
+        "description": "Habitación confortable con balcón, más espacio interior y detalles pensados para estancias tranquilas",
+        "capacity_adults": 3,
+        "capacity_children": 1,
+        "size_m2": 33,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 102,
+        "currency": "EUR",
+        "total_units": 2,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "familiar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hostal La Muralla",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hostal La Muralla",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.2
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_02",
+    "owner_key": "owner_01",
+    "name": "Hotel Ribera del Duero",
+    "slug": "hotel-ribera-del-duero",
+    "description": "Hotel Ribera del Duero ofrece una estancia cuidada en Aranda de Duero, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 2,
+    "country": "España",
+    "region": "Castilla y León",
+    "city": "Aranda de Duero",
+    "address": "Avenida Castilla 42",
+    "postal_code": "09400",
+    "latitude": 41.6706,
+    "longitude": -3.6892,
+    "contact_email": "reservas@hotel-ribera-del-duero.test",
+    "contact_phone": "+34 910000001",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 7 días antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 5,
+    "pets_allowed": false,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "parking",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/09/21/09/53/villa-cortine-palace-949547_1280.jpg",
+        "alt_text": "Hotel Ribera del Duero en Aranda de Duero",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/08/26/20/30/hotel-1623064_1280.jpg",
+        "alt_text": "Hotel Ribera del Duero en Aranda de Duero",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2014/07/10/17/17/hotel-389256_1280.jpg",
+        "alt_text": "Hotel Ribera del Duero en Aranda de Duero",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_02_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 0,
+        "size_m2": 24,
+        "bed_type": "Cama doble",
+        "base_price": 82,
+        "currency": "EUR",
+        "total_units": 7,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Ribera del Duero",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Ribera del Duero",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_02_superior",
+        "name": "Habitación familiar",
+        "description": "Habitación amplia para familias o grupos pequeños con equipamiento funcional",
+        "capacity_adults": 2,
+        "capacity_children": 2,
+        "size_m2": 36,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 111,
+        "currency": "EUR",
+        "total_units": 4,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "cocina"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Ribera del Duero",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Ribera del Duero",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_02_premium",
+        "name": "Habitación superior con balcón",
+        "description": "Habitación confortable con balcón, más espacio interior y detalles pensados para estancias tranquilas",
+        "capacity_adults": 3,
+        "capacity_children": 1,
+        "size_m2": 36,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 144,
+        "currency": "EUR",
+        "total_units": 3,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "familiar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Ribera del Duero",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Ribera del Duero",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.2
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_03",
+    "owner_key": "owner_01",
+    "name": "Hotel Jardines de Salamanca",
+    "slug": "hotel-jardines-de-salamanca",
+    "description": "Hotel Jardines de Salamanca ofrece una estancia cuidada en Salamanca, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 3,
+    "country": "España",
+    "region": "Castilla y León",
+    "city": "Salamanca",
+    "address": "Paseo de Carmelitas 31",
+    "postal_code": "37002",
+    "latitude": 40.9701,
+    "longitude": -5.6635,
+    "contact_email": "reservas@hotel-jardines-de-salamanca.test",
+    "contact_phone": "+34 910000002",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 72 horas antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 4,
+    "pets_allowed": false,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "restaurante",
+      "recepcion",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/08/26/20/30/hotel-1623064_1280.jpg",
+        "alt_text": "Hotel Jardines de Salamanca en Salamanca",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2014/07/10/17/17/hotel-389256_1280.jpg",
+        "alt_text": "Hotel Jardines de Salamanca en Salamanca",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/01/10/11/39/hotel-595121_1280.jpg",
+        "alt_text": "Hotel Jardines de Salamanca en Salamanca",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_03_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 1,
+        "size_m2": 27,
+        "bed_type": "Cama doble",
+        "base_price": 118,
+        "currency": "EUR",
+        "total_units": 8,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Jardines de Salamanca",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Jardines de Salamanca",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_03_superior",
+        "name": "Habitación familiar",
+        "description": "Habitación amplia para familias o grupos pequeños con equipamiento funcional",
+        "capacity_adults": 2,
+        "capacity_children": 2,
+        "size_m2": 41,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 159,
+        "currency": "EUR",
+        "total_units": 5,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "cocina"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Jardines de Salamanca",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Jardines de Salamanca",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_03_premium",
+        "name": "Habitación superior con balcón",
+        "description": "Habitación confortable con balcón, más espacio interior y detalles pensados para estancias tranquilas",
+        "capacity_adults": 3,
+        "capacity_children": 2,
+        "size_m2": 39,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 207,
+        "currency": "EUR",
+        "total_units": 4,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "familiar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Jardines de Salamanca",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Jardines de Salamanca",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.2
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_04",
+    "owner_key": "owner_01",
+    "name": "Hotel Palacio de Burgos",
+    "slug": "hotel-palacio-de-burgos",
+    "description": "Hotel Palacio de Burgos ofrece una estancia cuidada en Burgos, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 4,
+    "country": "España",
+    "region": "Castilla y León",
+    "city": "Burgos",
+    "address": "Calle Fernán González 12",
+    "postal_code": "09003",
+    "latitude": 42.3439,
+    "longitude": -3.6969,
+    "contact_email": "reservas@hotel-palacio-de-burgos.test",
+    "contact_phone": "+34 910000003",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 48 horas antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 2,
+    "pets_allowed": true,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "parking",
+      "gimnasio",
+      "restaurante",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2014/07/10/17/17/hotel-389256_1280.jpg",
+        "alt_text": "Hotel Palacio de Burgos en Burgos",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/01/10/11/39/hotel-595121_1280.jpg",
+        "alt_text": "Hotel Palacio de Burgos en Burgos",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2017/05/31/10/23/manor-house-2359884_1280.jpg",
+        "alt_text": "Hotel Palacio de Burgos en Burgos",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_04_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 1,
+        "size_m2": 30,
+        "bed_type": "Cama doble",
+        "base_price": 164,
+        "currency": "EUR",
+        "total_units": 9,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Palacio de Burgos",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Palacio de Burgos",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_04_superior",
+        "name": "Suite superior",
+        "description": "Suite amplia con zona de estar, detalles premium y vistas destacadas del entorno",
+        "capacity_adults": 3,
+        "capacity_children": 2,
+        "size_m2": 46,
+        "bed_type": "Cama king y sofá cama",
+        "base_price": 271,
+        "currency": "EUR",
+        "total_units": 6,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "balcon",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Suite superior en Hotel Palacio de Burgos",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Suite superior en Hotel Palacio de Burgos",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_04_premium",
+        "name": "Suite premium con vistas",
+        "description": "Alojamiento de categoría superior con dormitorio amplio, zona de estar, baño completo y vistas destacadas",
+        "capacity_adults": 4,
+        "capacity_children": 2,
+        "size_m2": 64,
+        "bed_type": "Cama king, sofá cama y cama supletoria",
+        "base_price": 353,
+        "currency": "EUR",
+        "total_units": 5,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "vistas_mar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Suite premium con vistas en Hotel Palacio de Burgos",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+            "alt_text": "Suite premium con vistas en Hotel Palacio de Burgos",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.25
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_05",
+    "owner_key": "owner_01",
+    "name": "Gran Hotel Mirador de Segovia",
+    "slug": "gran-hotel-mirador-segovia",
+    "description": "Gran Hotel Mirador de Segovia ofrece una estancia cuidada en Segovia, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 5,
+    "country": "España",
+    "region": "Castilla y León",
+    "city": "Segovia",
+    "address": "Plaza Mayor 7",
+    "postal_code": "40001",
+    "latitude": 40.9481,
+    "longitude": -4.1184,
+    "contact_email": "reservas@gran-hotel-mirador-segovia.test",
+    "contact_phone": "+34 910000004",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 48 horas antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 0,
+    "pets_allowed": false,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "parking",
+      "traslado",
+      "piscina",
+      "spa",
+      "gimnasio",
+      "restaurante",
+      "recepcion",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/01/10/11/39/hotel-595121_1280.jpg",
+        "alt_text": "Gran Hotel Mirador de Segovia en Segovia",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2017/05/31/10/23/manor-house-2359884_1280.jpg",
+        "alt_text": "Gran Hotel Mirador de Segovia en Segovia",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+        "alt_text": "Gran Hotel Mirador de Segovia en Segovia",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_05_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 1,
+        "size_m2": 33,
+        "bed_type": "Cama doble",
+        "base_price": 235,
+        "currency": "EUR",
+        "total_units": 10,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Habitación doble confort en Gran Hotel Mirador de Segovia",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Habitación doble confort en Gran Hotel Mirador de Segovia",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_05_superior",
+        "name": "Suite superior",
+        "description": "Suite amplia con zona de estar, detalles premium y vistas destacadas del entorno",
+        "capacity_adults": 3,
+        "capacity_children": 2,
+        "size_m2": 51,
+        "bed_type": "Cama king y sofá cama",
+        "base_price": 388,
+        "currency": "EUR",
+        "total_units": 7,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "balcon",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Suite superior en Gran Hotel Mirador de Segovia",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+            "alt_text": "Suite superior en Gran Hotel Mirador de Segovia",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_05_premium",
+        "name": "Suite premium con vistas",
+        "description": "Alojamiento de categoría superior con dormitorio amplio, zona de estar, baño completo y vistas destacadas",
+        "capacity_adults": 4,
+        "capacity_children": 2,
+        "size_m2": 68,
+        "bed_type": "Cama king, sofá cama y cama supletoria",
+        "base_price": 505,
+        "currency": "EUR",
+        "total_units": 6,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "vistas_mar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+            "alt_text": "Suite premium con vistas en Gran Hotel Mirador de Segovia",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594_1280.jpg",
+            "alt_text": "Suite premium con vistas en Gran Hotel Mirador de Segovia",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.25
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_06",
+    "owner_key": "owner_02",
+    "name": "Pensión Puerto Chico",
+    "slug": "pension-puerto-chico",
+    "description": "Pensión Puerto Chico ofrece una estancia cuidada en Santander, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 2,
+    "country": "España",
+    "region": "Cantabria",
+    "city": "Santander",
+    "address": "Calle Castelar 5",
+    "postal_code": "39004",
+    "latitude": 43.4623,
+    "longitude": -3.8006,
+    "contact_email": "reservas@pension-puerto-chico.test",
+    "contact_phone": "+34 910000005",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 7 días antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 5,
+    "pets_allowed": false,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "recepcion",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2017/05/31/10/23/manor-house-2359884_1280.jpg",
+        "alt_text": "Pensión Puerto Chico en Santander",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+        "alt_text": "Pensión Puerto Chico en Santander",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/05/31/17/00/hotel-1427355_960_720.jpg",
+        "alt_text": "Pensión Puerto Chico en Santander",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_06_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 0,
+        "size_m2": 21,
+        "bed_type": "Cama doble",
+        "base_price": 62,
+        "currency": "EUR",
+        "total_units": 6,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Habitación doble confort en Pensión Puerto Chico",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+            "alt_text": "Habitación doble confort en Pensión Puerto Chico",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_06_superior",
+        "name": "Habitación familiar",
+        "description": "Habitación amplia para familias o grupos pequeños con equipamiento funcional",
+        "capacity_adults": 2,
+        "capacity_children": 2,
+        "size_m2": 31,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 84,
+        "currency": "EUR",
+        "total_units": 3,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "cocina"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+            "alt_text": "Habitación familiar en Pensión Puerto Chico",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594_1280.jpg",
+            "alt_text": "Habitación familiar en Pensión Puerto Chico",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_06_premium",
+        "name": "Habitación superior con balcón",
+        "description": "Habitación confortable con balcón, más espacio interior y detalles pensados para estancias tranquilas",
+        "capacity_adults": 3,
+        "capacity_children": 1,
+        "size_m2": 33,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 109,
+        "currency": "EUR",
+        "total_units": 2,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "familiar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Pensión Puerto Chico",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Pensión Puerto Chico",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.2
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_07",
+    "owner_key": "owner_02",
+    "name": "Hotel Costa Verde",
+    "slug": "hotel-costa-verde",
+    "description": "Hotel Costa Verde ofrece una estancia cuidada en Gijón, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 3,
+    "country": "España",
+    "region": "Asturias",
+    "city": "Gijón",
+    "address": "Avenida de la Costa 91",
+    "postal_code": "33205",
+    "latitude": 43.5357,
+    "longitude": -5.6615,
+    "contact_email": "reservas@hotel-costa-verde.test",
+    "contact_phone": "+34 910000006",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 72 horas antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 4,
+    "pets_allowed": true,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "parking",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+        "alt_text": "Hotel Costa Verde en Gijón",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/05/31/17/00/hotel-1427355_960_720.jpg",
+        "alt_text": "Hotel Costa Verde en Gijón",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/09/21/09/53/villa-cortine-palace-949547_1280.jpg",
+        "alt_text": "Hotel Costa Verde en Gijón",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_07_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 0,
+        "size_m2": 24,
+        "bed_type": "Cama doble",
+        "base_price": 88,
+        "currency": "EUR",
+        "total_units": 7,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Costa Verde",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Costa Verde",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_07_superior",
+        "name": "Habitación familiar",
+        "description": "Habitación amplia para familias o grupos pequeños con equipamiento funcional",
+        "capacity_adults": 2,
+        "capacity_children": 2,
+        "size_m2": 36,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 119,
+        "currency": "EUR",
+        "total_units": 4,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "cocina"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Costa Verde",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Costa Verde",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_07_premium",
+        "name": "Habitación superior con balcón",
+        "description": "Habitación confortable con balcón, más espacio interior y detalles pensados para estancias tranquilas",
+        "capacity_adults": 3,
+        "capacity_children": 1,
+        "size_m2": 36,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 154,
+        "currency": "EUR",
+        "total_units": 3,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "familiar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Costa Verde",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Costa Verde",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.2
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_08",
+    "owner_key": "owner_02",
+    "name": "Hotel Bahía Norte",
+    "slug": "hotel-bahia-norte",
+    "description": "Hotel Bahía Norte ofrece una estancia cuidada en Santander, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 3,
+    "country": "España",
+    "region": "Cantabria",
+    "city": "Santander",
+    "address": "Paseo Pereda 24",
+    "postal_code": "39004",
+    "latitude": 43.4629,
+    "longitude": -3.8044,
+    "contact_email": "reservas@hotel-bahia-norte.test",
+    "contact_phone": "+34 910000007",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 72 horas antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 4,
+    "pets_allowed": false,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "restaurante",
+      "recepcion",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/05/31/17/00/hotel-1427355_960_720.jpg",
+        "alt_text": "Hotel Bahía Norte en Santander",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/09/21/09/53/villa-cortine-palace-949547_1280.jpg",
+        "alt_text": "Hotel Bahía Norte en Santander",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/08/26/20/30/hotel-1623064_1280.jpg",
+        "alt_text": "Hotel Bahía Norte en Santander",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_08_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 1,
+        "size_m2": 27,
+        "bed_type": "Cama doble",
+        "base_price": 126,
+        "currency": "EUR",
+        "total_units": 8,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Bahía Norte",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Bahía Norte",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_08_superior",
+        "name": "Habitación familiar",
+        "description": "Habitación amplia para familias o grupos pequeños con equipamiento funcional",
+        "capacity_adults": 2,
+        "capacity_children": 2,
+        "size_m2": 41,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 170,
+        "currency": "EUR",
+        "total_units": 5,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "cocina"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Bahía Norte",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Bahía Norte",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_08_premium",
+        "name": "Habitación superior con balcón",
+        "description": "Habitación confortable con balcón, más espacio interior y detalles pensados para estancias tranquilas",
+        "capacity_adults": 3,
+        "capacity_children": 2,
+        "size_m2": 39,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 221,
+        "currency": "EUR",
+        "total_units": 4,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "familiar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Bahía Norte",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Bahía Norte",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.2
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_09",
+    "owner_key": "owner_02",
+    "name": "Hotel Faro de Llanes",
+    "slug": "hotel-faro-llanes",
+    "description": "Hotel Faro de Llanes ofrece una estancia cuidada en Llanes, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 4,
+    "country": "España",
+    "region": "Asturias",
+    "city": "Llanes",
+    "address": "Calle Marqués de Canillejas 3",
+    "postal_code": "33500",
+    "latitude": 43.4215,
+    "longitude": -4.7546,
+    "contact_email": "reservas@hotel-faro-llanes.test",
+    "contact_phone": "+34 910000008",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 48 horas antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 2,
+    "pets_allowed": false,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "parking",
+      "gimnasio",
+      "restaurante",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/09/21/09/53/villa-cortine-palace-949547_1280.jpg",
+        "alt_text": "Hotel Faro de Llanes en Llanes",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/08/26/20/30/hotel-1623064_1280.jpg",
+        "alt_text": "Hotel Faro de Llanes en Llanes",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2014/07/10/17/17/hotel-389256_1280.jpg",
+        "alt_text": "Hotel Faro de Llanes en Llanes",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_09_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 1,
+        "size_m2": 30,
+        "bed_type": "Cama doble",
+        "base_price": 176,
+        "currency": "EUR",
+        "total_units": 9,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Faro de Llanes",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Faro de Llanes",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_09_superior",
+        "name": "Suite superior",
+        "description": "Suite amplia con zona de estar, detalles premium y vistas destacadas del entorno",
+        "capacity_adults": 3,
+        "capacity_children": 2,
+        "size_m2": 46,
+        "bed_type": "Cama king y sofá cama",
+        "base_price": 290,
+        "currency": "EUR",
+        "total_units": 6,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "balcon",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Suite superior en Hotel Faro de Llanes",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Suite superior en Hotel Faro de Llanes",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_09_premium",
+        "name": "Suite premium con vistas",
+        "description": "Alojamiento de categoría superior con dormitorio amplio, zona de estar, baño completo y vistas destacadas",
+        "capacity_adults": 4,
+        "capacity_children": 2,
+        "size_m2": 64,
+        "bed_type": "Cama king, sofá cama y cama supletoria",
+        "base_price": 378,
+        "currency": "EUR",
+        "total_units": 5,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "vistas_mar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Suite premium con vistas en Hotel Faro de Llanes",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Suite premium con vistas en Hotel Faro de Llanes",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.25
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_10",
+    "owner_key": "owner_02",
+    "name": "Gran Hotel Atlántico",
+    "slug": "gran-hotel-atlantico",
+    "description": "Gran Hotel Atlántico ofrece una estancia cuidada en A Coruña, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 5,
+    "country": "España",
+    "region": "Galicia",
+    "city": "A Coruña",
+    "address": "Avenida Marina 19",
+    "postal_code": "15001",
+    "latitude": 43.3713,
+    "longitude": -8.396,
+    "contact_email": "reservas@gran-hotel-atlantico.test",
+    "contact_phone": "+34 910000009",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 48 horas antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 0,
+    "pets_allowed": true,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "parking",
+      "traslado",
+      "piscina",
+      "spa",
+      "gimnasio",
+      "restaurante",
+      "recepcion",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/08/26/20/30/hotel-1623064_1280.jpg",
+        "alt_text": "Gran Hotel Atlántico en A Coruña",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2014/07/10/17/17/hotel-389256_1280.jpg",
+        "alt_text": "Gran Hotel Atlántico en A Coruña",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/01/10/11/39/hotel-595121_1280.jpg",
+        "alt_text": "Gran Hotel Atlántico en A Coruña",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_10_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 1,
+        "size_m2": 33,
+        "bed_type": "Cama doble",
+        "base_price": 248,
+        "currency": "EUR",
+        "total_units": 10,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Habitación doble confort en Gran Hotel Atlántico",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Habitación doble confort en Gran Hotel Atlántico",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_10_superior",
+        "name": "Suite superior",
+        "description": "Suite amplia con zona de estar, detalles premium y vistas destacadas del entorno",
+        "capacity_adults": 3,
+        "capacity_children": 2,
+        "size_m2": 51,
+        "bed_type": "Cama king y sofá cama",
+        "base_price": 409,
+        "currency": "EUR",
+        "total_units": 7,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "balcon",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Suite superior en Gran Hotel Atlántico",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Suite superior en Gran Hotel Atlántico",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_10_premium",
+        "name": "Suite premium con vistas",
+        "description": "Alojamiento de categoría superior con dormitorio amplio, zona de estar, baño completo y vistas destacadas",
+        "capacity_adults": 4,
+        "capacity_children": 2,
+        "size_m2": 68,
+        "bed_type": "Cama king, sofá cama y cama supletoria",
+        "base_price": 533,
+        "currency": "EUR",
+        "total_units": 6,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "vistas_mar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Suite premium con vistas en Gran Hotel Atlántico",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Suite premium con vistas en Gran Hotel Atlántico",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.25
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_11",
+    "owner_key": "owner_03",
+    "name": "Hostal Barrio de las Letras",
+    "slug": "hostal-barrio-letras",
+    "description": "Hostal Barrio de las Letras ofrece una estancia cuidada en Madrid, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 2,
+    "country": "España",
+    "region": "Comunidad de Madrid",
+    "city": "Madrid",
+    "address": "Calle Huertas 21",
+    "postal_code": "28014",
+    "latitude": 40.4142,
+    "longitude": -3.7003,
+    "contact_email": "reservas@hostal-barrio-letras.test",
+    "contact_phone": "+34 910000010",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 7 días antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 5,
+    "pets_allowed": false,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "recepcion",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2014/07/10/17/17/hotel-389256_1280.jpg",
+        "alt_text": "Hostal Barrio de las Letras en Madrid",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/01/10/11/39/hotel-595121_1280.jpg",
+        "alt_text": "Hostal Barrio de las Letras en Madrid",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2017/05/31/10/23/manor-house-2359884_1280.jpg",
+        "alt_text": "Hostal Barrio de las Letras en Madrid",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_11_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 0,
+        "size_m2": 21,
+        "bed_type": "Cama doble",
+        "base_price": 66,
+        "currency": "EUR",
+        "total_units": 6,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Habitación doble confort en Hostal Barrio de las Letras",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Habitación doble confort en Hostal Barrio de las Letras",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_11_superior",
+        "name": "Habitación familiar",
+        "description": "Habitación amplia para familias o grupos pequeños con equipamiento funcional",
+        "capacity_adults": 2,
+        "capacity_children": 2,
+        "size_m2": 31,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 89,
+        "currency": "EUR",
+        "total_units": 3,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "cocina"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Habitación familiar en Hostal Barrio de las Letras",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Habitación familiar en Hostal Barrio de las Letras",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_11_premium",
+        "name": "Habitación superior con balcón",
+        "description": "Habitación confortable con balcón, más espacio interior y detalles pensados para estancias tranquilas",
+        "capacity_adults": 3,
+        "capacity_children": 1,
+        "size_m2": 33,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 116,
+        "currency": "EUR",
+        "total_units": 2,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "familiar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hostal Barrio de las Letras",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hostal Barrio de las Letras",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.2
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_12",
+    "owner_key": "owner_03",
+    "name": "Hotel Plaza del Carmen",
+    "slug": "hotel-plaza-carmen",
+    "description": "Hotel Plaza del Carmen ofrece una estancia cuidada en Madrid, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 3,
+    "country": "España",
+    "region": "Comunidad de Madrid",
+    "city": "Madrid",
+    "address": "Plaza del Carmen 4",
+    "postal_code": "28013",
+    "latitude": 40.4194,
+    "longitude": -3.7044,
+    "contact_email": "reservas@hotel-plaza-carmen.test",
+    "contact_phone": "+34 910000011",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 72 horas antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 4,
+    "pets_allowed": false,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "parking",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/01/10/11/39/hotel-595121_1280.jpg",
+        "alt_text": "Hotel Plaza del Carmen en Madrid",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2017/05/31/10/23/manor-house-2359884_1280.jpg",
+        "alt_text": "Hotel Plaza del Carmen en Madrid",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+        "alt_text": "Hotel Plaza del Carmen en Madrid",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_12_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 0,
+        "size_m2": 24,
+        "bed_type": "Cama doble",
+        "base_price": 96,
+        "currency": "EUR",
+        "total_units": 7,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Plaza del Carmen",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Plaza del Carmen",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_12_superior",
+        "name": "Habitación familiar",
+        "description": "Habitación amplia para familias o grupos pequeños con equipamiento funcional",
+        "capacity_adults": 2,
+        "capacity_children": 2,
+        "size_m2": 36,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 130,
+        "currency": "EUR",
+        "total_units": 4,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "cocina"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Plaza del Carmen",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Plaza del Carmen",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_12_premium",
+        "name": "Habitación superior con balcón",
+        "description": "Habitación confortable con balcón, más espacio interior y detalles pensados para estancias tranquilas",
+        "capacity_adults": 3,
+        "capacity_children": 1,
+        "size_m2": 36,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 168,
+        "currency": "EUR",
+        "total_units": 3,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "familiar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Plaza del Carmen",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Plaza del Carmen",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.2
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_13",
+    "owner_key": "owner_03",
+    "name": "Hotel Retiro Norte",
+    "slug": "hotel-retiro-norte",
+    "description": "Hotel Retiro Norte ofrece una estancia cuidada en Madrid, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 4,
+    "country": "España",
+    "region": "Comunidad de Madrid",
+    "city": "Madrid",
+    "address": "Calle O'Donnell 38",
+    "postal_code": "28009",
+    "latitude": 40.4219,
+    "longitude": -3.6754,
+    "contact_email": "reservas@hotel-retiro-norte.test",
+    "contact_phone": "+34 910000012",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 48 horas antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 2,
+    "pets_allowed": true,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "restaurante",
+      "recepcion",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2017/05/31/10/23/manor-house-2359884_1280.jpg",
+        "alt_text": "Hotel Retiro Norte en Madrid",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+        "alt_text": "Hotel Retiro Norte en Madrid",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/05/31/17/00/hotel-1427355_960_720.jpg",
+        "alt_text": "Hotel Retiro Norte en Madrid",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_13_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 1,
+        "size_m2": 27,
+        "bed_type": "Cama doble",
+        "base_price": 138,
+        "currency": "EUR",
+        "total_units": 8,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Retiro Norte",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Retiro Norte",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_13_superior",
+        "name": "Habitación familiar",
+        "description": "Habitación amplia para familias o grupos pequeños con equipamiento funcional",
+        "capacity_adults": 2,
+        "capacity_children": 2,
+        "size_m2": 41,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 186,
+        "currency": "EUR",
+        "total_units": 5,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "cocina"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Retiro Norte",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Retiro Norte",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_13_premium",
+        "name": "Habitación superior con balcón",
+        "description": "Habitación confortable con balcón, más espacio interior y detalles pensados para estancias tranquilas",
+        "capacity_adults": 3,
+        "capacity_children": 2,
+        "size_m2": 39,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 242,
+        "currency": "EUR",
+        "total_units": 4,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "familiar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Retiro Norte",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Retiro Norte",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.2
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_14",
+    "owner_key": "owner_03",
+    "name": "Hotel Castellana Executive",
+    "slug": "hotel-castellana-executive",
+    "description": "Hotel Castellana Executive ofrece una estancia cuidada en Madrid, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 4,
+    "country": "España",
+    "region": "Comunidad de Madrid",
+    "city": "Madrid",
+    "address": "Paseo de la Castellana 144",
+    "postal_code": "28046",
+    "latitude": 40.4589,
+    "longitude": -3.6899,
+    "contact_email": "reservas@hotel-castellana-executive.test",
+    "contact_phone": "+34 910000013",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 48 horas antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 2,
+    "pets_allowed": false,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "parking",
+      "gimnasio",
+      "restaurante",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+        "alt_text": "Hotel Castellana Executive en Madrid",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/05/31/17/00/hotel-1427355_960_720.jpg",
+        "alt_text": "Hotel Castellana Executive en Madrid",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/09/21/09/53/villa-cortine-palace-949547_1280.jpg",
+        "alt_text": "Hotel Castellana Executive en Madrid",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_14_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 1,
+        "size_m2": 30,
+        "bed_type": "Cama doble",
+        "base_price": 190,
+        "currency": "EUR",
+        "total_units": 9,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Castellana Executive",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Castellana Executive",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_14_superior",
+        "name": "Suite superior",
+        "description": "Suite amplia con zona de estar, detalles premium y vistas destacadas del entorno",
+        "capacity_adults": 3,
+        "capacity_children": 2,
+        "size_m2": 46,
+        "bed_type": "Cama king y sofá cama",
+        "base_price": 314,
+        "currency": "EUR",
+        "total_units": 6,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "balcon",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594_1280.jpg",
+            "alt_text": "Suite superior en Hotel Castellana Executive",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Suite superior en Hotel Castellana Executive",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_14_premium",
+        "name": "Suite premium con vistas",
+        "description": "Alojamiento de categoría superior con dormitorio amplio, zona de estar, baño completo y vistas destacadas",
+        "capacity_adults": 4,
+        "capacity_children": 2,
+        "size_m2": 64,
+        "bed_type": "Cama king, sofá cama y cama supletoria",
+        "base_price": 409,
+        "currency": "EUR",
+        "total_units": 5,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "vistas_mar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Suite premium con vistas en Hotel Castellana Executive",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Suite premium con vistas en Hotel Castellana Executive",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.25
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_15",
+    "owner_key": "owner_03",
+    "name": "Palacio Real Suites",
+    "slug": "palacio-real-suites",
+    "description": "Palacio Real Suites ofrece una estancia cuidada en Madrid, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 5,
+    "country": "España",
+    "region": "Comunidad de Madrid",
+    "city": "Madrid",
+    "address": "Calle Bailén 16",
+    "postal_code": "28013",
+    "latitude": 40.4179,
+    "longitude": -3.7135,
+    "contact_email": "reservas@palacio-real-suites.test",
+    "contact_phone": "+34 910000014",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 48 horas antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 0,
+    "pets_allowed": false,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "parking",
+      "traslado",
+      "piscina",
+      "spa",
+      "gimnasio",
+      "restaurante",
+      "recepcion",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/05/31/17/00/hotel-1427355_960_720.jpg",
+        "alt_text": "Palacio Real Suites en Madrid",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/09/21/09/53/villa-cortine-palace-949547_1280.jpg",
+        "alt_text": "Palacio Real Suites en Madrid",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/08/26/20/30/hotel-1623064_1280.jpg",
+        "alt_text": "Palacio Real Suites en Madrid",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_15_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 1,
+        "size_m2": 33,
+        "bed_type": "Cama doble",
+        "base_price": 275,
+        "currency": "EUR",
+        "total_units": 10,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594_1280.jpg",
+            "alt_text": "Habitación doble confort en Palacio Real Suites",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Habitación doble confort en Palacio Real Suites",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_15_superior",
+        "name": "Suite superior",
+        "description": "Suite amplia con zona de estar, detalles premium y vistas destacadas del entorno",
+        "capacity_adults": 3,
+        "capacity_children": 2,
+        "size_m2": 51,
+        "bed_type": "Cama king y sofá cama",
+        "base_price": 454,
+        "currency": "EUR",
+        "total_units": 7,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "balcon",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Suite superior en Palacio Real Suites",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Suite superior en Palacio Real Suites",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_15_premium",
+        "name": "Suite premium con vistas",
+        "description": "Alojamiento de categoría superior con dormitorio amplio, zona de estar, baño completo y vistas destacadas",
+        "capacity_adults": 4,
+        "capacity_children": 2,
+        "size_m2": 68,
+        "bed_type": "Cama king, sofá cama y cama supletoria",
+        "base_price": 591,
+        "currency": "EUR",
+        "total_units": 6,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "vistas_mar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Suite premium con vistas en Palacio Real Suites",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Suite premium con vistas en Palacio Real Suites",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.25
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_16",
+    "owner_key": "owner_04",
+    "name": "Hostal Alameda del Sur",
+    "slug": "hostal-alameda-sur",
+    "description": "Hostal Alameda del Sur ofrece una estancia cuidada en Sevilla, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 1,
+    "country": "España",
+    "region": "Andalucía",
+    "city": "Sevilla",
+    "address": "Calle Feria 88",
+    "postal_code": "41002",
+    "latitude": 37.3973,
+    "longitude": -5.9911,
+    "contact_email": "reservas@hostal-alameda-sur.test",
+    "contact_phone": "+34 910000015",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 7 días antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 5,
+    "pets_allowed": true,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "recepcion",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/09/21/09/53/villa-cortine-palace-949547_1280.jpg",
+        "alt_text": "Hostal Alameda del Sur en Sevilla",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/08/26/20/30/hotel-1623064_1280.jpg",
+        "alt_text": "Hostal Alameda del Sur en Sevilla",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2014/07/10/17/17/hotel-389256_1280.jpg",
+        "alt_text": "Hostal Alameda del Sur en Sevilla",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_16_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 0,
+        "size_m2": 21,
+        "bed_type": "Cama doble",
+        "base_price": 54,
+        "currency": "EUR",
+        "total_units": 6,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Habitación doble confort en Hostal Alameda del Sur",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Habitación doble confort en Hostal Alameda del Sur",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_16_superior",
+        "name": "Habitación familiar",
+        "description": "Habitación amplia para familias o grupos pequeños con equipamiento funcional",
+        "capacity_adults": 2,
+        "capacity_children": 2,
+        "size_m2": 31,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 73,
+        "currency": "EUR",
+        "total_units": 3,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "cocina"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Habitación familiar en Hostal Alameda del Sur",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Habitación familiar en Hostal Alameda del Sur",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_16_premium",
+        "name": "Habitación superior con balcón",
+        "description": "Habitación confortable con balcón, más espacio interior y detalles pensados para estancias tranquilas",
+        "capacity_adults": 3,
+        "capacity_children": 1,
+        "size_m2": 33,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 95,
+        "currency": "EUR",
+        "total_units": 2,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "familiar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hostal Alameda del Sur",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hostal Alameda del Sur",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.2
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_17",
+    "owner_key": "owner_04",
+    "name": "Hotel Patio de Córdoba",
+    "slug": "hotel-patio-cordoba",
+    "description": "Hotel Patio de Córdoba ofrece una estancia cuidada en Córdoba, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 2,
+    "country": "España",
+    "region": "Andalucía",
+    "city": "Córdoba",
+    "address": "Calle Judíos 9",
+    "postal_code": "14004",
+    "latitude": 37.879,
+    "longitude": -4.7794,
+    "contact_email": "reservas@hotel-patio-cordoba.test",
+    "contact_phone": "+34 910000016",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 7 días antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 5,
+    "pets_allowed": false,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "parking",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/08/26/20/30/hotel-1623064_1280.jpg",
+        "alt_text": "Hotel Patio de Córdoba en Córdoba",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2014/07/10/17/17/hotel-389256_1280.jpg",
+        "alt_text": "Hotel Patio de Córdoba en Córdoba",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/01/10/11/39/hotel-595121_1280.jpg",
+        "alt_text": "Hotel Patio de Córdoba en Córdoba",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_17_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 0,
+        "size_m2": 24,
+        "bed_type": "Cama doble",
+        "base_price": 84,
+        "currency": "EUR",
+        "total_units": 7,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Patio de Córdoba",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Patio de Córdoba",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_17_superior",
+        "name": "Habitación familiar",
+        "description": "Habitación amplia para familias o grupos pequeños con equipamiento funcional",
+        "capacity_adults": 2,
+        "capacity_children": 2,
+        "size_m2": 36,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 113,
+        "currency": "EUR",
+        "total_units": 4,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "cocina"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Patio de Córdoba",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Patio de Córdoba",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_17_premium",
+        "name": "Habitación superior con balcón",
+        "description": "Habitación confortable con balcón, más espacio interior y detalles pensados para estancias tranquilas",
+        "capacity_adults": 3,
+        "capacity_children": 1,
+        "size_m2": 36,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 147,
+        "currency": "EUR",
+        "total_units": 3,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "familiar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Patio de Córdoba",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Patio de Córdoba",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.2
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_18",
+    "owner_key": "owner_04",
+    "name": "Hotel Albayzín",
+    "slug": "hotel-albayzin",
+    "description": "Hotel Albayzín ofrece una estancia cuidada en Granada, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 3,
+    "country": "España",
+    "region": "Andalucía",
+    "city": "Granada",
+    "address": "Carrera del Darro 31",
+    "postal_code": "18010",
+    "latitude": 37.1786,
+    "longitude": -3.592,
+    "contact_email": "reservas@hotel-albayzin.test",
+    "contact_phone": "+34 910000017",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 72 horas antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 4,
+    "pets_allowed": false,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "restaurante",
+      "recepcion",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2014/07/10/17/17/hotel-389256_1280.jpg",
+        "alt_text": "Hotel Albayzín en Granada",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/01/10/11/39/hotel-595121_1280.jpg",
+        "alt_text": "Hotel Albayzín en Granada",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2017/05/31/10/23/manor-house-2359884_1280.jpg",
+        "alt_text": "Hotel Albayzín en Granada",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_18_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 1,
+        "size_m2": 27,
+        "bed_type": "Cama doble",
+        "base_price": 122,
+        "currency": "EUR",
+        "total_units": 8,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Albayzín",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Albayzín",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_18_superior",
+        "name": "Habitación familiar",
+        "description": "Habitación amplia para familias o grupos pequeños con equipamiento funcional",
+        "capacity_adults": 2,
+        "capacity_children": 2,
+        "size_m2": 41,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 165,
+        "currency": "EUR",
+        "total_units": 5,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "cocina"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Albayzín",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Albayzín",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_18_premium",
+        "name": "Habitación superior con balcón",
+        "description": "Habitación confortable con balcón, más espacio interior y detalles pensados para estancias tranquilas",
+        "capacity_adults": 3,
+        "capacity_children": 2,
+        "size_m2": 39,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 214,
+        "currency": "EUR",
+        "total_units": 4,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "familiar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Albayzín",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Albayzín",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.2
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_19",
+    "owner_key": "owner_04",
+    "name": "Hotel Catedral de Málaga",
+    "slug": "hotel-catedral-malaga",
+    "description": "Hotel Catedral de Málaga ofrece una estancia cuidada en Málaga, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 4,
+    "country": "España",
+    "region": "Andalucía",
+    "city": "Málaga",
+    "address": "Calle Molina Lario 11",
+    "postal_code": "29015",
+    "latitude": 36.7201,
+    "longitude": -4.4203,
+    "contact_email": "reservas@hotel-catedral-malaga.test",
+    "contact_phone": "+34 910000018",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 48 horas antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 2,
+    "pets_allowed": true,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "parking",
+      "gimnasio",
+      "restaurante",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/01/10/11/39/hotel-595121_1280.jpg",
+        "alt_text": "Hotel Catedral de Málaga en Málaga",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2017/05/31/10/23/manor-house-2359884_1280.jpg",
+        "alt_text": "Hotel Catedral de Málaga en Málaga",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+        "alt_text": "Hotel Catedral de Málaga en Málaga",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_19_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 1,
+        "size_m2": 30,
+        "bed_type": "Cama doble",
+        "base_price": 172,
+        "currency": "EUR",
+        "total_units": 9,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Catedral de Málaga",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Catedral de Málaga",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_19_superior",
+        "name": "Suite superior",
+        "description": "Suite amplia con zona de estar, detalles premium y vistas destacadas del entorno",
+        "capacity_adults": 3,
+        "capacity_children": 2,
+        "size_m2": 46,
+        "bed_type": "Cama king y sofá cama",
+        "base_price": 284,
+        "currency": "EUR",
+        "total_units": 6,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "balcon",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Suite superior en Hotel Catedral de Málaga",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+            "alt_text": "Suite superior en Hotel Catedral de Málaga",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_19_premium",
+        "name": "Suite premium con vistas",
+        "description": "Alojamiento de categoría superior con dormitorio amplio, zona de estar, baño completo y vistas destacadas",
+        "capacity_adults": 4,
+        "capacity_children": 2,
+        "size_m2": 64,
+        "bed_type": "Cama king, sofá cama y cama supletoria",
+        "base_price": 370,
+        "currency": "EUR",
+        "total_units": 5,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "vistas_mar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+            "alt_text": "Suite premium con vistas en Hotel Catedral de Málaga",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594_1280.jpg",
+            "alt_text": "Suite premium con vistas en Hotel Catedral de Málaga",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.25
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_20",
+    "owner_key": "owner_04",
+    "name": "Gran Hotel Costa del Sol",
+    "slug": "gran-hotel-costa-sol",
+    "description": "Gran Hotel Costa del Sol ofrece una estancia cuidada en Marbella, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 5,
+    "country": "España",
+    "region": "Andalucía",
+    "city": "Marbella",
+    "address": "Bulevar Príncipe Alfonso 8",
+    "postal_code": "29602",
+    "latitude": 36.5101,
+    "longitude": -4.8824,
+    "contact_email": "reservas@gran-hotel-costa-sol.test",
+    "contact_phone": "+34 910000019",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 48 horas antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 0,
+    "pets_allowed": false,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "parking",
+      "traslado",
+      "piscina",
+      "spa",
+      "gimnasio",
+      "restaurante",
+      "recepcion",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2017/05/31/10/23/manor-house-2359884_1280.jpg",
+        "alt_text": "Gran Hotel Costa del Sol en Marbella",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+        "alt_text": "Gran Hotel Costa del Sol en Marbella",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/05/31/17/00/hotel-1427355_960_720.jpg",
+        "alt_text": "Gran Hotel Costa del Sol en Marbella",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_20_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 1,
+        "size_m2": 33,
+        "bed_type": "Cama doble",
+        "base_price": 260,
+        "currency": "EUR",
+        "total_units": 10,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Habitación doble confort en Gran Hotel Costa del Sol",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+            "alt_text": "Habitación doble confort en Gran Hotel Costa del Sol",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_20_superior",
+        "name": "Suite superior",
+        "description": "Suite amplia con zona de estar, detalles premium y vistas destacadas del entorno",
+        "capacity_adults": 3,
+        "capacity_children": 2,
+        "size_m2": 51,
+        "bed_type": "Cama king y sofá cama",
+        "base_price": 429,
+        "currency": "EUR",
+        "total_units": 7,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "balcon",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+            "alt_text": "Suite superior en Gran Hotel Costa del Sol",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594_1280.jpg",
+            "alt_text": "Suite superior en Gran Hotel Costa del Sol",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_20_premium",
+        "name": "Suite premium con vistas",
+        "description": "Alojamiento de categoría superior con dormitorio amplio, zona de estar, baño completo y vistas destacadas",
+        "capacity_adults": 4,
+        "capacity_children": 2,
+        "size_m2": 68,
+        "bed_type": "Cama king, sofá cama y cama supletoria",
+        "base_price": 559,
+        "currency": "EUR",
+        "total_units": 6,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "vistas_mar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594_1280.jpg",
+            "alt_text": "Suite premium con vistas en Gran Hotel Costa del Sol",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Suite premium con vistas en Gran Hotel Costa del Sol",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.25
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_21",
+    "owner_key": "owner_05",
+    "name": "Hostal Brisa Mediterránea",
+    "slug": "hostal-brisa-mediterranea",
+    "description": "Hostal Brisa Mediterránea ofrece una estancia cuidada en Valencia, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 2,
+    "country": "España",
+    "region": "Comunitat Valenciana",
+    "city": "Valencia",
+    "address": "Calle de la Paz 14",
+    "postal_code": "46003",
+    "latitude": 39.4742,
+    "longitude": -0.3731,
+    "contact_email": "reservas@hostal-brisa-mediterranea.test",
+    "contact_phone": "+34 910000020",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 7 días antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 5,
+    "pets_allowed": false,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "recepcion",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+        "alt_text": "Hostal Brisa Mediterránea en Valencia",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/05/31/17/00/hotel-1427355_960_720.jpg",
+        "alt_text": "Hostal Brisa Mediterránea en Valencia",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/09/21/09/53/villa-cortine-palace-949547_1280.jpg",
+        "alt_text": "Hostal Brisa Mediterránea en Valencia",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_21_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 0,
+        "size_m2": 21,
+        "bed_type": "Cama doble",
+        "base_price": 59,
+        "currency": "EUR",
+        "total_units": 6,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+            "alt_text": "Habitación doble confort en Hostal Brisa Mediterránea",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594_1280.jpg",
+            "alt_text": "Habitación doble confort en Hostal Brisa Mediterránea",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_21_superior",
+        "name": "Habitación familiar",
+        "description": "Habitación amplia para familias o grupos pequeños con equipamiento funcional",
+        "capacity_adults": 2,
+        "capacity_children": 2,
+        "size_m2": 31,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 80,
+        "currency": "EUR",
+        "total_units": 3,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "cocina"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594_1280.jpg",
+            "alt_text": "Habitación familiar en Hostal Brisa Mediterránea",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Habitación familiar en Hostal Brisa Mediterránea",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_21_premium",
+        "name": "Habitación superior con balcón",
+        "description": "Habitación confortable con balcón, más espacio interior y detalles pensados para estancias tranquilas",
+        "capacity_adults": 3,
+        "capacity_children": 1,
+        "size_m2": 33,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 103,
+        "currency": "EUR",
+        "total_units": 2,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "familiar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hostal Brisa Mediterránea",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hostal Brisa Mediterránea",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.2
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_22",
+    "owner_key": "owner_05",
+    "name": "Hotel Playa de la Malvarrosa",
+    "slug": "hotel-playa-malvarrosa",
+    "description": "Hotel Playa de la Malvarrosa ofrece una estancia cuidada en Valencia, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 3,
+    "country": "España",
+    "region": "Comunitat Valenciana",
+    "city": "Valencia",
+    "address": "Paseo Marítimo 31",
+    "postal_code": "46011",
+    "latitude": 39.4763,
+    "longitude": -0.3248,
+    "contact_email": "reservas@hotel-playa-malvarrosa.test",
+    "contact_phone": "+34 910000021",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 72 horas antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 4,
+    "pets_allowed": true,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "parking",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/05/31/17/00/hotel-1427355_960_720.jpg",
+        "alt_text": "Hotel Playa de la Malvarrosa en Valencia",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/09/21/09/53/villa-cortine-palace-949547_1280.jpg",
+        "alt_text": "Hotel Playa de la Malvarrosa en Valencia",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/08/26/20/30/hotel-1623064_1280.jpg",
+        "alt_text": "Hotel Playa de la Malvarrosa en Valencia",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_22_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 0,
+        "size_m2": 24,
+        "bed_type": "Cama doble",
+        "base_price": 92,
+        "currency": "EUR",
+        "total_units": 7,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/04/28/22/16/room-2269594_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Playa de la Malvarrosa",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Playa de la Malvarrosa",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_22_superior",
+        "name": "Habitación familiar",
+        "description": "Habitación amplia para familias o grupos pequeños con equipamiento funcional",
+        "capacity_adults": 2,
+        "capacity_children": 2,
+        "size_m2": 36,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 124,
+        "currency": "EUR",
+        "total_units": 4,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "cocina"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Playa de la Malvarrosa",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Playa de la Malvarrosa",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_22_premium",
+        "name": "Habitación superior con balcón",
+        "description": "Habitación confortable con balcón, más espacio interior y detalles pensados para estancias tranquilas",
+        "capacity_adults": 3,
+        "capacity_children": 1,
+        "size_m2": 36,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 161,
+        "currency": "EUR",
+        "total_units": 3,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "familiar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Playa de la Malvarrosa",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Playa de la Malvarrosa",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.2
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_23",
+    "owner_key": "owner_05",
+    "name": "Hotel Dársena Azul",
+    "slug": "hotel-darsena-azul",
+    "description": "Hotel Dársena Azul ofrece una estancia cuidada en Alicante, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 3,
+    "country": "España",
+    "region": "Comunitat Valenciana",
+    "city": "Alicante",
+    "address": "Avenida del Puerto 6",
+    "postal_code": "03001",
+    "latitude": 38.3445,
+    "longitude": -0.4837,
+    "contact_email": "reservas@hotel-darsena-azul.test",
+    "contact_phone": "+34 910000022",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 72 horas antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 4,
+    "pets_allowed": false,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "restaurante",
+      "recepcion",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/09/21/09/53/villa-cortine-palace-949547_1280.jpg",
+        "alt_text": "Hotel Dársena Azul en Alicante",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/08/26/20/30/hotel-1623064_1280.jpg",
+        "alt_text": "Hotel Dársena Azul en Alicante",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2014/07/10/17/17/hotel-389256_1280.jpg",
+        "alt_text": "Hotel Dársena Azul en Alicante",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_23_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 1,
+        "size_m2": 27,
+        "bed_type": "Cama doble",
+        "base_price": 132,
+        "currency": "EUR",
+        "total_units": 8,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Dársena Azul",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Dársena Azul",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_23_superior",
+        "name": "Habitación familiar",
+        "description": "Habitación amplia para familias o grupos pequeños con equipamiento funcional",
+        "capacity_adults": 2,
+        "capacity_children": 2,
+        "size_m2": 41,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 178,
+        "currency": "EUR",
+        "total_units": 5,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "cocina"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Dársena Azul",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Habitación familiar en Hotel Dársena Azul",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_23_premium",
+        "name": "Habitación superior con balcón",
+        "description": "Habitación confortable con balcón, más espacio interior y detalles pensados para estancias tranquilas",
+        "capacity_adults": 3,
+        "capacity_children": 2,
+        "size_m2": 39,
+        "bed_type": "Cama doble y sofá cama",
+        "base_price": 231,
+        "currency": "EUR",
+        "total_units": 4,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "familiar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Dársena Azul",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Habitación superior con balcón en Hotel Dársena Azul",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.2
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_24",
+    "owner_key": "owner_05",
+    "name": "Hotel Jardín de las Artes",
+    "slug": "hotel-jardin-artes",
+    "description": "Hotel Jardín de las Artes ofrece una estancia cuidada en Valencia, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 4,
+    "country": "España",
+    "region": "Comunitat Valenciana",
+    "city": "Valencia",
+    "address": "Avenida Instituto Obrero 20",
+    "postal_code": "46013",
+    "latitude": 39.4548,
+    "longitude": -0.3525,
+    "contact_email": "reservas@hotel-jardin-artes.test",
+    "contact_phone": "+34 910000023",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 48 horas antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 2,
+    "pets_allowed": false,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "parking",
+      "gimnasio",
+      "restaurante",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/08/26/20/30/hotel-1623064_1280.jpg",
+        "alt_text": "Hotel Jardín de las Artes en Valencia",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2014/07/10/17/17/hotel-389256_1280.jpg",
+        "alt_text": "Hotel Jardín de las Artes en Valencia",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/01/10/11/39/hotel-595121_1280.jpg",
+        "alt_text": "Hotel Jardín de las Artes en Valencia",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_24_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 1,
+        "size_m2": 30,
+        "bed_type": "Cama doble",
+        "base_price": 184,
+        "currency": "EUR",
+        "total_units": 9,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2015/11/06/11/45/interior-1026452_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Jardín de las Artes",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Habitación doble confort en Hotel Jardín de las Artes",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_24_superior",
+        "name": "Suite superior",
+        "description": "Suite amplia con zona de estar, detalles premium y vistas destacadas del entorno",
+        "capacity_adults": 3,
+        "capacity_children": 2,
+        "size_m2": 46,
+        "bed_type": "Cama king y sofá cama",
+        "base_price": 304,
+        "currency": "EUR",
+        "total_units": 6,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "balcon",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Suite superior en Hotel Jardín de las Artes",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Suite superior en Hotel Jardín de las Artes",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_24_premium",
+        "name": "Suite premium con vistas",
+        "description": "Alojamiento de categoría superior con dormitorio amplio, zona de estar, baño completo y vistas destacadas",
+        "capacity_adults": 4,
+        "capacity_children": 2,
+        "size_m2": 64,
+        "bed_type": "Cama king, sofá cama y cama supletoria",
+        "base_price": 396,
+        "currency": "EUR",
+        "total_units": 5,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "vistas_mar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Suite premium con vistas en Hotel Jardín de las Artes",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Suite premium con vistas en Hotel Jardín de las Artes",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.25
+        }
+      }
+    ]
+  },
+  {
+    "key": "hotel_25",
+    "owner_key": "owner_05",
+    "name": "Gran Hotel Mediterráneo",
+    "slug": "gran-hotel-mediterraneo",
+    "description": "Gran Hotel Mediterráneo ofrece una estancia cuidada en Palma, con habitaciones cómodas, atención cercana y una ubicación práctica para descubrir la ciudad y sus alrededores",
+    "stars": 5,
+    "country": "España",
+    "region": "Illes Balears",
+    "city": "Palma",
+    "address": "Paseo Marítimo 27",
+    "postal_code": "07014",
+    "latitude": 39.568,
+    "longitude": 2.6326,
+    "contact_email": "reservas@gran-hotel-mediterraneo.test",
+    "contact_phone": "+34 910000024",
+    "check_in_time": "15:00:00",
+    "check_out_time": "11:00:00",
+    "cancellation_policy": "Cancelación gratuita hasta 48 horas antes de la llegada",
+    "tax_rate_percent": 10,
+    "discount_rate_percent": 0,
+    "pets_allowed": true,
+    "smoking_allowed": false,
+    "status": "published",
+    "services": [
+      "wifi",
+      "desayuno",
+      "parking",
+      "traslado",
+      "piscina",
+      "spa",
+      "gimnasio",
+      "restaurante",
+      "recepcion",
+      "climatizacion"
+    ],
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2014/07/10/17/17/hotel-389256_1280.jpg",
+        "alt_text": "Gran Hotel Mediterráneo en Palma",
+        "is_cover": true,
+        "sort_order": 0
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2015/01/10/11/39/hotel-595121_1280.jpg",
+        "alt_text": "Gran Hotel Mediterráneo en Palma",
+        "is_cover": false,
+        "sort_order": 1
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2017/05/31/10/23/manor-house-2359884_1280.jpg",
+        "alt_text": "Gran Hotel Mediterráneo en Palma",
+        "is_cover": false,
+        "sort_order": 2
+      }
+    ],
+    "room_types": [
+      {
+        "key": "hotel_25_doble",
+        "name": "Habitación doble confort",
+        "description": "Habitación luminosa con cama doble, baño privado y una distribución pensada para estancias de ocio o trabajo",
+        "capacity_adults": 2,
+        "capacity_children": 1,
+        "size_m2": 33,
+        "bed_type": "Cama doble",
+        "base_price": 285,
+        "currency": "EUR",
+        "total_units": 10,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/29/03/53/house-1867187_1280.jpg",
+            "alt_text": "Habitación doble confort en Gran Hotel Mediterráneo",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Habitación doble confort en Gran Hotel Mediterráneo",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.18
+        }
+      },
+      {
+        "key": "hotel_25_superior",
+        "name": "Suite superior",
+        "description": "Suite amplia con zona de estar, detalles premium y vistas destacadas del entorno",
+        "capacity_adults": 3,
+        "capacity_children": 2,
+        "size_m2": 51,
+        "bed_type": "Cama king y sofá cama",
+        "base_price": 470,
+        "currency": "EUR",
+        "total_units": 7,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "familiar",
+          "balcon",
+          "escritorio"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_1280.jpg",
+            "alt_text": "Suite superior en Gran Hotel Mediterráneo",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Suite superior en Gran Hotel Mediterráneo",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.22
+        }
+      },
+      {
+        "key": "hotel_25_premium",
+        "name": "Suite premium con vistas",
+        "description": "Alojamiento de categoría superior con dormitorio amplio, zona de estar, baño completo y vistas destacadas",
+        "capacity_adults": 4,
+        "capacity_children": 2,
+        "size_m2": 68,
+        "bed_type": "Cama king, sofá cama y cama supletoria",
+        "base_price": 613,
+        "currency": "EUR",
+        "total_units": 6,
+        "status": "active",
+        "services": [
+          "wifi",
+          "climatizacion",
+          "bano_privado",
+          "balcon",
+          "escritorio",
+          "vistas_mar"
+        ],
+        "images": [
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/19/15/50/chair-1840011_1280.jpg",
+            "alt_text": "Suite premium con vistas en Gran Hotel Mediterráneo",
+            "is_cover": true,
+            "sort_order": 0
+          },
+          {
+            "url": "https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg",
+            "alt_text": "Suite premium con vistas en Gran Hotel Mediterráneo",
+            "is_cover": false,
+            "sort_order": 1
+          }
+        ],
+        "availability": {
+          "start": "2026-05-23",
+          "days": 120,
+          "weekend_multiplier": 1.25
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,265 @@
+{
+  "bookings": [
+    {
+      "key": "booking_01",
+      "reference": "DR-2026-0001",
+      "user_key": "customer_01",
+      "room_type_key": "hotel_05_superior",
+      "check_in": "2026-06-12",
+      "check_out": "2026-06-15",
+      "adults_count": 2,
+      "children_count": 1,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-01 10:15:00",
+      "confirmed_at": "2026-05-01 10:20:00",
+      "notes": "Cuna disponible si es posible",
+      "guests": [
+        {
+          "full_name": "Laura García Molina",
+          "document_type": "DNI",
+          "document_number": "12345678A",
+          "birth_date": "1988-04-12",
+          "is_primary": true
+        },
+        {
+          "full_name": "Sergio Pérez León",
+          "document_type": "DNI",
+          "document_number": "23456789B",
+          "birth_date": "1987-09-21",
+          "is_primary": false
+        },
+        {
+          "full_name": "Mateo Pérez García",
+          "birth_date": "2021-03-03",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "stripe",
+          "amount": 938.85,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "pi_demo_0001",
+          "paid_at": "2026-05-01 10:22:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 5,
+        "comment": "El hotel está muy bien situado y la habitación era amplia y silenciosa",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_02",
+      "reference": "DR-2026-0002",
+      "user_key": "customer_02",
+      "room_type_key": "hotel_10_doble",
+      "check_in": "2026-07-04",
+      "check_out": "2026-07-07",
+      "adults_count": 2,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "confirmed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-03 18:40:00",
+      "confirmed_at": "2026-05-03 18:44:00",
+      "notes": "Preferencia por habitación en planta alta",
+      "guests": [
+        {
+          "full_name": "Miguel Torres Blanco",
+          "document_type": "DNI",
+          "document_number": "34567890C",
+          "birth_date": "1991-11-08",
+          "is_primary": true
+        },
+        {
+          "full_name": "Patricia Alonso Vega",
+          "document_type": "DNI",
+          "document_number": "45678901D",
+          "birth_date": "1992-02-17",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "paypal",
+          "amount": 818.4,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "PAY-DEMO-0002",
+          "paid_at": "2026-05-03 18:45:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ]
+    },
+    {
+      "key": "booking_03",
+      "reference": "DR-2026-0003",
+      "user_key": "customer_03",
+      "room_type_key": "hotel_18_superior",
+      "check_in": "2026-06-20",
+      "check_out": "2026-06-23",
+      "adults_count": 2,
+      "children_count": 2,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-04-28 09:05:00",
+      "confirmed_at": "2026-04-28 09:10:00",
+      "guests": [
+        {
+          "full_name": "Carmen Ruiz Ortega",
+          "document_type": "DNI",
+          "document_number": "56789012E",
+          "birth_date": "1984-06-30",
+          "is_primary": true
+        },
+        {
+          "full_name": "Daniel Núñez Mora",
+          "document_type": "DNI",
+          "document_number": "67890123F",
+          "birth_date": "1983-01-15",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "stripe",
+          "amount": 523.12,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "pi_demo_0003",
+          "paid_at": "2026-04-28 09:12:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 4,
+        "comment": "Muy buena ubicación y personal atento, el desayuno fue variado",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_04",
+      "reference": "DR-2026-0004",
+      "user_key": "customer_04",
+      "room_type_key": "hotel_14_doble",
+      "check_in": "2026-08-01",
+      "check_out": "2026-08-04",
+      "adults_count": 1,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "pending",
+      "payment_status": "pending",
+      "booked_at": "2026-05-20 12:30:00",
+      "expires_at": "2026-05-20 13:00:00",
+      "guests": [
+        {
+          "full_name": "Javier Martín Santos",
+          "document_type": "DNI",
+          "document_number": "78901234G",
+          "birth_date": "1990-12-01",
+          "is_primary": true
+        }
+      ],
+      "payments": []
+    },
+    {
+      "key": "booking_05",
+      "reference": "DR-2026-0005",
+      "user_key": "customer_05",
+      "room_type_key": "hotel_25_superior",
+      "check_in": "2026-09-10",
+      "check_out": "2026-09-14",
+      "adults_count": 2,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "confirmed",
+      "payment_status": "partial",
+      "booked_at": "2026-05-21 16:10:00",
+      "confirmed_at": "2026-05-21 16:30:00",
+      "notes": "Llegada aproximada a las 20:00",
+      "guests": [
+        {
+          "full_name": "Ana López Serrano",
+          "document_type": "DNI",
+          "document_number": "89012345H",
+          "birth_date": "1989-05-19",
+          "is_primary": true
+        },
+        {
+          "full_name": "Rubén Cano Prieto",
+          "document_type": "DNI",
+          "document_number": "90123456J",
+          "birth_date": "1986-08-04",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "manual",
+          "amount": 600,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "TRANSFER-DEMO-0005",
+          "paid_at": "2026-05-21 16:35:00",
+          "metadata": {
+            "canal": "transferencia"
+          }
+        }
+      ]
+    }
+  ],
+  "favorites": [
+    {
+      "user_key": "customer_01",
+      "hotel_keys": [
+        "hotel_05",
+        "hotel_10",
+        "hotel_25"
+      ]
+    },
+    {
+      "user_key": "customer_02",
+      "hotel_keys": [
+        "hotel_08",
+        "hotel_14",
+        "hotel_20"
+      ]
+    },
+    {
+      "user_key": "customer_03",
+      "hotel_keys": [
+        "hotel_03",
+        "hotel_18",
+        "hotel_23"
+      ]
+    },
+    {
+      "user_key": "customer_04",
+      "hotel_keys": [
+        "hotel_12",
+        "hotel_15",
+        "hotel_24"
+      ]
+    },
+    {
+      "user_key": "customer_05",
+      "hotel_keys": [
+        "hotel_01",
+        "hotel_19",
+        "hotel_25"
+      ]
+    }
+  ]
+}

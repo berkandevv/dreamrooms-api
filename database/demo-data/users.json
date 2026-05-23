@@ -1,0 +1,101 @@
+[
+  {
+    "key": "admin",
+    "role": "admin",
+    "name": "Administrador DreamRooms",
+    "email": "admin@dreamrooms.com",
+    "phone": "+34910000000",
+    "password": "12345678",
+    "status": "active"
+  },
+  {
+    "key": "owner_01",
+    "role": "owner",
+    "name": "Propietario Demo",
+    "email": "owner@example.com",
+    "phone": "+34670000001",
+    "password": "password",
+    "status": "active"
+  },
+  {
+    "key": "owner_02",
+    "role": "owner",
+    "name": "Javier Ríos Alameda",
+    "email": "owner02@dreamrooms.test",
+    "phone": "+34620212223",
+    "password": "password",
+    "status": "active"
+  },
+  {
+    "key": "owner_03",
+    "role": "owner",
+    "name": "Elena Soler Campos",
+    "email": "owner03@dreamrooms.test",
+    "phone": "+34630313233",
+    "password": "password",
+    "status": "active"
+  },
+  {
+    "key": "owner_04",
+    "role": "owner",
+    "name": "Andrés Navarro Gil",
+    "email": "owner04@dreamrooms.test",
+    "phone": "+34640414243",
+    "password": "password",
+    "status": "active"
+  },
+  {
+    "key": "owner_05",
+    "role": "owner",
+    "name": "Lucía Herrera Pons",
+    "email": "owner05@dreamrooms.test",
+    "phone": "+34650515253",
+    "password": "password",
+    "status": "active"
+  },
+  {
+    "key": "customer_01",
+    "role": "customer",
+    "name": "Cliente Demo",
+    "email": "customer@example.com",
+    "phone": "+34670000002",
+    "password": "password",
+    "status": "active"
+  },
+  {
+    "key": "customer_02",
+    "role": "customer",
+    "name": "Miguel Torres Blanco",
+    "email": "cliente02@dreamrooms.test",
+    "phone": "+34662222333",
+    "password": "password",
+    "status": "active"
+  },
+  {
+    "key": "customer_03",
+    "role": "customer",
+    "name": "Carmen Ruiz Ortega",
+    "email": "cliente03@dreamrooms.test",
+    "phone": "+34663333444",
+    "password": "password",
+    "status": "active"
+  },
+  {
+    "key": "customer_04",
+    "role": "customer",
+    "name": "Javier Martín Santos",
+    "email": "cliente04@dreamrooms.test",
+    "phone": "+34664444555",
+    "password": "password",
+    "status": "active"
+  },
+  {
+    "key": "customer_05",
+    "role": "customer",
+    "name": "Ana López Serrano",
+    "email": "cliente05@dreamrooms.test",
+    "phone": "+34665555666",
+    "password": "password",
+    "status": "active"
+  }
+]
