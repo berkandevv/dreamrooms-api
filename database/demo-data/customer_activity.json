@@ -53,7 +53,10 @@
         "rating": 5,
         "comment": "El hotel está muy bien situado y la habitación era amplia y silenciosa",
         "status": "published"
-      }
+      },
+      "customer_name": "Laura García Molina",
+      "customer_email": "cliente01@dreamrooms.test",
+      "customer_phone": "+34661111222"
     },
     {
       "key": "booking_02",
@@ -218,6 +221,1317 @@
           }
         }
       ]
+    },
+    {
+      "key": "booking_06",
+      "reference": "DR-2026-0006",
+      "user_key": "customer_06",
+      "room_type_key": "hotel_07_premium",
+      "check_in": "2026-06-28",
+      "check_out": "2026-07-01",
+      "adults_count": 2,
+      "children_count": 1,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-06 11:25:00",
+      "confirmed_at": "2026-05-06 11:30:00",
+      "customer_name": "Sofía Medina Castro",
+      "customer_email": "cliente06@dreamrooms.test",
+      "customer_phone": "+34666666777",
+      "notes": "Solicita habitación tranquila si hay disponibilidad",
+      "guests": [
+        {
+          "full_name": "Sofía Medina Castro",
+          "document_type": "DNI",
+          "document_number": "11223344K",
+          "birth_date": "1993-07-14",
+          "is_primary": true
+        },
+        {
+          "full_name": "Álvaro Pardo Mena",
+          "document_type": "DNI",
+          "document_number": "22334455L",
+          "birth_date": "1991-10-02",
+          "is_primary": false
+        },
+        {
+          "full_name": "Clara Pardo Medina",
+          "birth_date": "2020-06-18",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "stripe",
+          "amount": 450,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "pi_demo_0006",
+          "paid_at": "2026-05-06 11:33:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 5,
+        "comment": "Habitación muy cómoda y trato excelente durante toda la estancia",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_07",
+      "reference": "DR-2026-0007",
+      "user_key": "customer_07",
+      "room_type_key": "hotel_12_doble",
+      "check_in": "2026-07-18",
+      "check_out": "2026-07-20",
+      "adults_count": 2,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "confirmed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-09 20:05:00",
+      "confirmed_at": "2026-05-09 20:08:00",
+      "customer_name": "Diego Romero Fuentes",
+      "customer_email": "cliente07@dreamrooms.test",
+      "customer_phone": "+34667777888",
+      "guests": [
+        {
+          "full_name": "Diego Romero Fuentes",
+          "document_type": "DNI",
+          "document_number": "33445566M",
+          "birth_date": "1985-03-22",
+          "is_primary": true
+        },
+        {
+          "full_name": "Marta Ibáñez Rojo",
+          "document_type": "DNI",
+          "document_number": "44556677N",
+          "birth_date": "1987-12-09",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "paypal",
+          "amount": 255.2,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "PAY-DEMO-0007",
+          "paid_at": "2026-05-09 20:10:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ]
+    },
+    {
+      "key": "booking_08",
+      "reference": "DR-2026-0008",
+      "user_key": "customer_08",
+      "room_type_key": "hotel_16_superior",
+      "check_in": "2026-08-12",
+      "check_out": "2026-08-16",
+      "adults_count": 1,
+      "children_count": 1,
+      "units_booked": 1,
+      "status": "cancelled",
+      "payment_status": "refunded",
+      "booked_at": "2026-05-12 09:45:00",
+      "confirmed_at": "2026-05-12 09:50:00",
+      "cancelled_at": "2026-05-18 18:20:00",
+      "customer_name": "Nuria Calvo Herrero",
+      "customer_email": "cliente08@dreamrooms.test",
+      "customer_phone": "+34668888999",
+      "notes": "Cancelada por cambio de fechas del viaje",
+      "guests": [
+        {
+          "full_name": "Nuria Calvo Herrero",
+          "document_type": "DNI",
+          "document_number": "55667788P",
+          "birth_date": "1994-09-06",
+          "is_primary": true
+        },
+        {
+          "full_name": "Lola Calvo Herrero",
+          "birth_date": "2018-01-29",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "stripe",
+          "amount": 246.4,
+          "currency": "EUR",
+          "status": "refunded",
+          "transaction_reference": "pi_demo_0008",
+          "paid_at": "2026-05-12 09:52:00",
+          "metadata": {
+            "canal": "web",
+            "reembolso": "completo"
+          }
+        }
+      ]
+    },
+    {
+      "key": "booking_09",
+      "reference": "DR-2026-0009",
+      "user_key": "customer_09",
+      "room_type_key": "hotel_21_premium",
+      "check_in": "2026-09-04",
+      "check_out": "2026-09-06",
+      "adults_count": 2,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "pending",
+      "payment_status": "pending",
+      "booked_at": "2026-05-23 17:40:00",
+      "expires_at": "2026-05-23 18:10:00",
+      "customer_name": "Pablo Sánchez León",
+      "customer_email": "cliente09@dreamrooms.test",
+      "customer_phone": "+34669999000",
+      "guests": [
+        {
+          "full_name": "Pablo Sánchez León",
+          "document_type": "DNI",
+          "document_number": "66778899Q",
+          "birth_date": "1982-05-11",
+          "is_primary": true
+        },
+        {
+          "full_name": "Raquel Arias Mora",
+          "document_type": "DNI",
+          "document_number": "77889900R",
+          "birth_date": "1984-02-25",
+          "is_primary": false
+        }
+      ],
+      "payments": []
+    },
+    {
+      "key": "booking_10",
+      "reference": "DR-2026-0010",
+      "user_key": "customer_10",
+      "room_type_key": "hotel_24_superior",
+      "check_in": "2026-06-07",
+      "check_out": "2026-06-10",
+      "adults_count": 2,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-04-25 14:15:00",
+      "confirmed_at": "2026-04-25 14:20:00",
+      "customer_name": "Irene Morales Vega",
+      "customer_email": "cliente10@dreamrooms.test",
+      "customer_phone": "+34660000111",
+      "notes": "Viaje de aniversario",
+      "guests": [
+        {
+          "full_name": "Irene Morales Vega",
+          "document_type": "DNI",
+          "document_number": "88990011S",
+          "birth_date": "1990-08-17",
+          "is_primary": true
+        },
+        {
+          "full_name": "Héctor Prieto Salas",
+          "document_type": "DNI",
+          "document_number": "99001122T",
+          "birth_date": "1989-04-03",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "manual",
+          "amount": 612,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "TRANSFER-DEMO-0010",
+          "paid_at": "2026-04-25 14:35:00",
+          "metadata": {
+            "canal": "transferencia"
+          }
+        }
+      ],
+      "review": {
+        "rating": 4,
+        "comment": "Muy buena experiencia, especialmente por la ubicación y la limpieza",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0011",
+      "reference": "DR-2026-0011",
+      "user_key": "customer_01",
+      "room_type_key": "hotel_01_doble",
+      "check_in": "2026-06-02",
+      "check_out": "2026-06-04",
+      "adults_count": 1,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-01 10:10:00",
+      "confirmed_at": "2026-05-01 10:15:00",
+      "customer_name": "Laura García Molina",
+      "customer_email": "cliente01@dreamrooms.test",
+      "customer_phone": "+34661111222",
+      "guests": [
+        {
+          "full_name": "Laura García Molina",
+          "document_type": "DNI",
+          "document_number": "21000000A",
+          "birth_date": "1986-02-14",
+          "is_primary": true
+        }
+      ],
+      "payments": [
+        {
+          "provider": "stripe",
+          "amount": 127.6,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0011",
+          "paid_at": "2026-05-01 10:20:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 4,
+        "comment": "Estancia muy agradable, habitación limpia y personal atento",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0012",
+      "reference": "DR-2026-0012",
+      "user_key": "customer_02",
+      "room_type_key": "hotel_02_superior",
+      "check_in": "2026-06-03",
+      "check_out": "2026-06-05",
+      "adults_count": 2,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-02 10:11:00",
+      "confirmed_at": "2026-05-02 10:16:00",
+      "customer_name": "Miguel Torres Blanco",
+      "customer_email": "cliente02@dreamrooms.test",
+      "customer_phone": "+34662222333",
+      "guests": [
+        {
+          "full_name": "Miguel Torres Blanco",
+          "document_type": "DNI",
+          "document_number": "21000001B",
+          "birth_date": "1990-05-23",
+          "is_primary": true
+        },
+        {
+          "full_name": "Iván Molina Ríos",
+          "document_type": "DNI",
+          "document_number": "31000001Y",
+          "birth_date": "1991-06-08",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "paypal",
+          "amount": 244.2,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0012",
+          "paid_at": "2026-05-02 10:21:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 5,
+        "comment": "Buena ubicación para moverse por la zona y cama muy cómoda",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0013",
+      "reference": "DR-2026-0013",
+      "user_key": "customer_03",
+      "room_type_key": "hotel_03_premium",
+      "check_in": "2026-06-04",
+      "check_out": "2026-06-06",
+      "adults_count": 2,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-03 10:12:00",
+      "confirmed_at": "2026-05-03 10:17:00",
+      "customer_name": "Carmen Ruiz Ortega",
+      "customer_email": "cliente03@dreamrooms.test",
+      "customer_phone": "+34663333444",
+      "guests": [
+        {
+          "full_name": "Carmen Ruiz Ortega",
+          "document_type": "DNI",
+          "document_number": "21000002C",
+          "birth_date": "1988-11-04",
+          "is_primary": true
+        },
+        {
+          "full_name": "Teresa Cano Vidal",
+          "document_type": "DNI",
+          "document_number": "31000002X",
+          "birth_date": "1985-10-21",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "manual",
+          "amount": 455.4,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0013",
+          "paid_at": "2026-05-03 10:22:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 4,
+        "comment": "Todo estuvo bien organizado y el check-in fue rápido",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0014",
+      "reference": "DR-2026-0014",
+      "user_key": "customer_04",
+      "room_type_key": "hotel_04_doble",
+      "check_in": "2026-06-05",
+      "check_out": "2026-06-07",
+      "adults_count": 2,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-04 10:13:00",
+      "confirmed_at": "2026-05-04 10:18:00",
+      "customer_name": "Javier Martín Santos",
+      "customer_email": "cliente04@dreamrooms.test",
+      "customer_phone": "+34664444555",
+      "guests": [
+        {
+          "full_name": "Javier Martín Santos",
+          "document_type": "DNI",
+          "document_number": "21000003D",
+          "birth_date": "1992-07-19",
+          "is_primary": true
+        },
+        {
+          "full_name": "Óscar León Martín",
+          "document_type": "DNI",
+          "document_number": "31000003W",
+          "birth_date": "1993-03-16",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "stripe",
+          "amount": 360.8,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0014",
+          "paid_at": "2026-05-04 10:23:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 5,
+        "comment": "Nos gustó mucho el desayuno y la tranquilidad de la habitación",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0015",
+      "reference": "DR-2026-0015",
+      "user_key": "customer_05",
+      "room_type_key": "hotel_06_superior",
+      "check_in": "2026-06-06",
+      "check_out": "2026-06-08",
+      "adults_count": 1,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-05 10:14:00",
+      "confirmed_at": "2026-05-05 10:19:00",
+      "customer_name": "Ana López Serrano",
+      "customer_email": "cliente05@dreamrooms.test",
+      "customer_phone": "+34665555666",
+      "guests": [
+        {
+          "full_name": "Ana López Serrano",
+          "document_type": "DNI",
+          "document_number": "21000004E",
+          "birth_date": "1984-09-30",
+          "is_primary": true
+        }
+      ],
+      "payments": [
+        {
+          "provider": "paypal",
+          "amount": 184.8,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0015",
+          "paid_at": "2026-05-05 10:24:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 4,
+        "comment": "Hotel recomendable para una escapada corta, volveríamos",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0016",
+      "reference": "DR-2026-0016",
+      "user_key": "customer_06",
+      "room_type_key": "hotel_08_premium",
+      "check_in": "2026-06-07",
+      "check_out": "2026-06-09",
+      "adults_count": 2,
+      "children_count": 1,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-06 10:15:00",
+      "confirmed_at": "2026-05-06 10:20:00",
+      "customer_name": "Sofía Medina Castro",
+      "customer_email": "cliente06@dreamrooms.test",
+      "customer_phone": "+34666666777",
+      "guests": [
+        {
+          "full_name": "Sofía Medina Castro",
+          "document_type": "DNI",
+          "document_number": "21000005F",
+          "birth_date": "1986-02-14",
+          "is_primary": true
+        },
+        {
+          "full_name": "Alba Navarro Pérez",
+          "document_type": "DNI",
+          "document_number": "31000005U",
+          "birth_date": "1987-01-11",
+          "is_primary": false
+        },
+        {
+          "full_name": "Leo Molina Navarro",
+          "birth_date": "2017-04-18",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "manual",
+          "amount": 486.2,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0016",
+          "paid_at": "2026-05-06 10:25:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 5,
+        "comment": "La habitación era amplia y el baño estaba muy cuidado",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0017",
+      "reference": "DR-2026-0017",
+      "user_key": "customer_07",
+      "room_type_key": "hotel_09_doble",
+      "check_in": "2026-06-08",
+      "check_out": "2026-06-10",
+      "adults_count": 2,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-07 10:16:00",
+      "confirmed_at": "2026-05-07 10:21:00",
+      "customer_name": "Diego Romero Fuentes",
+      "customer_email": "cliente07@dreamrooms.test",
+      "customer_phone": "+34667777888",
+      "guests": [
+        {
+          "full_name": "Diego Romero Fuentes",
+          "document_type": "DNI",
+          "document_number": "21000006G",
+          "birth_date": "1990-05-23",
+          "is_primary": true
+        },
+        {
+          "full_name": "Iván Molina Ríos",
+          "document_type": "DNI",
+          "document_number": "31000006T",
+          "birth_date": "1991-06-08",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "stripe",
+          "amount": 387.2,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0017",
+          "paid_at": "2026-05-07 10:26:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 4,
+        "comment": "Servicio correcto, buena relación calidad precio",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0018",
+      "reference": "DR-2026-0018",
+      "user_key": "customer_08",
+      "room_type_key": "hotel_10_superior",
+      "check_in": "2026-06-09",
+      "check_out": "2026-06-11",
+      "adults_count": 2,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-08 10:17:00",
+      "confirmed_at": "2026-05-08 10:22:00",
+      "customer_name": "Nuria Calvo Herrero",
+      "customer_email": "cliente08@dreamrooms.test",
+      "customer_phone": "+34668888999",
+      "guests": [
+        {
+          "full_name": "Nuria Calvo Herrero",
+          "document_type": "DNI",
+          "document_number": "21000007H",
+          "birth_date": "1988-11-04",
+          "is_primary": true
+        },
+        {
+          "full_name": "Teresa Cano Vidal",
+          "document_type": "DNI",
+          "document_number": "31000007S",
+          "birth_date": "1985-10-21",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "paypal",
+          "amount": 899.8,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0018",
+          "paid_at": "2026-05-08 10:27:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 5,
+        "comment": "La ubicación fue perfecta y el descanso muy bueno",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0019",
+      "reference": "DR-2026-0019",
+      "user_key": "customer_09",
+      "room_type_key": "hotel_11_premium",
+      "check_in": "2026-06-10",
+      "check_out": "2026-06-12",
+      "adults_count": 1,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-09 10:18:00",
+      "confirmed_at": "2026-05-09 10:23:00",
+      "customer_name": "Pablo Sánchez León",
+      "customer_email": "cliente09@dreamrooms.test",
+      "customer_phone": "+34669999000",
+      "guests": [
+        {
+          "full_name": "Pablo Sánchez León",
+          "document_type": "DNI",
+          "document_number": "21000008I",
+          "birth_date": "1992-07-19",
+          "is_primary": true
+        }
+      ],
+      "payments": [
+        {
+          "provider": "manual",
+          "amount": 255.2,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0019",
+          "paid_at": "2026-05-09 10:28:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 4,
+        "comment": "Personal amable y zonas comunes bien mantenidas",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0020",
+      "reference": "DR-2026-0020",
+      "user_key": "customer_10",
+      "room_type_key": "hotel_12_doble",
+      "check_in": "2026-06-11",
+      "check_out": "2026-06-13",
+      "adults_count": 2,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-10 10:19:00",
+      "confirmed_at": "2026-05-10 10:24:00",
+      "customer_name": "Irene Morales Vega",
+      "customer_email": "cliente10@dreamrooms.test",
+      "customer_phone": "+34660000111",
+      "guests": [
+        {
+          "full_name": "Irene Morales Vega",
+          "document_type": "DNI",
+          "document_number": "21000009J",
+          "birth_date": "1984-09-30",
+          "is_primary": true
+        },
+        {
+          "full_name": "Paula Gil Serrano",
+          "document_type": "DNI",
+          "document_number": "31000009Q",
+          "birth_date": "1989-12-02",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "stripe",
+          "amount": 211.2,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0020",
+          "paid_at": "2026-05-10 10:29:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 5,
+        "comment": "Experiencia positiva, especialmente por la limpieza y el trato",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0021",
+      "reference": "DR-2026-0021",
+      "user_key": "customer_01",
+      "room_type_key": "hotel_13_superior",
+      "check_in": "2026-06-12",
+      "check_out": "2026-06-14",
+      "adults_count": 2,
+      "children_count": 1,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-11 10:20:00",
+      "confirmed_at": "2026-05-11 10:25:00",
+      "customer_name": "Laura García Molina",
+      "customer_email": "cliente01@dreamrooms.test",
+      "customer_phone": "+34661111222",
+      "guests": [
+        {
+          "full_name": "Laura García Molina",
+          "document_type": "DNI",
+          "document_number": "21000010K",
+          "birth_date": "1986-02-14",
+          "is_primary": true
+        },
+        {
+          "full_name": "Alba Navarro Pérez",
+          "document_type": "DNI",
+          "document_number": "31000010P",
+          "birth_date": "1987-01-11",
+          "is_primary": false
+        },
+        {
+          "full_name": "Leo Molina Navarro",
+          "birth_date": "2017-04-18",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "paypal",
+          "amount": 409.2,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0021",
+          "paid_at": "2026-05-11 10:30:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 4,
+        "comment": "Estancia muy agradable, habitación limpia y personal atento",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0022",
+      "reference": "DR-2026-0022",
+      "user_key": "customer_02",
+      "room_type_key": "hotel_14_premium",
+      "check_in": "2026-06-13",
+      "check_out": "2026-06-15",
+      "adults_count": 2,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-12 10:21:00",
+      "confirmed_at": "2026-05-12 10:26:00",
+      "customer_name": "Miguel Torres Blanco",
+      "customer_email": "cliente02@dreamrooms.test",
+      "customer_phone": "+34662222333",
+      "guests": [
+        {
+          "full_name": "Miguel Torres Blanco",
+          "document_type": "DNI",
+          "document_number": "21000011L",
+          "birth_date": "1990-05-23",
+          "is_primary": true
+        },
+        {
+          "full_name": "Iván Molina Ríos",
+          "document_type": "DNI",
+          "document_number": "31000011O",
+          "birth_date": "1991-06-08",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "manual",
+          "amount": 899.8,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0022",
+          "paid_at": "2026-05-12 10:31:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 5,
+        "comment": "Buena ubicación para moverse por la zona y cama muy cómoda",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0023",
+      "reference": "DR-2026-0023",
+      "user_key": "customer_03",
+      "room_type_key": "hotel_15_doble",
+      "check_in": "2026-06-14",
+      "check_out": "2026-06-16",
+      "adults_count": 1,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-13 10:22:00",
+      "confirmed_at": "2026-05-13 10:27:00",
+      "customer_name": "Carmen Ruiz Ortega",
+      "customer_email": "cliente03@dreamrooms.test",
+      "customer_phone": "+34663333444",
+      "guests": [
+        {
+          "full_name": "Carmen Ruiz Ortega",
+          "document_type": "DNI",
+          "document_number": "21000012M",
+          "birth_date": "1988-11-04",
+          "is_primary": true
+        }
+      ],
+      "payments": [
+        {
+          "provider": "stripe",
+          "amount": 605,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0023",
+          "paid_at": "2026-05-13 10:32:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 4,
+        "comment": "Todo estuvo bien organizado y el check-in fue rápido",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0024",
+      "reference": "DR-2026-0024",
+      "user_key": "customer_04",
+      "room_type_key": "hotel_16_superior",
+      "check_in": "2026-06-15",
+      "check_out": "2026-06-17",
+      "adults_count": 2,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-14 10:23:00",
+      "confirmed_at": "2026-05-14 10:28:00",
+      "customer_name": "Javier Martín Santos",
+      "customer_email": "cliente04@dreamrooms.test",
+      "customer_phone": "+34664444555",
+      "guests": [
+        {
+          "full_name": "Javier Martín Santos",
+          "document_type": "DNI",
+          "document_number": "21000013N",
+          "birth_date": "1992-07-19",
+          "is_primary": true
+        },
+        {
+          "full_name": "Óscar León Martín",
+          "document_type": "DNI",
+          "document_number": "31000013M",
+          "birth_date": "1993-03-16",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "paypal",
+          "amount": 160.6,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0024",
+          "paid_at": "2026-05-14 10:33:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 5,
+        "comment": "Nos gustó mucho el desayuno y la tranquilidad de la habitación",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0025",
+      "reference": "DR-2026-0025",
+      "user_key": "customer_05",
+      "room_type_key": "hotel_17_premium",
+      "check_in": "2026-06-16",
+      "check_out": "2026-06-18",
+      "adults_count": 2,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-15 10:24:00",
+      "confirmed_at": "2026-05-15 10:29:00",
+      "customer_name": "Ana López Serrano",
+      "customer_email": "cliente05@dreamrooms.test",
+      "customer_phone": "+34665555666",
+      "guests": [
+        {
+          "full_name": "Ana López Serrano",
+          "document_type": "DNI",
+          "document_number": "21000014O",
+          "birth_date": "1984-09-30",
+          "is_primary": true
+        },
+        {
+          "full_name": "Paula Gil Serrano",
+          "document_type": "DNI",
+          "document_number": "31000014L",
+          "birth_date": "1989-12-02",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "manual",
+          "amount": 323.4,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0025",
+          "paid_at": "2026-05-15 10:34:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 4,
+        "comment": "Hotel recomendable para una escapada corta, volveríamos",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0026",
+      "reference": "DR-2026-0026",
+      "user_key": "customer_06",
+      "room_type_key": "hotel_19_doble",
+      "check_in": "2026-06-17",
+      "check_out": "2026-06-19",
+      "adults_count": 2,
+      "children_count": 1,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-16 10:25:00",
+      "confirmed_at": "2026-05-16 10:30:00",
+      "customer_name": "Sofía Medina Castro",
+      "customer_email": "cliente06@dreamrooms.test",
+      "customer_phone": "+34666666777",
+      "guests": [
+        {
+          "full_name": "Sofía Medina Castro",
+          "document_type": "DNI",
+          "document_number": "21000015P",
+          "birth_date": "1986-02-14",
+          "is_primary": true
+        },
+        {
+          "full_name": "Alba Navarro Pérez",
+          "document_type": "DNI",
+          "document_number": "31000015K",
+          "birth_date": "1987-01-11",
+          "is_primary": false
+        },
+        {
+          "full_name": "Leo Molina Navarro",
+          "birth_date": "2017-04-18",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "stripe",
+          "amount": 378.4,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0026",
+          "paid_at": "2026-05-16 10:35:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 5,
+        "comment": "La habitación era amplia y el baño estaba muy cuidado",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0027",
+      "reference": "DR-2026-0027",
+      "user_key": "customer_07",
+      "room_type_key": "hotel_20_superior",
+      "check_in": "2026-06-18",
+      "check_out": "2026-06-20",
+      "adults_count": 1,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-17 10:26:00",
+      "confirmed_at": "2026-05-17 10:31:00",
+      "customer_name": "Diego Romero Fuentes",
+      "customer_email": "cliente07@dreamrooms.test",
+      "customer_phone": "+34667777888",
+      "guests": [
+        {
+          "full_name": "Diego Romero Fuentes",
+          "document_type": "DNI",
+          "document_number": "21000016Q",
+          "birth_date": "1990-05-23",
+          "is_primary": true
+        }
+      ],
+      "payments": [
+        {
+          "provider": "paypal",
+          "amount": 943.8,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0027",
+          "paid_at": "2026-05-17 10:36:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 4,
+        "comment": "Servicio correcto, buena relación calidad precio",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0028",
+      "reference": "DR-2026-0028",
+      "user_key": "customer_08",
+      "room_type_key": "hotel_21_premium",
+      "check_in": "2026-06-19",
+      "check_out": "2026-06-21",
+      "adults_count": 2,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-18 10:27:00",
+      "confirmed_at": "2026-05-18 10:32:00",
+      "customer_name": "Nuria Calvo Herrero",
+      "customer_email": "cliente08@dreamrooms.test",
+      "customer_phone": "+34668888999",
+      "guests": [
+        {
+          "full_name": "Nuria Calvo Herrero",
+          "document_type": "DNI",
+          "document_number": "21000017R",
+          "birth_date": "1988-11-04",
+          "is_primary": true
+        },
+        {
+          "full_name": "Teresa Cano Vidal",
+          "document_type": "DNI",
+          "document_number": "31000017I",
+          "birth_date": "1985-10-21",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "manual",
+          "amount": 226.6,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0028",
+          "paid_at": "2026-05-18 10:37:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 5,
+        "comment": "La ubicación fue perfecta y el descanso muy bueno",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0029",
+      "reference": "DR-2026-0029",
+      "user_key": "customer_09",
+      "room_type_key": "hotel_22_doble",
+      "check_in": "2026-06-20",
+      "check_out": "2026-06-22",
+      "adults_count": 2,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-19 10:28:00",
+      "confirmed_at": "2026-05-19 10:33:00",
+      "customer_name": "Pablo Sánchez León",
+      "customer_email": "cliente09@dreamrooms.test",
+      "customer_phone": "+34669999000",
+      "guests": [
+        {
+          "full_name": "Pablo Sánchez León",
+          "document_type": "DNI",
+          "document_number": "21000018S",
+          "birth_date": "1992-07-19",
+          "is_primary": true
+        },
+        {
+          "full_name": "Óscar León Martín",
+          "document_type": "DNI",
+          "document_number": "31000018H",
+          "birth_date": "1993-03-16",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "stripe",
+          "amount": 202.4,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0029",
+          "paid_at": "2026-05-19 10:38:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 4,
+        "comment": "Personal amable y zonas comunes bien mantenidas",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0030",
+      "reference": "DR-2026-0030",
+      "user_key": "customer_10",
+      "room_type_key": "hotel_23_superior",
+      "check_in": "2026-06-21",
+      "check_out": "2026-06-23",
+      "adults_count": 2,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-20 10:29:00",
+      "confirmed_at": "2026-05-20 10:34:00",
+      "customer_name": "Irene Morales Vega",
+      "customer_email": "cliente10@dreamrooms.test",
+      "customer_phone": "+34660000111",
+      "guests": [
+        {
+          "full_name": "Irene Morales Vega",
+          "document_type": "DNI",
+          "document_number": "21000019T",
+          "birth_date": "1984-09-30",
+          "is_primary": true
+        },
+        {
+          "full_name": "Paula Gil Serrano",
+          "document_type": "DNI",
+          "document_number": "31000019G",
+          "birth_date": "1989-12-02",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "paypal",
+          "amount": 391.6,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0030",
+          "paid_at": "2026-05-20 10:39:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 5,
+        "comment": "Experiencia positiva, especialmente por la limpieza y el trato",
+        "status": "published"
+      }
+    },
+    {
+      "key": "booking_0031",
+      "reference": "DR-2026-0031",
+      "user_key": "customer_01",
+      "room_type_key": "hotel_25_premium",
+      "check_in": "2026-06-22",
+      "check_out": "2026-06-24",
+      "adults_count": 1,
+      "children_count": 1,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-01 10:30:00",
+      "confirmed_at": "2026-05-01 10:35:00",
+      "customer_name": "Laura García Molina",
+      "customer_email": "cliente01@dreamrooms.test",
+      "customer_phone": "+34661111222",
+      "guests": [
+        {
+          "full_name": "Laura García Molina",
+          "document_type": "DNI",
+          "document_number": "21000020U",
+          "birth_date": "1986-02-14",
+          "is_primary": true
+        },
+        {
+          "full_name": "Leo Molina Navarro",
+          "birth_date": "2017-04-18",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "manual",
+          "amount": 1348.6,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "DEMO-REVIEW-0031",
+          "paid_at": "2026-05-01 10:40:00",
+          "metadata": {
+            "canal": "web"
+          }
+        }
+      ],
+      "review": {
+        "rating": 4,
+        "comment": "Estancia muy agradable, habitación limpia y personal atento",
+        "status": "published"
+      }
     }
   ],
   "favorites": [
@@ -259,6 +1573,46 @@
         "hotel_01",
         "hotel_19",
         "hotel_25"
+      ]
+    },
+    {
+      "user_key": "customer_06",
+      "hotel_keys": [
+        "hotel_07",
+        "hotel_11",
+        "hotel_19"
+      ]
+    },
+    {
+      "user_key": "customer_07",
+      "hotel_keys": [
+        "hotel_02",
+        "hotel_12",
+        "hotel_22"
+      ]
+    },
+    {
+      "user_key": "customer_08",
+      "hotel_keys": [
+        "hotel_06",
+        "hotel_16",
+        "hotel_20"
+      ]
+    },
+    {
+      "user_key": "customer_09",
+      "hotel_keys": [
+        "hotel_04",
+        "hotel_21",
+        "hotel_25"
+      ]
+    },
+    {
+      "user_key": "customer_10",
+      "hotel_keys": [
+        "hotel_09",
+        "hotel_17",
+        "hotel_24"
       ]
     }
   ]

@@ -11,9 +11,9 @@
   {
     "key": "owner_01",
     "role": "owner",
-    "name": "Propietario Demo",
-    "email": "owner@example.com",
-    "phone": "+34670000001",
+    "name": "María Fernández Vidal",
+    "email": "owner01@dreamrooms.test",
+    "phone": "+34610111213",
     "password": "password",
     "status": "active"
   },
@@ -56,9 +56,9 @@
   {
     "key": "customer_01",
     "role": "customer",
-    "name": "Cliente Demo",
-    "email": "customer@example.com",
-    "phone": "+34670000002",
+    "name": "Laura García Molina",
+    "email": "cliente01@dreamrooms.test",
+    "phone": "+34661111222",
     "password": "password",
     "status": "active"
   },
@@ -95,6 +95,51 @@
     "name": "Ana López Serrano",
     "email": "cliente05@dreamrooms.test",
     "phone": "+34665555666",
+    "password": "password",
+    "status": "active"
+  },
+  {
+    "key": "customer_06",
+    "role": "customer",
+    "name": "Sofía Medina Castro",
+    "email": "cliente06@dreamrooms.test",
+    "phone": "+34666666777",
+    "password": "password",
+    "status": "active"
+  },
+  {
+    "key": "customer_07",
+    "role": "customer",
+    "name": "Diego Romero Fuentes",
+    "email": "cliente07@dreamrooms.test",
+    "phone": "+34667777888",
+    "password": "password",
+    "status": "active"
+  },
+  {
+    "key": "customer_08",
+    "role": "customer",
+    "name": "Nuria Calvo Herrero",
+    "email": "cliente08@dreamrooms.test",
+    "phone": "+34668888999",
+    "password": "password",
+    "status": "active"
+  },
+  {
+    "key": "customer_09",
+    "role": "customer",
+    "name": "Pablo Sánchez León",
+    "email": "cliente09@dreamrooms.test",
+    "phone": "+34669999000",
+    "password": "password",
+    "status": "active"
+  },
+  {
+    "key": "customer_10",
+    "role": "customer",
+    "name": "Irene Morales Vega",
+    "email": "cliente10@dreamrooms.test",
+    "phone": "+34660000111",
     "password": "password",
     "status": "active"
   }

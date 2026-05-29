@@ -23,11 +23,11 @@ Roles actuales:
 
 Si has ejecutado los seeders, tendrás estas credenciales fijas:
 
-- `owner@example.com` / `password`
-- `customer@example.com` / `password`
+- `owner01@dreamrooms.test` / `password`
+- `cliente01@dreamrooms.test` / `password`
 - `admin@dreamrooms.com` / `12345678` para el panel web Laravel
 
-`owner@example.com` y `customer@example.com` sirven para probar el login de API y los flujos del frontend React. El usuario admin queda fuera de la API pública de autenticación.
+`owner01@dreamrooms.test` y `cliente01@dreamrooms.test` sirven para probar el login de API y los flujos del frontend React. El usuario admin queda fuera de la API pública de autenticación.
 
 ## Documentación de la API
 
@@ -76,7 +76,7 @@ Body:
 
 ```json
 {
-  "name": "Cliente Demo",
+  "name": "Laura García Molina",
   "email": "cliente@example.com",
   "phone": "+34600000000",
   "account_type": "customer",
@@ -97,7 +97,7 @@ Body:
 
 ```json
 {
-  "email": "owner@example.com",
+  "email": "owner01@dreamrooms.test",
   "password": "password"
 }
 ```
@@ -195,13 +195,13 @@ Body ejemplo:
   "adults_count": 2,
   "children_count": 0,
   "units_booked": 1,
-  "customer_name": "Cliente Demo",
+  "customer_name": "Laura García Molina",
   "customer_email": "cliente@example.com",
   "customer_phone": "+34600000000",
   "notes": "Llegada tarde",
   "guests": [
     {
-      "full_name": "Cliente Demo",
+      "full_name": "Laura García Molina",
       "is_primary": true
     }
   ]
