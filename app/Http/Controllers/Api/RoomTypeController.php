@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\RoomTypeAvailabilityResource;
+use App\Http\Resources\AvailabilityResource;
 use App\Models\RoomType;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
@@ -30,6 +30,6 @@ class RoomTypeController extends Controller
             ->orderBy('date')
             ->get();
 
-        return RoomTypeAvailabilityResource::collection($availability);
+        return AvailabilityResource::collection($availability);
     }
 }

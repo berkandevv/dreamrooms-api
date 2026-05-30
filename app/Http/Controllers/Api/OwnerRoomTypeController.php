@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\RoomTypeAvailabilityResource;
+use App\Http\Resources\AvailabilityResource;
 use App\Http\Resources\RoomTypeResource;
 use App\Models\Hotel;
 use App\Models\RoomType;
@@ -94,7 +94,7 @@ class OwnerRoomTypeController extends Controller
             ->orderBy('date')
             ->get();
 
-        return RoomTypeAvailabilityResource::collection($availability);
+        return AvailabilityResource::collection($availability);
     }
 
     // Actualiza en bloque la disponibilidad y precios de varias fechas
@@ -148,7 +148,7 @@ class OwnerRoomTypeController extends Controller
             ->orderBy('date')
             ->get();
 
-        return RoomTypeAvailabilityResource::collection($availability);
+        return AvailabilityResource::collection($availability);
     }
 
     // Evita guardar más disponibilidad diaria que habitaciones reales tiene el tipo

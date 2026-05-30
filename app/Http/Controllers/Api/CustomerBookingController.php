@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\BookingResource;
+use App\Http\Resources\BookResource;
+use App\Http\Resources\ReservationListResource;
+use App\Http\Resources\ReservationReadResource;
 use App\Http\Resources\ReviewResource;
 use App\Models\Booking;
 use App\Models\RoomType;
@@ -26,28 +28,28 @@ class CustomerBookingController extends Controller
             ->orderBy('id')
             ->get();
 
-        return BookingResource::collection($bookings);
+        return ReservationListResource::collection($bookings);
     }
 
     // Muestra el detalle de una reserva del cliente autenticado
-    public function show(Request $request, int $bookingId): BookingResource
+    public function show(Request $request, int $bookingId): ReservationReadResource
     {
         $booking = Booking::query()
             ->where('user_id', $request->user()->id)
             ->with($this->bookingDetailRelations())
             ->findOrFail($bookingId);
 
-        return new BookingResource($booking);
+        return new ReservationReadResource($booking);
     }
 
     // Cancela una reserva activa del cliente y restaura la disponibilidad
-    public function cancel(Request $request, int $bookingId): BookingResource
+    public function cancel(Request $request, int $bookingId): ReservationReadResource
     {
         $booking = DB::transaction(fn (): Booking => $this->cancelBooking($bookingId, $request->user()->id));
 
         $this->loadBookingDetails($booking);
 
-        return new BookingResource($booking);
+        return new ReservationReadResource($booking);
     }
 
     // Crea una reseña pública para una reserva completada
@@ -97,7 +99,7 @@ class CustomerBookingController extends Controller
 
         $this->loadBookingDetails($booking);
 
-        return (new BookingResource($booking))
+        return (new BookResource($booking))
             ->response()
             ->setStatusCode(201);
     }

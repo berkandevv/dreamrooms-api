@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\HotelResource;
+use App\Http\Resources\MetadataResource;
 use App\Http\Resources\ReviewResource;
 use App\Models\Hotel;
 use Illuminate\Database\Eloquent\Builder;
@@ -48,7 +48,7 @@ class HotelController extends Controller
             ->orderBy('id')
             ->get();
 
-        return HotelResource::collection($hotels);
+        return MetadataResource::collection($hotels);
     }
 
     /**
@@ -57,7 +57,7 @@ class HotelController extends Controller
      * Returns the full public detail for a hotel, including images, services,
      * room types, room images, and room services
      */
-    public function show(string $slug): HotelResource
+    public function show(string $slug): MetadataResource
     {
         // Devuelve el detalle público de un hotel publicado por su slug
         $query = Hotel::query()
@@ -69,7 +69,7 @@ class HotelController extends Controller
 
         $hotel = $query->firstOrFail();
 
-        return new HotelResource($hotel);
+        return new MetadataResource($hotel);
     }
 
     /**
