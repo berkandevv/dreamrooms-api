@@ -53,10 +53,12 @@ Route::middleware(['auth:sanctum', 'role:owner'])->group(function (): void {
     Route::get('/owner/hotels', [OwnerHotelController::class, 'index']);
     Route::post('/owner/hotels', [OwnerHotelController::class, 'store']);
     Route::put('/owner/hotels/{hotelId}', [OwnerHotelController::class, 'update']);
+    Route::post('/owner/hotels/{hotelId}/images', [OwnerHotelController::class, 'images']);
     Route::get('/owner/hotels/{hotelId}/room-types', [OwnerRoomTypeController::class, 'index']);
     Route::post('/owner/hotels/{hotelId}/room-types', [OwnerRoomTypeController::class, 'store']);
     Route::get('/owner/hotels/{hotelId}', [OwnerHotelController::class, 'show']);
     Route::put('/owner/room-types/{roomTypeId}', [OwnerRoomTypeController::class, 'update']);
+    Route::post('/owner/room-types/{roomTypeId}/images', [OwnerRoomTypeController::class, 'images']);
     Route::post('/owner/room-types/{roomTypeId}/availability/bulk', [OwnerRoomTypeController::class, 'availabilityBulk']);
     Route::get('/owner/room-types/{roomTypeId}/availability', [OwnerRoomTypeController::class, 'availability']);
     Route::get('/owner/room-types/{roomTypeId}', [OwnerRoomTypeController::class, 'show']);

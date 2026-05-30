@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Resources\HotelResource;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
@@ -77,8 +78,10 @@ class OwnerHotelController extends Controller
         $hotel = Hotel::query()->create($this->hotelPayload($validated));
 
         $this->syncServices($hotel, $validated);
+        $this->storeImages($hotel, $validated);
         $hotel->load([
             'coverImage',
+            'images' => fn ($query) => $query->orderBy('sort_order'),
             'services' => fn ($query) => $query->orderBy('name'),
         ]);
 
@@ -105,8 +108,29 @@ class OwnerHotelController extends Controller
 
         $hotel->update($payload);
         $this->syncServices($hotel, $validated);
+        $this->storeImages($hotel, $validated);
         $hotel->load([
             'coverImage',
+            'images' => fn ($query) => $query->orderBy('sort_order'),
+            'services' => fn ($query) => $query->orderBy('name'),
+        ]);
+
+        return new HotelResource($hotel);
+    }
+
+    public function images(Request $request, int $hotelId): HotelResource
+    {
+        $validated = $request->validate($this->imageRules());
+        $ownerUserId = $request->user()->id;
+
+        $hotel = Hotel::query()
+            ->where('owner_user_id', $ownerUserId)
+            ->findOrFail($hotelId);
+
+        $this->storeImages($hotel, $validated);
+        $hotel->load([
+            'coverImage',
+            'images' => fn ($query) => $query->orderBy('sort_order'),
             'services' => fn ($query) => $query->orderBy('name'),
         ]);
 
@@ -146,6 +170,20 @@ class OwnerHotelController extends Controller
                     ->where('is_active', true)
                     ->whereIn('scope', ['hotel', 'both'])),
             ],
+            ...$this->imageRules(),
+        ];
+    }
+
+    private function imageRules(): array
+    {
+        return [
+            'image' => ['sometimes', 'file', 'image', 'max:5120'],
+            'images' => ['sometimes', 'array', 'size:1'],
+            'images.*' => ['file', 'image', 'max:5120'],
+            'alt_text' => ['nullable', 'string', 'max:150'],
+            'image_alt_texts' => ['sometimes', 'array', 'size:1'],
+            'image_alt_texts.*' => ['nullable', 'string', 'max:150'],
+            'is_cover' => ['nullable', 'boolean'],
         ];
     }
 
@@ -156,6 +194,34 @@ class OwnerHotelController extends Controller
         }
 
         $hotel->services()->sync($validated['service_ids']);
+    }
+
+    private function storeImages(Hotel $hotel, array $validated): void
+    {
+        $image = $validated['image'] ?? ($validated['images'][0] ?? null);
+
+        if (! $image) {
+            return;
+        }
+
+        $hasCoverImage = $hotel->images()->where('is_cover', true)->exists();
+        $nextSortOrder = (int) $hotel->images()->max('sort_order') + 1;
+        $isCover = array_key_exists('is_cover', $validated)
+            ? (bool) $validated['is_cover']
+            : ! $hasCoverImage;
+
+        if ($isCover) {
+            $hotel->images()->update(['is_cover' => false]);
+        }
+
+        $path = $image->store("hotels/{$hotel->id}", 'public');
+
+        $hotel->images()->create([
+            'image_url' => Storage::disk('public')->url($path),
+            'alt_text' => $validated['alt_text'] ?? ($validated['image_alt_texts'][0] ?? $hotel->name),
+            'is_cover' => $isCover,
+            'sort_order' => $nextSortOrder,
+        ]);
     }
 
     private function hotelPayload(array $validated, ?Hotel $hotel = null): array
