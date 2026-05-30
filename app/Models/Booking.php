@@ -29,6 +29,7 @@ class Booking extends Model
         'children_count',
         'units_booked',
         'status',
+        'payment_method',
         'payment_status',
         'subtotal_amount',
         'taxes_amount',

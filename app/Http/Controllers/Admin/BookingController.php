@@ -67,7 +67,7 @@ class BookingController extends Controller
         return view('admin.bookings.show', [
             'booking' => $booking->load(['hotel:id,name,slug', 'roomType:id,name,total_units', 'user:id,name,email', 'guests', 'payments']),
             'statuses' => $this->statuses(),
-            'paymentStatuses' => ['pending', 'authorized', 'paid', 'failed', 'refunded'],
+            'paymentStatuses' => ['pending', 'paid', 'failed', 'refunded'],
         ]);
     }
 
@@ -88,7 +88,7 @@ class BookingController extends Controller
     {
         $validated = $request->validate([
             'amount' => ['required', 'numeric', 'min:0.01'],
-            'status' => ['required', 'string', 'in:pending,authorized,paid,failed,refunded'],
+            'status' => ['required', 'string', 'in:paid,failed,refunded'],
             'transaction_reference' => ['nullable', 'string', 'max:100'],
         ]);
 
@@ -113,6 +113,6 @@ class BookingController extends Controller
 
     private function paymentStatuses(): array
     {
-        return ['pending', 'partial', 'paid', 'failed', 'refunded'];
+        return ['pending', 'paid', 'failed', 'refunded'];
     }
 }

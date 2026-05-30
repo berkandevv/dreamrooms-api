@@ -38,8 +38,8 @@
       ],
       "payments": [
         {
-          "provider": "stripe",
-          "amount": 938.85,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "pi_demo_0001",
@@ -56,7 +56,8 @@
       },
       "customer_name": "Laura García Molina",
       "customer_email": "cliente01@dreamrooms.test",
-      "customer_phone": "+34661111222"
+      "customer_phone": "+34661111222",
+      "payment_method": "card"
     },
     {
       "key": "booking_02",
@@ -91,8 +92,8 @@
       ],
       "payments": [
         {
-          "provider": "paypal",
-          "amount": 818.4,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "PAY-DEMO-0002",
@@ -101,7 +102,8 @@
             "canal": "web"
           }
         }
-      ]
+      ],
+      "payment_method": "card"
     },
     {
       "key": "booking_03",
@@ -135,8 +137,8 @@
       ],
       "payments": [
         {
-          "provider": "stripe",
-          "amount": 523.12,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "pi_demo_0003",
@@ -150,7 +152,8 @@
         "rating": 4,
         "comment": "Muy buena ubicación y personal atento, el desayuno fue variado",
         "status": "published"
-      }
+      },
+      "payment_method": "card"
     },
     {
       "key": "booking_04",
@@ -175,7 +178,8 @@
           "is_primary": true
         }
       ],
-      "payments": []
+      "payments": [],
+      "payment_method": "hotel"
     },
     {
       "key": "booking_05",
@@ -188,7 +192,7 @@
       "children_count": 0,
       "units_booked": 1,
       "status": "confirmed",
-      "payment_status": "partial",
+      "payment_status": "pending",
       "booked_at": "2026-05-21 16:10:00",
       "confirmed_at": "2026-05-21 16:30:00",
       "notes": "Llegada aproximada a las 20:00",
@@ -208,19 +212,8 @@
           "is_primary": false
         }
       ],
-      "payments": [
-        {
-          "provider": "manual",
-          "amount": 600,
-          "currency": "EUR",
-          "status": "paid",
-          "transaction_reference": "TRANSFER-DEMO-0005",
-          "paid_at": "2026-05-21 16:35:00",
-          "metadata": {
-            "canal": "transferencia"
-          }
-        }
-      ]
+      "payments": [],
+      "payment_method": "hotel"
     },
     {
       "key": "booking_06",
@@ -263,8 +256,8 @@
       ],
       "payments": [
         {
-          "provider": "stripe",
-          "amount": 450,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "pi_demo_0006",
@@ -278,7 +271,8 @@
         "rating": 5,
         "comment": "Habitación muy cómoda y trato excelente durante toda la estancia",
         "status": "published"
-      }
+      },
+      "payment_method": "card"
     },
     {
       "key": "booking_07",
@@ -315,8 +309,8 @@
       ],
       "payments": [
         {
-          "provider": "paypal",
-          "amount": 255.2,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "PAY-DEMO-0007",
@@ -325,7 +319,8 @@
             "canal": "web"
           }
         }
-      ]
+      ],
+      "payment_method": "card"
     },
     {
       "key": "booking_08",
@@ -362,7 +357,7 @@
       ],
       "payments": [
         {
-          "provider": "stripe",
+          "provider": "card",
           "amount": 246.4,
           "currency": "EUR",
           "status": "refunded",
@@ -373,7 +368,8 @@
             "reembolso": "completo"
           }
         }
-      ]
+      ],
+      "payment_method": "card"
     },
     {
       "key": "booking_09",
@@ -408,7 +404,8 @@
           "is_primary": false
         }
       ],
-      "payments": []
+      "payments": [],
+      "payment_method": "hotel"
     },
     {
       "key": "booking_10",
@@ -447,7 +444,7 @@
       "payments": [
         {
           "provider": "manual",
-          "amount": 612,
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "TRANSFER-DEMO-0010",
@@ -461,7 +458,8 @@
         "rating": 4,
         "comment": "Muy buena experiencia, especialmente por la ubicación y la limpieza",
         "status": "published"
-      }
+      },
+      "payment_method": "hotel"
     },
     {
       "key": "booking_0011",
@@ -491,8 +489,8 @@
       ],
       "payments": [
         {
-          "provider": "stripe",
-          "amount": 127.6,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0011",
@@ -506,7 +504,8 @@
         "rating": 4,
         "comment": "Estancia muy agradable, habitación limpia y personal atento",
         "status": "published"
-      }
+      },
+      "payment_method": "card"
     },
     {
       "key": "booking_0012",
@@ -543,8 +542,8 @@
       ],
       "payments": [
         {
-          "provider": "paypal",
-          "amount": 244.2,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0012",
@@ -558,7 +557,8 @@
         "rating": 5,
         "comment": "Buena ubicación para moverse por la zona y cama muy cómoda",
         "status": "published"
-      }
+      },
+      "payment_method": "card"
     },
     {
       "key": "booking_0013",
@@ -596,7 +596,7 @@
       "payments": [
         {
           "provider": "manual",
-          "amount": 455.4,
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0013",
@@ -610,7 +610,8 @@
         "rating": 4,
         "comment": "Todo estuvo bien organizado y el check-in fue rápido",
         "status": "published"
-      }
+      },
+      "payment_method": "hotel"
     },
     {
       "key": "booking_0014",
@@ -647,8 +648,8 @@
       ],
       "payments": [
         {
-          "provider": "stripe",
-          "amount": 360.8,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0014",
@@ -662,7 +663,8 @@
         "rating": 5,
         "comment": "Nos gustó mucho el desayuno y la tranquilidad de la habitación",
         "status": "published"
-      }
+      },
+      "payment_method": "card"
     },
     {
       "key": "booking_0015",
@@ -692,8 +694,8 @@
       ],
       "payments": [
         {
-          "provider": "paypal",
-          "amount": 184.8,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0015",
@@ -707,7 +709,8 @@
         "rating": 4,
         "comment": "Hotel recomendable para una escapada corta, volveríamos",
         "status": "published"
-      }
+      },
+      "payment_method": "card"
     },
     {
       "key": "booking_0016",
@@ -750,7 +753,7 @@
       "payments": [
         {
           "provider": "manual",
-          "amount": 486.2,
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0016",
@@ -764,7 +767,8 @@
         "rating": 5,
         "comment": "La habitación era amplia y el baño estaba muy cuidado",
         "status": "published"
-      }
+      },
+      "payment_method": "hotel"
     },
     {
       "key": "booking_0017",
@@ -801,8 +805,8 @@
       ],
       "payments": [
         {
-          "provider": "stripe",
-          "amount": 387.2,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0017",
@@ -816,7 +820,8 @@
         "rating": 4,
         "comment": "Servicio correcto, buena relación calidad precio",
         "status": "published"
-      }
+      },
+      "payment_method": "card"
     },
     {
       "key": "booking_0018",
@@ -853,8 +858,8 @@
       ],
       "payments": [
         {
-          "provider": "paypal",
-          "amount": 899.8,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0018",
@@ -868,7 +873,8 @@
         "rating": 5,
         "comment": "La ubicación fue perfecta y el descanso muy bueno",
         "status": "published"
-      }
+      },
+      "payment_method": "card"
     },
     {
       "key": "booking_0019",
@@ -899,7 +905,7 @@
       "payments": [
         {
           "provider": "manual",
-          "amount": 255.2,
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0019",
@@ -913,7 +919,8 @@
         "rating": 4,
         "comment": "Personal amable y zonas comunes bien mantenidas",
         "status": "published"
-      }
+      },
+      "payment_method": "hotel"
     },
     {
       "key": "booking_0020",
@@ -950,8 +957,8 @@
       ],
       "payments": [
         {
-          "provider": "stripe",
-          "amount": 211.2,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0020",
@@ -965,7 +972,8 @@
         "rating": 5,
         "comment": "Experiencia positiva, especialmente por la limpieza y el trato",
         "status": "published"
-      }
+      },
+      "payment_method": "card"
     },
     {
       "key": "booking_0021",
@@ -1007,8 +1015,8 @@
       ],
       "payments": [
         {
-          "provider": "paypal",
-          "amount": 409.2,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0021",
@@ -1022,7 +1030,8 @@
         "rating": 4,
         "comment": "Estancia muy agradable, habitación limpia y personal atento",
         "status": "published"
-      }
+      },
+      "payment_method": "card"
     },
     {
       "key": "booking_0022",
@@ -1060,7 +1069,7 @@
       "payments": [
         {
           "provider": "manual",
-          "amount": 899.8,
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0022",
@@ -1074,7 +1083,8 @@
         "rating": 5,
         "comment": "Buena ubicación para moverse por la zona y cama muy cómoda",
         "status": "published"
-      }
+      },
+      "payment_method": "hotel"
     },
     {
       "key": "booking_0023",
@@ -1104,8 +1114,8 @@
       ],
       "payments": [
         {
-          "provider": "stripe",
-          "amount": 605,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0023",
@@ -1119,7 +1129,8 @@
         "rating": 4,
         "comment": "Todo estuvo bien organizado y el check-in fue rápido",
         "status": "published"
-      }
+      },
+      "payment_method": "card"
     },
     {
       "key": "booking_0024",
@@ -1156,8 +1167,8 @@
       ],
       "payments": [
         {
-          "provider": "paypal",
-          "amount": 160.6,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0024",
@@ -1171,7 +1182,8 @@
         "rating": 5,
         "comment": "Nos gustó mucho el desayuno y la tranquilidad de la habitación",
         "status": "published"
-      }
+      },
+      "payment_method": "card"
     },
     {
       "key": "booking_0025",
@@ -1209,7 +1221,7 @@
       "payments": [
         {
           "provider": "manual",
-          "amount": 323.4,
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0025",
@@ -1223,7 +1235,8 @@
         "rating": 4,
         "comment": "Hotel recomendable para una escapada corta, volveríamos",
         "status": "published"
-      }
+      },
+      "payment_method": "hotel"
     },
     {
       "key": "booking_0026",
@@ -1265,8 +1278,8 @@
       ],
       "payments": [
         {
-          "provider": "stripe",
-          "amount": 378.4,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0026",
@@ -1280,7 +1293,8 @@
         "rating": 5,
         "comment": "La habitación era amplia y el baño estaba muy cuidado",
         "status": "published"
-      }
+      },
+      "payment_method": "card"
     },
     {
       "key": "booking_0027",
@@ -1310,8 +1324,8 @@
       ],
       "payments": [
         {
-          "provider": "paypal",
-          "amount": 943.8,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0027",
@@ -1325,7 +1339,8 @@
         "rating": 4,
         "comment": "Servicio correcto, buena relación calidad precio",
         "status": "published"
-      }
+      },
+      "payment_method": "card"
     },
     {
       "key": "booking_0028",
@@ -1363,7 +1378,7 @@
       "payments": [
         {
           "provider": "manual",
-          "amount": 226.6,
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0028",
@@ -1377,7 +1392,8 @@
         "rating": 5,
         "comment": "La ubicación fue perfecta y el descanso muy bueno",
         "status": "published"
-      }
+      },
+      "payment_method": "hotel"
     },
     {
       "key": "booking_0029",
@@ -1414,8 +1430,8 @@
       ],
       "payments": [
         {
-          "provider": "stripe",
-          "amount": 202.4,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0029",
@@ -1429,7 +1445,8 @@
         "rating": 4,
         "comment": "Personal amable y zonas comunes bien mantenidas",
         "status": "published"
-      }
+      },
+      "payment_method": "card"
     },
     {
       "key": "booking_0030",
@@ -1466,8 +1483,8 @@
       ],
       "payments": [
         {
-          "provider": "paypal",
-          "amount": 391.6,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0030",
@@ -1481,7 +1498,8 @@
         "rating": 5,
         "comment": "Experiencia positiva, especialmente por la limpieza y el trato",
         "status": "published"
-      }
+      },
+      "payment_method": "card"
     },
     {
       "key": "booking_0031",
@@ -1517,7 +1535,7 @@
       "payments": [
         {
           "provider": "manual",
-          "amount": 1348.6,
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "DEMO-REVIEW-0031",
@@ -1531,7 +1549,8 @@
         "rating": 4,
         "comment": "Estancia muy agradable, habitación limpia y personal atento",
         "status": "published"
-      }
+      },
+      "payment_method": "hotel"
     },
     {
       "key": "booking_review_pending_demo",
@@ -1569,8 +1588,8 @@
       ],
       "payments": [
         {
-          "provider": "stripe",
-          "amount": 150,
+          "provider": "card",
+          "amount": "total",
           "currency": "EUR",
           "status": "paid",
           "transaction_reference": "pi_demo_review_pending",
@@ -1580,7 +1599,8 @@
             "demo": "completed_without_review"
           }
         }
-      ]
+      ],
+      "payment_method": "card"
     }
   ],
   "favorites": [

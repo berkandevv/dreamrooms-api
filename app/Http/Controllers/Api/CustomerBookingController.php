@@ -77,6 +77,7 @@ class CustomerBookingController extends Controller
             'adults_count' => ['required', 'integer', 'min:1'],
             'children_count' => ['nullable', 'integer', 'min:0'],
             'units_booked' => ['nullable', 'integer', 'min:1'],
+            'payment_method' => ['required', 'string', 'in:card,hotel'],
             'customer_name' => ['required', 'string', 'max:150'],
             'customer_email' => ['required', 'email', 'max:150'],
             'customer_phone' => ['nullable', 'string', 'max:30'],
@@ -148,6 +149,7 @@ class CustomerBookingController extends Controller
 
         $this->decrementAvailability($availability, $stayData['units_booked']);
         $this->createBookingGuests($booking, $validated);
+        $this->createSimulatedCardPayment($booking, $validated);
 
         return $booking;
     }
@@ -467,16 +469,39 @@ class CustomerBookingController extends Controller
             'adults_count' => $validated['adults_count'],
             'children_count' => $childrenCount,
             'units_booked' => $validated['units_booked'] ?? 1,
-            'status' => 'pending',
-            'payment_status' => 'pending',
+            'status' => $validated['payment_method'] === 'card' ? 'confirmed' : 'pending',
+            'payment_method' => $validated['payment_method'],
+            'payment_status' => $validated['payment_method'] === 'card' ? 'paid' : 'pending',
             'subtotal_amount' => $amounts['subtotal'],
             'taxes_amount' => $amounts['taxes'],
             'discount_amount' => $amounts['discount'],
             'total_amount' => $amounts['total'],
             'currency' => 'EUR',
             'booked_at' => now(),
-            'expires_at' => now()->addMinutes(30),
+            'expires_at' => $validated['payment_method'] === 'card' ? null : now()->addMinutes(30),
+            'confirmed_at' => $validated['payment_method'] === 'card' ? now() : null,
             'notes' => $validated['notes'] ?? null,
+        ]);
+    }
+
+    // Registra el pago simulado cuando el cliente elige tarjeta
+    private function createSimulatedCardPayment(Booking $booking, array $validated): void
+    {
+        if ($validated['payment_method'] !== 'card') {
+            return;
+        }
+
+        $booking->payments()->create([
+            'provider' => 'card',
+            'amount' => $booking->total_amount,
+            'currency' => $booking->currency,
+            'status' => 'paid',
+            'transaction_reference' => 'CARD-'.$booking->booking_reference,
+            'paid_at' => now(),
+            'metadata' => [
+                'simulated' => true,
+                'channel' => 'customer_checkout',
+            ],
         ]);
     }
 

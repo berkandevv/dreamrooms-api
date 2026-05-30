@@ -195,6 +195,7 @@ Body ejemplo:
   "adults_count": 2,
   "children_count": 0,
   "units_booked": 1,
+  "payment_method": "card",
   "customer_name": "Laura García Molina",
   "customer_email": "cliente@example.com",
   "customer_phone": "+34600000000",
@@ -217,6 +218,11 @@ La reserva valida:
 - disponibilidad diaria;
 - estancia mínima;
 - unidades disponibles.
+
+Valores de `payment_method`:
+
+- `card`: pago simulado con tarjeta, la reserva queda `confirmed` y `paid`
+- `hotel`: pago en el hotel, la reserva queda `pending` y el owner registrará el pago completo
 
 ## 4.4 `POST /api/customer/bookings/{bookingId}/cancel`
 
@@ -456,9 +462,10 @@ Si pasa a `cancelled`, se restauran unidades en la disponibilidad diaria.
 
 ## 8.4 `POST /api/owner/bookings/{bookingId}/payments`
 
-Registra un pago o intento de pago sobre una reserva de un hotel del propietario autenticado.
+Registra un pago manual completo sobre una reserva de pago en hotel.
 
 Esta ruta está en owner, no en cliente, para evitar que un cliente marque su propia reserva como pagada.
+No permite pagos parciales ni reservas pagadas por tarjeta.
 
 Body:
 
@@ -477,18 +484,13 @@ Body:
 
 Valores de `provider`:
 
-- `stripe`
-- `paypal`
 - `manual`
 
 Valores de `status`:
 
-- `pending`
-- `authorized`
 - `paid`
 - `failed`
 - `refunded`
-- `partially_refunded`
 
 Si no se envía `status`, se usa `paid` por defecto.
 

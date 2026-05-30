@@ -30,7 +30,8 @@ return new class extends Migration
             $table->unsignedTinyInteger('children_count');
             $table->unsignedSmallInteger('units_booked');
             $table->enum('status', ['pending', 'confirmed', 'cancelled', 'completed']);
-            $table->enum('payment_status', ['pending', 'partial', 'paid', 'failed', 'refunded']);
+            $table->enum('payment_method', ['card', 'hotel'])->default('hotel');
+            $table->enum('payment_status', ['pending', 'paid', 'failed', 'refunded']);
             $table->decimal('subtotal_amount', 10, 2);
             $table->decimal('taxes_amount', 10, 2);
             $table->decimal('discount_amount', 10, 2);

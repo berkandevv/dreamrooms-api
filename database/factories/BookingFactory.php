@@ -39,6 +39,7 @@ class BookingFactory extends Factory
             'children_count' => fake()->numberBetween(0, 2),
             'units_booked' => 1,
             'status' => 'completed',
+            'payment_method' => 'card',
             'payment_status' => 'paid',
             'subtotal_amount' => $subtotal,
             'taxes_amount' => $taxes,

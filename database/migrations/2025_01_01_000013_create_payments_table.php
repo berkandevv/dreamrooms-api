@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('booking_id')->constrained('bookings')->cascadeOnDelete();
-            $table->enum('provider', ['stripe', 'paypal', 'manual']);
+            $table->enum('provider', ['card', 'manual']);
             $table->decimal('amount', 10, 2);
             $table->char('currency', 3)->default('EUR');
             $table->enum('status', ['pending', 'authorized', 'paid', 'failed', 'refunded']);

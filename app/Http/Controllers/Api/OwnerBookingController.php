@@ -22,7 +22,7 @@ class OwnerBookingController extends Controller
         $validated = $request->validate([
             'hotel_id' => ['nullable', 'integer', 'exists:hotels,id'],
             'status' => ['nullable', 'string', 'in:pending,confirmed,cancelled,completed'],
-            'payment_status' => ['nullable', 'string', 'in:pending,partial,paid,failed,refunded'],
+            'payment_status' => ['nullable', 'string', 'in:pending,paid,failed,refunded'],
         ]);
         // El owner solo lista reservas de hoteles que le pertenecen
         $ownerUserId = $request->user()->id;
@@ -72,10 +72,10 @@ class OwnerBookingController extends Controller
     public function payments(Request $request, int $bookingId)
     {
         $validated = $request->validate([
-            'provider' => ['required', 'string', 'in:stripe,paypal,manual'],
+            'provider' => ['nullable', 'string', 'in:manual'],
             'amount' => ['required', 'numeric', 'min:0.01'],
             'currency' => ['nullable', 'string', 'size:3'],
-            'status' => ['nullable', 'string', 'in:pending,authorized,paid,failed,refunded'],
+            'status' => ['nullable', 'string', 'in:paid,failed,refunded'],
             'transaction_reference' => ['nullable', 'string', 'max:100'],
             'metadata' => ['nullable', 'array'],
         ]);

@@ -22,6 +22,7 @@ class BookingResource extends JsonResource
             'id' => $this->id,
             'booking_reference' => $this->booking_reference,
             'status' => $this->status,
+            'payment_method' => $this->payment_method,
             'payment_status' => $this->payment_status,
             'hotel' => [
                 'id' => $this->hotel_id,

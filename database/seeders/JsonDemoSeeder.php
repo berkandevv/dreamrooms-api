@@ -295,6 +295,7 @@ class JsonDemoSeeder extends Seeder
                 'children_count' => $bookingData['children_count'] ?? 0,
                 'units_booked' => $bookingData['units_booked'] ?? 1,
                 'status' => $bookingData['status'],
+                'payment_method' => $bookingData['payment_method'] ?? 'hotel',
                 'payment_status' => $bookingData['payment_status'],
                 'subtotal_amount' => $subtotal,
                 'taxes_amount' => $taxes,
@@ -347,6 +348,10 @@ class JsonDemoSeeder extends Seeder
         $booking->payments()->delete();
 
         foreach ($payments as $paymentData) {
+            if (($paymentData['amount'] ?? null) === 'total') {
+                $paymentData['amount'] = $booking->total_amount;
+            }
+
             $booking->payments()->create($paymentData);
         }
     }

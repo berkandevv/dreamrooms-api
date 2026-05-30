@@ -56,6 +56,12 @@ class BookingService
             $booking = $this->lockBooking($bookingId, $ownerUserId);
             $paymentStatus = $validated['status'] ?? 'paid';
 
+            if ($booking->payment_method !== 'hotel') {
+                throw ValidationException::withMessages([
+                    'payment' => ['Only pay-at-hotel bookings can receive manual owner payments.'],
+                ]);
+            }
+
             if ($booking->status === 'cancelled' && $paymentStatus !== 'refunded') {
                 throw ValidationException::withMessages([
                     'amount' => ['Cancelled bookings can only receive refunded payments.'],
@@ -69,15 +75,16 @@ class BookingService
             }
 
             $amount = round((float) $validated['amount'], 2);
-            $paidAmount = (float) Payment::query()
-                ->where('booking_id', $booking->id)
-                ->where('status', 'paid')
-                ->sum('amount');
-            $remainingAmount = round((float) $booking->total_amount - $paidAmount, 2);
 
-            if ($paymentStatus === 'paid' && $amount > $remainingAmount) {
+            if ($paymentStatus === 'paid' && $amount !== round((float) $booking->total_amount, 2)) {
                 throw ValidationException::withMessages([
-                    'amount' => ['The payment amount cannot exceed the remaining booking total.'],
+                    'amount' => ['The payment amount must match the full booking total. Partial payments are not allowed.'],
+                ]);
+            }
+
+            if ($paymentStatus === 'paid' && $booking->payment_status === 'paid') {
+                throw ValidationException::withMessages([
+                    'payment' => ['This booking is already paid.'],
                 ]);
             }
 
@@ -175,7 +182,6 @@ class BookingService
         $paymentStatus = match (true) {
             $latestPaymentStatus === 'refunded' => 'refunded',
             $paidAmount >= $totalAmount => 'paid',
-            $paidAmount > 0 => 'partial',
             $latestPaymentStatus === 'failed' => 'failed',
             default => 'pending',
         };
