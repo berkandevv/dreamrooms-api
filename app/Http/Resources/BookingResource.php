@@ -77,6 +77,20 @@ class BookingResource extends JsonResource
                 'metadata' => $this->when($request->user()?->hasRole(['owner', 'admin']), $payment->metadata),
                 'paid_at' => $payment->paid_at?->toISOString(),
             ])),
+            'has_review' => $this->when(
+                $this->relationLoaded('review'),
+                fn () => $this->review !== null
+            ),
+            'can_review' => $this->when(
+                $this->relationLoaded('review'),
+                fn () => $this->status === 'completed' && $this->review === null
+            ),
+            'review' => $this->whenLoaded('review', fn () => $this->review ? [
+                'id' => $this->review->id,
+                'rating' => $this->review->rating,
+                'comment' => $this->review->comment,
+                'status' => $this->review->status,
+            ] : null),
             'notes' => $this->notes,
             'booked_at' => $this->booked_at?->toISOString(),
             'expires_at' => $this->expires_at?->toISOString(),

@@ -110,6 +110,7 @@ class CustomerBookingController extends Controller
             'user:id,name,email',
             'hotel:id,name,slug',
             'roomType:id,name',
+            'review:id,booking_id,rating,comment,status',
         ];
     }
 

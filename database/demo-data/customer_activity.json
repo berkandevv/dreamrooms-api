@@ -1532,6 +1532,55 @@
         "comment": "Estancia muy agradable, habitación limpia y personal atento",
         "status": "published"
       }
+    },
+    {
+      "key": "booking_review_pending_demo",
+      "reference": "DR-2026-REVIEW-DEMO",
+      "user_key": "customer_02",
+      "room_type_key": "hotel_06_doble",
+      "check_in": "2026-06-26",
+      "check_out": "2026-06-28",
+      "adults_count": 2,
+      "children_count": 0,
+      "units_booked": 1,
+      "status": "completed",
+      "payment_status": "paid",
+      "booked_at": "2026-05-22 12:10:00",
+      "confirmed_at": "2026-05-22 12:15:00",
+      "customer_name": "Miguel Torres Blanco",
+      "customer_email": "cliente02@dreamrooms.test",
+      "customer_phone": "+34662222333",
+      "notes": "Reserva demo completada sin reseña para probar el formulario de comentarios",
+      "guests": [
+        {
+          "full_name": "Miguel Torres Blanco",
+          "document_type": "DNI",
+          "document_number": "34567890C",
+          "birth_date": "1991-11-08",
+          "is_primary": true
+        },
+        {
+          "full_name": "Patricia Alonso Vega",
+          "document_type": "DNI",
+          "document_number": "45678901D",
+          "birth_date": "1992-02-17",
+          "is_primary": false
+        }
+      ],
+      "payments": [
+        {
+          "provider": "stripe",
+          "amount": 150,
+          "currency": "EUR",
+          "status": "paid",
+          "transaction_reference": "pi_demo_review_pending",
+          "paid_at": "2026-05-22 12:20:00",
+          "metadata": {
+            "canal": "web",
+            "demo": "completed_without_review"
+          }
+        }
+      ]
     }
   ],
   "favorites": [
