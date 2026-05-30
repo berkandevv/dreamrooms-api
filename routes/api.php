@@ -28,6 +28,7 @@ Route::get('/hotels/{slug}/reviews', [HotelController::class, 'reviews']);
 
 // Disponibilidad pública de habitaciones publicadas
 Route::get('/room-types/{roomTypeId}/availability', [RoomTypeController::class, 'availability']);
+Route::get('/room-types/{roomTypeId}/availability/quote', [RoomTypeController::class, 'quote']);
 
 // Área de cliente: reservas y favoritos siempre usan el usuario del token
 Route::middleware(['auth:sanctum', 'role:customer'])->group(function (): void {

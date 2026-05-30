@@ -10,6 +10,7 @@ use App\Models\Booking;
 use App\Models\RoomType;
 use App\Models\RoomTypeAvailability;
 use App\Models\User;
+use App\Services\RoomTypeAvailabilityService;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -19,6 +20,13 @@ use Illuminate\Validation\ValidationException;
 
 class CustomerBookingController extends Controller
 {
+    private readonly RoomTypeAvailabilityService $availabilityService;
+
+    public function __construct(RoomTypeAvailabilityService $availabilityService)
+    {
+        $this->availabilityService = $availabilityService;
+    }
+
     // Lista las reservas del cliente autenticado
     public function index(Request $request)
     {
@@ -159,17 +167,7 @@ class CustomerBookingController extends Controller
     // Prepara los datos derivados de fechas y ocupación antes de reservar
     private function buildStayData(array $validated): array
     {
-        $checkIn = CarbonImmutable::parse($validated['check_in']);
-        $checkOut = CarbonImmutable::parse($validated['check_out']);
-
-        return [
-            'check_in' => $checkIn,
-            'check_out' => $checkOut,
-            'nights' => (int) $checkIn->diffInDays($checkOut),
-            'units_booked' => $validated['units_booked'] ?? 1,
-            'children_count' => $validated['children_count'] ?? 0,
-            'stay_dates' => $this->buildStayDates($checkIn, $checkOut),
-        ];
+        return $this->availabilityService->buildStayData($validated);
     }
 
     // Bloquea y valida la disponibilidad necesaria para la estancia solicitada
@@ -177,7 +175,7 @@ class CustomerBookingController extends Controller
     {
         $availability = $this->lockAvailability($roomType, $stayData['stay_dates']);
 
-        $this->validateAvailability(
+        $this->availabilityService->validateAvailability(
             $availability,
             $stayData['stay_dates'],
             $stayData['nights'],
@@ -368,64 +366,19 @@ class CustomerBookingController extends Controller
     // Genera las noches de estancia sin incluir el día de salida
     private function buildStayDates(CarbonImmutable $checkIn, CarbonImmutable $checkOut): array
     {
-        $stayDates = [];
-
-        for ($date = $checkIn; $date->lt($checkOut); $date = $date->addDay()) {
-            $stayDates[] = $date->toDateString();
-        }
-
-        return $stayDates;
+        return $this->availabilityService->buildStayDates($checkIn, $checkOut);
     }
 
     // Bloquea la disponibilidad para evitar dobles reservas simultáneas
     private function lockAvailability(RoomType $roomType, array $stayDates): Collection
     {
-        return $roomType->availability()
-            ->whereIn('date', $stayDates)
-            ->lockForUpdate()
-            ->get()
-            ->keyBy(fn ($day) => $day->date->toDateString());
-    }
-
-    // Comprueba que todas las noches estén abiertas y tengan unidades suficientes
-    private function validateAvailability(Collection $availability, array $stayDates, int $nights, int $unitsBooked): void
-    {
-        if ($availability->count() !== $nights) {
-            throw ValidationException::withMessages([
-                'check_in' => ['There is no availability for every night in the selected stay.'],
-            ]);
-        }
-
-        foreach ($stayDates as $stayDate) {
-            $day = $availability[$stayDate];
-
-            if ($day->status !== 'open' || $day->available_units < $unitsBooked) {
-                throw ValidationException::withMessages([
-                    'check_in' => ['The selected room type is not available for the requested dates.'],
-                ]);
-            }
-
-            if ($day->min_stay_nights !== null && $nights < $day->min_stay_nights) {
-                throw ValidationException::withMessages([
-                    'check_out' => ["The selected dates require at least {$day->min_stay_nights} nights."],
-                ]);
-            }
-        }
+        return $this->availabilityService->availabilityForStay($roomType, $stayDates, lock: true);
     }
 
     // Calcula los importes finales a partir del precio diario de la estancia
     private function calculateAmounts(Collection $availability, RoomType $roomType, int $unitsBooked): array
     {
-        $subtotal = $availability->sum(fn ($day) => (float) $day->price) * $unitsBooked;
-        $taxes = round($subtotal * ((float) $roomType->hotel->tax_rate_percent / 100), 2);
-        $discount = round($subtotal * ((float) $roomType->hotel->discount_rate_percent / 100), 2);
-
-        return [
-            'subtotal' => round($subtotal, 2),
-            'taxes' => $taxes,
-            'discount' => $discount,
-            'total' => round($subtotal + $taxes - $discount, 2),
-        ];
+        return $this->availabilityService->calculateAmounts($availability, $roomType, $unitsBooked);
     }
 
     // Busca un cliente activo antes de completar la reserva

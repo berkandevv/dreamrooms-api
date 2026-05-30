@@ -165,6 +165,87 @@ Ejemplo:
 GET /api/room-types/1/availability?from=2026-05-01&to=2026-05-03
 ```
 
+Este endpoint devuelve filas de calendario por fecha. El rango `from`/`to` es inclusivo porque sirve para pintar calendario.
+
+Para calcular una estancia, la API de reservas usa otra regla: `check_in` incluido y `check_out` excluido. Una estancia del `2026-05-01` al `2026-05-03` ocupa y cobra solo las noches `2026-05-01` y `2026-05-02`.
+
+Conceptos de unidades:
+
+- `total_units`: inventario total del tipo de habitación. Ejemplo: el hotel tiene 8 habitaciones dobles en total.
+- `available_units`: disponibilidad de una fecha concreta del calendario. Cambia por día y baja cuando se reserva esa noche.
+- `available_units_for_stay`: disponibilidad real para una estancia completa. Es el mínimo de `available_units` entre las noches seleccionadas, y será `0` si alguna noche falta, está cerrada o no cumple las reglas.
+
+## 3.2 `GET /api/room-types/{roomTypeId}/availability/quote`
+
+Comprueba si una estancia concreta se puede reservar y devuelve el mismo cálculo de noches e importes que usará `POST /api/customer/bookings`.
+
+Query params obligatorios:
+
+```http
+check_in=2026-05-01
+check_out=2026-05-03
+```
+
+Query params opcionales:
+
+```http
+units_booked=1
+```
+
+Ejemplo:
+
+```http
+GET /api/room-types/1/availability/quote?check_in=2026-05-01&check_out=2026-05-03&units_booked=1
+```
+
+Respuesta:
+
+```json
+{
+  "data": {
+    "room_type_id": 1,
+    "check_in": "2026-05-01",
+    "check_out": "2026-05-03",
+    "nights": 2,
+    "stay_dates": ["2026-05-01", "2026-05-02"],
+    "units_booked": 1,
+    "is_available": true,
+    "total_units": 8,
+    "available_units_for_stay": 6,
+    "remaining_units_after_booking": 5,
+    "daily_available_units": [
+      {
+        "date": "2026-05-01",
+        "available_units": 6,
+        "status": "open"
+      },
+      {
+        "date": "2026-05-02",
+        "available_units": 7,
+        "status": "open"
+      }
+    ],
+    "availability_issues": {
+      "is_available": true,
+      "missing_dates": [],
+      "closed_dates": [],
+      "insufficient_dates": [],
+      "min_stay_violations": []
+    },
+    "subtotal_amount": 420,
+    "taxes_amount": 42,
+    "discount_amount": 0,
+    "total_amount": 462,
+    "currency": "EUR"
+  }
+}
+
+```
+
+Usa este endpoint en el front cuando el usuario ya ha elegido entrada, salida y unidades. `GET /availability` queda para pintar días del calendario.
+
+Para mostrar “quedan X habitaciones”, usa `available_units_for_stay`, no `total_units` ni la suma de `available_units`. En el ejemplo anterior se muestran 6 disponibles para toda la estancia porque la noche más limitada tiene 6.
+
 ---
 
 # 4. Área de cliente
