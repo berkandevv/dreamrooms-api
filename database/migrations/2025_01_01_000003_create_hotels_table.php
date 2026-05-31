@@ -31,7 +31,7 @@ return new class extends Migration
             $table->time('check_in_time')->nullable();
             $table->time('check_out_time')->nullable();
             $table->text('cancellation_policy')->nullable();
-            $table->decimal('tax_rate_percent', 5, 2)->default(10);
+            $table->decimal('tax_rate_percent', 5, 2)->default(0);
             $table->decimal('discount_rate_percent', 5, 2)->default(0);
             $table->boolean('pets_allowed')->default(false);
             $table->boolean('smoking_allowed')->default(false);

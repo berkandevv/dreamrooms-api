@@ -216,7 +216,7 @@ class OwnerHotelController extends Controller
             'check_in_time' => $validated['check_in_time'] ?? $hotel?->check_in_time,
             'check_out_time' => $validated['check_out_time'] ?? $hotel?->check_out_time,
             'cancellation_policy' => $validated['cancellation_policy'] ?? $hotel?->cancellation_policy,
-            'tax_rate_percent' => $validated['tax_rate_percent'] ?? $hotel?->tax_rate_percent ?? 10,
+            'tax_rate_percent' => $validated['tax_rate_percent'] ?? $hotel?->tax_rate_percent ?? 0,
             'discount_rate_percent' => $validated['discount_rate_percent'] ?? $hotel?->discount_rate_percent ?? 0,
             'pets_allowed' => $validated['pets_allowed'] ?? $hotel?->pets_allowed ?? false,
             'smoking_allowed' => $validated['smoking_allowed'] ?? $hotel?->smoking_allowed ?? false,

@@ -164,7 +164,7 @@ class JsonDemoSeeder extends Seeder
                     'check_in_time' => $hotelData['check_in_time'] ?? '15:00:00',
                     'check_out_time' => $hotelData['check_out_time'] ?? '11:00:00',
                     'cancellation_policy' => $hotelData['cancellation_policy'] ?? null,
-                    'tax_rate_percent' => $hotelData['tax_rate_percent'] ?? 10,
+                    'tax_rate_percent' => $hotelData['tax_rate_percent'] ?? 0,
                     'discount_rate_percent' => $hotelData['discount_rate_percent'] ?? 0,
                     'pets_allowed' => $hotelData['pets_allowed'] ?? false,
                     'smoking_allowed' => $hotelData['smoking_allowed'] ?? false,
