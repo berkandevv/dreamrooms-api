@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class CustomerFavoriteController extends Controller
 {
+    // Lista los hoteles favoritos del cliente
     public function index(Request $request)
     {
         // Los favoritos se resuelven siempre desde el token para evitar suplantar usuarios
@@ -16,19 +17,11 @@ class CustomerFavoriteController extends Controller
 
         $hotels = Favorite::query()
             ->where('user_id', $user->id)
-            ->whereHas('hotel', fn ($query) => $query->where('status', 'published'))
+            ->whereHas('hotel', fn ($query) => $query->published())
             ->with([
                 'hotel.coverImage',
                 'hotel' => fn ($query) => $query
-                    ->withMin([
-                        'roomTypes' => fn ($roomTypeQuery) => $roomTypeQuery->where('status', 'active'),
-                    ], 'base_price')
-                    ->withAvg([
-                        'reviews as average_rating' => fn ($reviewQuery) => $reviewQuery->where('status', 'published'),
-                    ], 'rating')
-                    ->withCount([
-                        'reviews as reviews_count' => fn ($reviewQuery) => $reviewQuery->where('status', 'published'),
-                    ]),
+                    ->withPublicSummaryMetrics(),
             ])
             ->orderByDesc('created_at')
             ->get()
@@ -37,13 +30,14 @@ class CustomerFavoriteController extends Controller
         return HotelResource::collection($hotels);
     }
 
+    // Añade un hotel a los favoritos del cliente
     public function store(Request $request, int $hotelId)
     {
         // Solo se pueden marcar como favoritos hoteles publicados
         $user = $request->user();
 
         $hotel = Hotel::query()
-            ->where('status', 'published')
+            ->published()
             ->findOrFail($hotelId);
 
         Favorite::query()->firstOrCreate([
@@ -58,13 +52,14 @@ class CustomerFavoriteController extends Controller
         ], 201);
     }
 
+    // Elimina un hotel de los favoritos del cliente
     public function destroy(Request $request, int $hotelId)
     {
         // El borrado queda acotado al favorito del usuario autenticado
         $user = $request->user();
 
         $hotel = Hotel::query()
-            ->where('status', 'published')
+            ->published()
             ->findOrFail($hotelId);
 
         Favorite::query()

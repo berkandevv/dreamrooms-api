@@ -3,15 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Hotel;
+use App\Models\Role;
 use App\Models\User;
+use App\Services\HotelSlugService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class HotelController extends Controller
 {
+    // Inicializa el generador de slugs
+    public function __construct(private readonly HotelSlugService $hotelSlugs) {}
+
+    // Lista los hoteles del panel de administración
     public function index(Request $request): View
     {
         $search = $request->string('q')->toString();
@@ -44,6 +49,7 @@ class HotelController extends Controller
         ]);
     }
 
+    // Muestra el formulario de edición de un hotel
     public function edit(Hotel $hotel): View
     {
         return view('admin.hotels.edit', [
@@ -53,6 +59,7 @@ class HotelController extends Controller
         ]);
     }
 
+    // Actualiza los datos de un hotel
     public function update(Request $request, Hotel $hotel): RedirectResponse
     {
         $validated = $request->validate([
@@ -93,6 +100,7 @@ class HotelController extends Controller
             ->with('status', 'hotel-updated');
     }
 
+    // Devuelve los propietarios activos
     private function owners()
     {
         return User::query()
@@ -102,33 +110,24 @@ class HotelController extends Controller
             ->get(['id', 'name', 'email']);
     }
 
+    // Devuelve los identificadores de los propietarios
     private function ownerRoleIds(): array
     {
-        return \App\Models\Role::query()
+        return Role::query()
             ->where('name', 'owner')
             ->pluck('id')
             ->all();
     }
 
+    // Devuelve los estados permitidos para un hotel
     private function statuses(): array
     {
         return ['draft', 'published', 'inactive'];
     }
 
+    // Genera un slug único para un hotel
     private function generateUniqueSlug(string $name, ?int $ignoreHotelId = null): string
     {
-        $baseSlug = Str::slug($name);
-        $slug = $baseSlug;
-        $counter = 2;
-
-        while (Hotel::query()
-            ->where('slug', $slug)
-            ->when($ignoreHotelId, fn ($query) => $query->whereKeyNot($ignoreHotelId))
-            ->exists()) {
-            $slug = "{$baseSlug}-{$counter}";
-            $counter++;
-        }
-
-        return $slug;
+        return $this->hotelSlugs->generate($name, $ignoreHotelId);
     }
 }

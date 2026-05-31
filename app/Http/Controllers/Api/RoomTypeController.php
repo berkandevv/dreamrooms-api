@@ -12,11 +12,13 @@ class RoomTypeController extends Controller
 {
     private readonly RoomTypeAvailabilityService $availabilityService;
 
+    // Inicializa el servicio de disponibilidad
     public function __construct(RoomTypeAvailabilityService $availabilityService)
     {
         $this->availabilityService = $availabilityService;
     }
 
+    // Lista la disponibilidad pública de un tipo de habitación
     public function availability(Request $request, int $roomTypeId)
     {
         $validated = $request->validate([
@@ -29,8 +31,7 @@ class RoomTypeController extends Controller
 
         // Devuelve la disponibilidad pública de un tipo de habitación activo
         $roomType = RoomType::query()
-            ->where('status', 'active')
-            ->whereHas('hotel', fn ($query) => $query->where('status', 'published'))
+            ->bookable()
             ->findOrFail($roomTypeId);
 
         $availability = $roomType->availability()
@@ -41,6 +42,7 @@ class RoomTypeController extends Controller
         return AvailabilityResource::collection($availability);
     }
 
+    // Calcula el presupuesto de una estancia
     public function quote(Request $request, int $roomTypeId)
     {
         $validated = $request->validate([
@@ -51,8 +53,7 @@ class RoomTypeController extends Controller
 
         $roomType = RoomType::query()
             ->with('hotel')
-            ->where('status', 'active')
-            ->whereHas('hotel', fn ($query) => $query->where('status', 'published'))
+            ->bookable()
             ->findOrFail($roomTypeId);
 
         $stayData = $this->availabilityService->buildStayData($validated);

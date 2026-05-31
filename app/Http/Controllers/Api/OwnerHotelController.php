@@ -4,13 +4,20 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\HotelResource;
 use App\Models\Hotel;
+use App\Services\HotelSlugService;
+use App\Services\ImageStorageService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class OwnerHotelController extends Controller
 {
+    // Inicializa los servicios de hoteles
+    public function __construct(
+        private readonly HotelSlugService $hotelSlugs,
+        private readonly ImageStorageService $images,
+    ) {}
+
+    // Lista los hoteles del propietario autenticado
     public function index(Request $request)
     {
         // El owner solo ve los hoteles asociados a su propio usuario
@@ -19,16 +26,10 @@ class OwnerHotelController extends Controller
         $hotels = Hotel::query()
             ->where('owner_user_id', $ownerUserId)
             ->with('coverImage')
-            ->withMin([
-                'roomTypes' => fn ($query) => $query->where('status', 'active'),
-            ], 'base_price')
-            ->withAvg([
-                'reviews as average_rating' => fn ($query) => $query->where('status', 'published'),
-            ], 'rating')
+            ->withPublicSummaryMetrics()
             ->withCount([
                 'bookings',
                 'roomTypes',
-                'reviews as reviews_count' => fn ($query) => $query->where('status', 'published'),
             ])
             ->orderBy('id')
             ->get();
@@ -36,6 +37,7 @@ class OwnerHotelController extends Controller
         return HotelResource::collection($hotels);
     }
 
+    // Muestra un hotel del propietario autenticado
     public function show(Request $request, int $hotelId): HotelResource
     {
         // Evita que un propietario consulte hoteles de otro owner cambiando el ID
@@ -53,22 +55,17 @@ class OwnerHotelController extends Controller
                 'roomTypes.images' => fn ($query) => $query->orderByDesc('is_cover')->orderBy('sort_order'),
                 'roomTypes.services' => fn ($query) => $query->orderBy('name'),
             ])
-            ->withMin([
-                'roomTypes' => fn ($query) => $query->where('status', 'active'),
-            ], 'base_price')
-            ->withAvg([
-                'reviews as average_rating' => fn ($query) => $query->where('status', 'published'),
-            ], 'rating')
+            ->withPublicSummaryMetrics()
             ->withCount([
                 'bookings',
                 'roomTypes',
-                'reviews as reviews_count' => fn ($query) => $query->where('status', 'published'),
             ])
             ->firstOrFail();
 
         return new HotelResource($hotel);
     }
 
+    // Crea un hotel para el propietario autenticado
     public function store(Request $request)
     {
         $validated = $request->validate($this->hotelRules());
@@ -90,6 +87,7 @@ class OwnerHotelController extends Controller
             ->setStatusCode(201);
     }
 
+    // Actualiza un hotel del propietario autenticado
     public function update(Request $request, int $hotelId): HotelResource
     {
         $validated = $request->validate($this->hotelRules(required: false));
@@ -118,6 +116,7 @@ class OwnerHotelController extends Controller
         return new HotelResource($hotel);
     }
 
+    // Añade una imagen a un hotel del propietario
     public function images(Request $request, int $hotelId): HotelResource
     {
         $validated = $request->validate($this->imageRules());
@@ -137,6 +136,7 @@ class OwnerHotelController extends Controller
         return new HotelResource($hotel);
     }
 
+    // Devuelve las reglas de validación de hoteles
     private function hotelRules(bool $required = true): array
     {
         $presence = $required ? 'required' : 'sometimes';
@@ -174,19 +174,13 @@ class OwnerHotelController extends Controller
         ];
     }
 
+    // Devuelve las reglas de validación de imágenes
     private function imageRules(): array
     {
-        return [
-            'image' => ['sometimes', 'file', 'image', 'max:5120'],
-            'images' => ['sometimes', 'array', 'size:1'],
-            'images.*' => ['file', 'image', 'max:5120'],
-            'alt_text' => ['nullable', 'string', 'max:150'],
-            'image_alt_texts' => ['sometimes', 'array', 'size:1'],
-            'image_alt_texts.*' => ['nullable', 'string', 'max:150'],
-            'is_cover' => ['nullable', 'boolean'],
-        ];
+        return $this->images->validationRules();
     }
 
+    // Sincroniza los servicios asignados al hotel
     private function syncServices(Hotel $hotel, array $validated): void
     {
         if (! array_key_exists('service_ids', $validated)) {
@@ -196,34 +190,13 @@ class OwnerHotelController extends Controller
         $hotel->services()->sync($validated['service_ids']);
     }
 
+    // Guarda las imágenes enviadas para el hotel
     private function storeImages(Hotel $hotel, array $validated): void
     {
-        $image = $validated['image'] ?? ($validated['images'][0] ?? null);
-
-        if (! $image) {
-            return;
-        }
-
-        $hasCoverImage = $hotel->images()->where('is_cover', true)->exists();
-        $nextSortOrder = (int) $hotel->images()->max('sort_order') + 1;
-        $isCover = array_key_exists('is_cover', $validated)
-            ? (bool) $validated['is_cover']
-            : ! $hasCoverImage;
-
-        if ($isCover) {
-            $hotel->images()->update(['is_cover' => false]);
-        }
-
-        $path = $image->store("hotels/{$hotel->id}", 'public');
-
-        $hotel->images()->create([
-            'image_url' => Storage::disk('public')->url($path),
-            'alt_text' => $validated['alt_text'] ?? ($validated['image_alt_texts'][0] ?? $hotel->name),
-            'is_cover' => $isCover,
-            'sort_order' => $nextSortOrder,
-        ]);
+        $this->images->store($hotel, $validated, 'hotels');
     }
 
+    // Prepara los datos permitidos para guardar el hotel
     private function hotelPayload(array $validated, ?Hotel $hotel = null): array
     {
         $payload = collect([
@@ -257,21 +230,9 @@ class OwnerHotelController extends Controller
         return $payload;
     }
 
+    // Genera un slug único para el hotel
     private function generateUniqueSlug(string $name, ?int $ignoreHotelId = null): string
     {
-        // Evita colisiones cuando un propietario repite nombres de hotel
-        $baseSlug = Str::slug($name);
-        $slug = $baseSlug;
-        $counter = 2;
-
-        while (Hotel::query()
-            ->where('slug', $slug)
-            ->when($ignoreHotelId, fn ($query) => $query->whereKeyNot($ignoreHotelId))
-            ->exists()) {
-            $slug = "{$baseSlug}-{$counter}";
-            $counter++;
-        }
-
-        return $slug;
+        return $this->hotelSlugs->generate($name, $ignoreHotelId);
     }
 }

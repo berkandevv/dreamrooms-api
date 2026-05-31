@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,6 +28,7 @@ class RoomType extends Model
         'status',
     ];
 
+    // Define la conversión de tipos de los atributos
     protected function casts(): array
     {
         return [
@@ -35,16 +37,27 @@ class RoomType extends Model
         ];
     }
 
+    // Filtra los tipos de habitación reservables
+    public function scopeBookable(Builder $query): Builder
+    {
+        return $query
+            ->where('status', 'active')
+            ->whereHas('hotel', fn ($hotelQuery) => $hotelQuery->published());
+    }
+
+    // Devuelve el hotel del tipo de habitación
     public function hotel(): BelongsTo
     {
         return $this->belongsTo(Hotel::class);
     }
 
+    // Devuelve las imágenes del tipo de habitación
     public function images(): HasMany
     {
         return $this->hasMany(RoomTypeImage::class);
     }
 
+    // Devuelve la imagen de portada del tipo de habitación
     public function coverImage(): HasOne
     {
         return $this->hasOne(RoomTypeImage::class)
@@ -52,6 +65,7 @@ class RoomType extends Model
             ->orderBy('sort_order');
     }
 
+    // Devuelve los servicios del tipo de habitación
     public function services(): BelongsToMany
     {
         return $this->belongsToMany(Service::class, 'room_type_services')
@@ -59,11 +73,13 @@ class RoomType extends Model
             ->withTimestamps();
     }
 
+    // Devuelve la disponibilidad del tipo de habitación
     public function availability(): HasMany
     {
         return $this->hasMany(RoomTypeAvailability::class);
     }
 
+    // Devuelve las reservas del tipo de habitación
     public function bookings(): HasMany
     {
         return $this->hasMany(Booking::class);

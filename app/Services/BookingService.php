@@ -11,6 +11,44 @@ use Illuminate\Validation\ValidationException;
 
 class BookingService
 {
+    // Inicializa el servicio de disponibilidad
+    public function __construct(private readonly RoomTypeAvailabilityService $availabilityService) {}
+
+    // Cancela una reserva del cliente autenticado
+    public function cancelForCustomer(int $bookingId, int $customerUserId): Booking
+    {
+        return DB::transaction(function () use ($bookingId, $customerUserId): Booking {
+            $booking = Booking::query()
+                ->where('user_id', $customerUserId)
+                ->lockForUpdate()
+                ->findOrFail($bookingId);
+
+            return $this->cancelLockedBooking($booking);
+        });
+    }
+
+    // Cancela las reservas pendientes que han caducado
+    public function expirePendingBookings(): void
+    {
+        Booking::query()
+            ->where('status', 'pending')
+            ->whereNotNull('expires_at')
+            ->where('expires_at', '<=', now())
+            ->pluck('id')
+            ->each(fn (int $bookingId) => DB::transaction(function () use ($bookingId): void {
+                $booking = Booking::query()
+                    ->lockForUpdate()
+                    ->find($bookingId);
+
+                if (! $booking || $booking->status !== 'pending') {
+                    return;
+                }
+
+                $this->cancelLockedBooking($booking);
+            }));
+    }
+
+    // Cambia el estado de una reserva
     public function changeStatus(int $bookingId, string $newStatus, ?int $ownerUserId = null): Booking
     {
         return DB::transaction(function () use ($bookingId, $newStatus, $ownerUserId): Booking {
@@ -50,6 +88,7 @@ class BookingService
         });
     }
 
+    // Registra un pago manual de una reserva
     public function registerPayment(int $bookingId, array $validated, ?int $ownerUserId = null): Booking
     {
         return DB::transaction(function () use ($bookingId, $validated, $ownerUserId): Booking {
@@ -105,13 +144,14 @@ class BookingService
         });
     }
 
+    // Devuelve las unidades reservadas al calendario
     public function restoreAvailability(Booking $booking): void
     {
         $booking->loadMissing('roomType');
 
         $availability = RoomTypeAvailability::query()
             ->where('room_type_id', $booking->room_type_id)
-            ->whereIn('date', $this->buildStayDates(
+            ->whereIn('date', $this->availabilityService->buildStayDates(
                 CarbonImmutable::parse($booking->check_in),
                 CarbonImmutable::parse($booking->check_out),
             ))
@@ -127,17 +167,7 @@ class BookingService
         });
     }
 
-    public function buildStayDates(CarbonImmutable $checkIn, CarbonImmutable $checkOut): array
-    {
-        $stayDates = [];
-
-        for ($date = $checkIn; $date->lt($checkOut); $date = $date->addDay()) {
-            $stayDates[] = $date->toDateString();
-        }
-
-        return $stayDates;
-    }
-
+    // Bloquea una reserva para actualizarla con seguridad
     private function lockBooking(int $bookingId, ?int $ownerUserId = null, array $with = []): Booking
     {
         /** @var Booking $booking */
@@ -154,6 +184,7 @@ class BookingService
         return $booking;
     }
 
+    // Comprueba si el cambio de estado está permitido
     private function validateStatusTransition(string $currentStatus, string $newStatus): void
     {
         $allowedTransitions = [
@@ -172,6 +203,32 @@ class BookingService
         ]);
     }
 
+    // Cancela una reserva previamente bloqueada
+    private function cancelLockedBooking(Booking $booking): Booking
+    {
+        if ($booking->status === 'cancelled') {
+            throw ValidationException::withMessages([
+                'booking' => ['The booking is already cancelled.'],
+            ]);
+        }
+
+        if ($booking->status === 'completed') {
+            throw ValidationException::withMessages([
+                'booking' => ['Completed bookings cannot be cancelled.'],
+            ]);
+        }
+
+        $this->restoreAvailability($booking);
+
+        $booking->forceFill([
+            'status' => 'cancelled',
+            'cancelled_at' => now(),
+        ])->save();
+
+        return $booking;
+    }
+
+    // Actualiza el estado de pago de una reserva
     private function refreshPaymentStatus(int $bookingId, float $totalAmount, string $latestPaymentStatus): void
     {
         $paidAmount = (float) Payment::query()

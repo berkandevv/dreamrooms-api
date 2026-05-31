@@ -6,15 +6,18 @@ use App\Http\Resources\AvailabilityResource;
 use App\Http\Resources\RoomTypeResource;
 use App\Models\Hotel;
 use App\Models\RoomType;
+use App\Services\ImageStorageService;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class OwnerRoomTypeController extends Controller
 {
+    // Inicializa el servicio de imágenes
+    public function __construct(private readonly ImageStorageService $images) {}
+
     // Lista los tipos de habitación de un hotel del propietario autenticado
     public function index(Request $request, int $hotelId)
     {
@@ -165,7 +168,7 @@ class OwnerRoomTypeController extends Controller
         }
     }
 
-    // Evita bajar las unidades totales por debajo de la disponibilidad ya creada.
+    // Evita bajar las unidades totales por debajo de la disponibilidad ya creada
     private function validateTotalUnits(RoomType $roomType, int $totalUnits): void
     {
         $maxAvailableUnits = (int) $roomType->availability()->max('available_units');
@@ -246,19 +249,13 @@ class OwnerRoomTypeController extends Controller
         ];
     }
 
+    // Devuelve las reglas de validación de imágenes
     private function imageRules(): array
     {
-        return [
-            'image' => ['sometimes', 'file', 'image', 'max:5120'],
-            'images' => ['sometimes', 'array', 'size:1'],
-            'images.*' => ['file', 'image', 'max:5120'],
-            'alt_text' => ['nullable', 'string', 'max:150'],
-            'image_alt_texts' => ['sometimes', 'array', 'size:1'],
-            'image_alt_texts.*' => ['nullable', 'string', 'max:150'],
-            'is_cover' => ['nullable', 'boolean'],
-        ];
+        return $this->images->validationRules();
     }
 
+    // Sincroniza los servicios asignados al tipo de habitación
     private function syncServices(RoomType $roomType, array $validated): void
     {
         if (! array_key_exists('service_ids', $validated)) {
@@ -268,32 +265,10 @@ class OwnerRoomTypeController extends Controller
         $roomType->services()->sync($validated['service_ids']);
     }
 
+    // Guarda las imágenes enviadas para el tipo de habitación
     private function storeImages(RoomType $roomType, array $validated): void
     {
-        $image = $validated['image'] ?? ($validated['images'][0] ?? null);
-
-        if (! $image) {
-            return;
-        }
-
-        $hasCoverImage = $roomType->images()->where('is_cover', true)->exists();
-        $nextSortOrder = (int) $roomType->images()->max('sort_order') + 1;
-        $isCover = array_key_exists('is_cover', $validated)
-            ? (bool) $validated['is_cover']
-            : ! $hasCoverImage;
-
-        if ($isCover) {
-            $roomType->images()->update(['is_cover' => false]);
-        }
-
-        $path = $image->store("room-types/{$roomType->id}", 'public');
-
-        $roomType->images()->create([
-            'image_url' => Storage::disk('public')->url($path),
-            'alt_text' => $validated['alt_text'] ?? ($validated['image_alt_texts'][0] ?? $roomType->name),
-            'is_cover' => $isCover,
-            'sort_order' => $nextSortOrder,
-        ]);
+        $this->images->store($roomType, $validated, 'room-types');
     }
 
     // Helpers de carga para respuestas de tipos de habitación

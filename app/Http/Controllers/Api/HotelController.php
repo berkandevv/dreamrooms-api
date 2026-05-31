@@ -10,12 +10,7 @@ use Illuminate\Http\Request;
 
 class HotelController extends Controller
 {
-    /**
-     * List published hotels
-     *
-     * Returns the public hotel catalog with location, cover image, services,
-     * starting price, average rating, and review count
-     */
+    // Lista los hoteles publicados
     public function index(Request $request)
     {
         $validated = $request->validate([
@@ -30,7 +25,7 @@ class HotelController extends Controller
 
         // Devuelve el catálogo público de hoteles con los datos necesarios para listados
         $query = Hotel::query()
-            ->where('status', 'published')
+            ->published()
             ->when($validated['country'] ?? null, fn ($query, $country) => $query->where('country', 'like', "%{$country}%"))
             ->when($validated['city'] ?? null, fn ($query, $city) => $query->where('city', 'like', "%{$city}%"))
             ->when($validated['stars'] ?? null, fn ($query, $stars) => $query->where('stars', $stars))
@@ -40,9 +35,8 @@ class HotelController extends Controller
                 isset($validated['min_price']) || isset($validated['max_price']),
                 fn (Builder $query) => $this->applyRoomTypePriceFilter($query, $validated)
             )
-            ->with($this->hotelListRelations());
-
-        $this->applyHotelSummaryMetrics($query);
+            ->with($this->hotelListRelations())
+            ->withPublicSummaryMetrics();
 
         $hotels = $query
             ->orderBy('id')
@@ -51,37 +45,27 @@ class HotelController extends Controller
         return MetadataResource::collection($hotels);
     }
 
-    /**
-     * Show a published hotel
-     *
-     * Returns the full public detail for a hotel, including images, services,
-     * room types, room images, and room services
-     */
+    // Muestra el detalle público de un hotel
     public function show(string $slug): MetadataResource
     {
         // Devuelve el detalle público de un hotel publicado por su slug
         $query = Hotel::query()
-            ->where('status', 'published')
+            ->published()
             ->where('slug', $slug)
-            ->with($this->hotelDetailRelations());
-
-        $this->applyHotelSummaryMetrics($query);
+            ->with($this->hotelDetailRelations())
+            ->withPublicSummaryMetrics();
 
         $hotel = $query->firstOrFail();
 
         return new MetadataResource($hotel);
     }
 
-    /**
-     * List published hotel reviews
-     *
-     * Returns the public reviews for a published hotel ordered from newest to oldest
-     */
+    // Lista las reseñas publicadas de un hotel
     public function reviews(string $slug)
     {
         // Devuelve las reseñas publicadas de un hotel publicado por su slug
         $hotel = Hotel::query()
-            ->where('status', 'published')
+            ->published()
             ->where('slug', $slug)
             ->firstOrFail();
 
@@ -117,21 +101,6 @@ class HotelController extends Controller
             'roomTypes.images' => fn ($query) => $query->orderByDesc('is_cover')->orderBy('sort_order'),
             'roomTypes.services' => fn ($query) => $query->where('is_active', true)->orderBy('name'),
         ];
-    }
-
-    // Añade al query las métricas resumen que usan los resources de hotel
-    private function applyHotelSummaryMetrics(Builder $query): void
-    {
-        $query
-            ->withMin([
-                'roomTypes' => fn ($roomTypeQuery) => $roomTypeQuery->where('status', 'active'),
-            ], 'base_price')
-            ->withAvg([
-                'reviews as average_rating' => fn ($reviewQuery) => $reviewQuery->where('status', 'published'),
-            ], 'rating')
-            ->withCount([
-                'reviews as reviews_count' => fn ($reviewQuery) => $reviewQuery->where('status', 'published'),
-            ]);
     }
 
     // Aplica el filtro de precio usando solo tipos de habitación activos

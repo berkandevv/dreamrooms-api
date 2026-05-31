@@ -8,8 +8,8 @@ use App\Http\Resources\ReservationReadResource;
 use App\Http\Resources\ReviewResource;
 use App\Models\Booking;
 use App\Models\RoomType;
-use App\Models\RoomTypeAvailability;
 use App\Models\User;
+use App\Services\BookingService;
 use App\Services\RoomTypeAvailabilityService;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
@@ -20,12 +20,11 @@ use Illuminate\Validation\ValidationException;
 
 class CustomerBookingController extends Controller
 {
-    private readonly RoomTypeAvailabilityService $availabilityService;
-
-    public function __construct(RoomTypeAvailabilityService $availabilityService)
-    {
-        $this->availabilityService = $availabilityService;
-    }
+    // Inicializa los servicios de reservas y disponibilidad
+    public function __construct(
+        private readonly BookingService $bookings,
+        private readonly RoomTypeAvailabilityService $availabilityService,
+    ) {}
 
     // Lista las reservas del cliente autenticado
     public function index(Request $request)
@@ -53,7 +52,7 @@ class CustomerBookingController extends Controller
     // Cancela una reserva activa del cliente y restaura la disponibilidad
     public function cancel(Request $request, int $bookingId): ReservationReadResource
     {
-        $booking = DB::transaction(fn (): Booking => $this->cancelBooking($bookingId, $request->user()->id));
+        $booking = $this->bookings->cancelForCustomer($bookingId, $request->user()->id);
 
         $this->loadBookingDetails($booking);
 
@@ -101,7 +100,7 @@ class CustomerBookingController extends Controller
         ]);
         $validated['user_id'] = $request->user()->id;
         $this->validateGuestsLimit($validated);
-        $this->expirePendingBookings();
+        $this->bookings->expirePendingBookings();
 
         $booking = DB::transaction(fn (): Booking => $this->createBooking($validated));
 
@@ -207,36 +206,6 @@ class CustomerBookingController extends Controller
         );
     }
 
-    // Cancela una reserva activa y devuelve sus unidades al calendario de disponibilidad
-    private function cancelBooking(int $id, int $userId): Booking
-    {
-        $booking = Booking::query()
-            ->where('user_id', $userId)
-            ->lockForUpdate()
-            ->findOrFail($id);
-
-        if ($booking->status === 'cancelled') {
-            throw ValidationException::withMessages([
-                'booking' => ['The booking is already cancelled.'],
-            ]);
-        }
-
-        if ($booking->status === 'completed') {
-            throw ValidationException::withMessages([
-                'booking' => ['Completed bookings cannot be cancelled.'],
-            ]);
-        }
-
-        $this->restoreBookingAvailability($booking);
-
-        $booking->forceFill([
-            'status' => 'cancelled',
-            'cancelled_at' => now(),
-        ])->save();
-
-        return $booking;
-    }
-
     // Crea una única reseña para reservas completadas
     private function createReview(int $id, int $userId, array $validated)
     {
@@ -272,62 +241,8 @@ class CustomerBookingController extends Controller
     {
         return RoomType::query()
             ->with('hotel')
-            ->where('status', 'active')
-            ->whereHas('hotel', fn ($query) => $query->where('status', 'published'))
+            ->bookable()
             ->findOrFail($roomTypeId);
-    }
-
-    // Cancela reservas pendientes caducadas antes de intentar crear una reserva nueva
-    private function expirePendingBookings(): void
-    {
-        Booking::query()
-            ->where('status', 'pending')
-            ->whereNotNull('expires_at')
-            ->where('expires_at', '<=', now())
-            ->pluck('id')
-            ->each(function (int $bookingId): void {
-                DB::transaction(function () use ($bookingId): void {
-                    /** @var Booking|null $booking */
-                    $booking = Booking::query()
-                        ->with('roomType')
-                        ->lockForUpdate()
-                        ->find($bookingId);
-
-                    if (! $booking || $booking->status !== 'pending') {
-                        return;
-                    }
-
-                    $this->restoreBookingAvailability($booking);
-
-                    $booking->forceFill([
-                        'status' => 'cancelled',
-                        'cancelled_at' => now(),
-                    ])->save();
-                });
-            });
-    }
-
-    // Devuelve las unidades de una reserva al calendario de disponibilidad
-    private function restoreBookingAvailability(Booking $booking): void
-    {
-        $stayDates = $this->buildStayDates(
-            CarbonImmutable::parse($booking->check_in),
-            CarbonImmutable::parse($booking->check_out),
-        );
-
-        $availability = $booking->roomType
-            ->availability()
-            ->whereIn('date', $stayDates)
-            ->lockForUpdate()
-            ->get();
-
-        $availability->each(function (RoomTypeAvailability $day) use ($booking): void {
-            $day->available_units = min(
-                $day->available_units + $booking->units_booked,
-                $booking->roomType->total_units,
-            );
-            $day->save();
-        });
     }
 
     // Comprueba que la ocupación solicitada cabe en las unidades reservadas
@@ -361,12 +276,6 @@ class CustomerBookingController extends Controller
         throw ValidationException::withMessages([
             'guests' => ['The number of guests cannot exceed adults_count plus children_count.'],
         ]);
-    }
-
-    // Genera las noches de estancia sin incluir el día de salida
-    private function buildStayDates(CarbonImmutable $checkIn, CarbonImmutable $checkOut): array
-    {
-        return $this->availabilityService->buildStayDates($checkIn, $checkOut);
     }
 
     // Bloquea la disponibilidad para evitar dobles reservas simultáneas
