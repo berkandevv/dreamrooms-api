@@ -25,7 +25,10 @@ class OwnerHotelController extends Controller
 
         $hotels = Hotel::query()
             ->where('owner_user_id', $ownerUserId)
-            ->with('coverImage')
+            ->with([
+                'coverImage',
+                'services' => fn ($query) => $query->orderBy('name'),
+            ])
             ->withPublicSummaryMetrics()
             ->withCount([
                 'bookings',
