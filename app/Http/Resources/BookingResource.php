@@ -97,6 +97,10 @@ class BookingResource extends JsonResource
             'expires_at' => $this->expires_at?->toISOString(),
             'confirmed_at' => $this->confirmed_at?->toISOString(),
             'cancelled_at' => $this->cancelled_at?->toISOString(),
+            'cancellation' => [
+                'deadline_at' => $this->cancellation_deadline_at?->toISOString(),
+                'can_cancel' => $this->canBeCancelledByCustomer(),
+            ],
         ];
     }
 

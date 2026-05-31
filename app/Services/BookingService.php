@@ -23,6 +23,12 @@ class BookingService
                 ->lockForUpdate()
                 ->findOrFail($bookingId);
 
+            if ($booking->cancellation_deadline_at !== null && ! $booking->cancellation_deadline_at->isFuture()) {
+                throw ValidationException::withMessages([
+                    'booking' => ['The free cancellation deadline for this booking has passed.'],
+                ]);
+            }
+
             return $this->cancelLockedBooking($booking);
         });
     }

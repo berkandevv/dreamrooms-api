@@ -66,6 +66,7 @@ class RoomTypeController extends Controller
             'bed_type' => ['nullable', 'string', 'max:100'],
             'base_price' => ['required', 'numeric', 'min:0'],
             'total_units' => ['required', 'integer', 'min:1', 'max:65535'],
+            'free_cancellation_hours' => ['nullable', 'integer', 'min:0', 'max:8760'],
             'status' => ['required', Rule::in($this->statuses())],
         ]);
 

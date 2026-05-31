@@ -236,6 +236,7 @@ class OwnerRoomTypeController extends Controller
             'base_price' => [$presence, 'numeric', 'min:0'],
             'currency' => ['nullable', 'string', 'size:3'],
             'total_units' => [$presence, 'integer', 'min:1', 'max:65535'],
+            'free_cancellation_hours' => ['nullable', 'integer', 'min:0', 'max:8760'],
             'status' => ['nullable', 'string', 'in:active,inactive'],
             'service_ids' => ['sometimes', 'array'],
             'service_ids.*' => [
@@ -311,7 +312,11 @@ class OwnerRoomTypeController extends Controller
                 ? strtoupper($validated['currency'])
                 : ($roomType?->currency ?? 'EUR'),
             'total_units' => $validated['total_units'] ?? $roomType?->total_units,
+            'free_cancellation_hours' => array_key_exists('free_cancellation_hours', $validated)
+                ? $validated['free_cancellation_hours']
+                : $roomType?->free_cancellation_hours,
             'status' => $validated['status'] ?? $roomType?->status ?? 'active',
-        ])->filter(fn ($value) => $value !== null)->all();
+        ])->filter(fn ($value, $key) => $value !== null
+            || ($key === 'free_cancellation_hours' && array_key_exists($key, $validated)))->all();
     }
 }

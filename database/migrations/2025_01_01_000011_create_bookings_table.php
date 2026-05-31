@@ -41,6 +41,7 @@ return new class extends Migration
             $table->dateTime('expires_at')->nullable();
             $table->dateTime('confirmed_at')->nullable();
             $table->dateTime('cancelled_at')->nullable();
+            $table->dateTime('cancellation_deadline_at')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
         });

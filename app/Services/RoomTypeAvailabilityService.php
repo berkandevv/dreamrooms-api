@@ -105,6 +105,7 @@ class RoomTypeAvailabilityService
             'discount_amount' => $amounts['discount'],
             'total_amount' => $amounts['total'],
             'currency' => $roomType->currency ?? 'EUR',
+            'free_cancellation_hours' => $roomType->free_cancellation_hours,
         ];
     }
 

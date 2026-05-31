@@ -31,6 +31,7 @@ class RoomTypeResource extends JsonResource
             'currency' => $this->currency ?? self::DEFAULT_PRICE_CURRENCY,
             'currency_symbol' => $this->currencySymbol($this->currency ?? self::DEFAULT_PRICE_CURRENCY),
             'total_units' => $this->total_units,
+            'free_cancellation_hours' => $this->free_cancellation_hours,
             'status' => $this->status,
             'availability_count' => $this->whenCounted('availability'),
             'bookings_count' => $this->whenCounted('bookings'),

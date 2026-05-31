@@ -66,6 +66,12 @@
         <x-text-input id="size_m2" name="size_m2" type="number" min="0" step="0.01" class="mt-1 block w-full" :value="old('size_m2', $roomType->size_m2)" />
         <x-input-error class="mt-2" :messages="$errors->get('size_m2')" />
     </div>
+
+    <div>
+        <x-input-label for="free_cancellation_hours" value="Free Cancellation Hours" />
+        <x-text-input id="free_cancellation_hours" name="free_cancellation_hours" type="number" min="0" max="8760" class="mt-1 block w-full" :value="old('free_cancellation_hours', $roomType->free_cancellation_hours)" />
+        <x-input-error class="mt-2" :messages="$errors->get('free_cancellation_hours')" />
+    </div>
 </div>
 
 <div>

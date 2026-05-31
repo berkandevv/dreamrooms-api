@@ -220,6 +220,7 @@ class JsonDemoSeeder extends Seeder
                     'base_price' => $roomTypeData['base_price'],
                     'currency' => $roomTypeData['currency'] ?? 'EUR',
                     'total_units' => $roomTypeData['total_units'],
+                    'free_cancellation_hours' => $roomTypeData['free_cancellation_hours'] ?? null,
                     'status' => $roomTypeData['status'] ?? 'active',
                 ]
             );
@@ -306,6 +307,7 @@ class JsonDemoSeeder extends Seeder
                 'expires_at' => $bookingData['expires_at'] ?? null,
                 'confirmed_at' => $bookingData['confirmed_at'] ?? null,
                 'cancelled_at' => $bookingData['cancelled_at'] ?? null,
+                'cancellation_deadline_at' => $bookingData['cancellation_deadline_at'] ?? null,
                 'notes' => $bookingData['notes'] ?? null,
             ]
         );

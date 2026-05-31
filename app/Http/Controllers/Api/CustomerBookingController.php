@@ -342,8 +342,22 @@ class CustomerBookingController extends Controller
             'booked_at' => now(),
             'expires_at' => $validated['payment_method'] === 'card' ? null : now()->addMinutes(30),
             'confirmed_at' => $validated['payment_method'] === 'card' ? now() : null,
+            'cancellation_deadline_at' => $this->cancellationDeadline($roomType, $checkIn),
             'notes' => $validated['notes'] ?? null,
         ]);
+    }
+
+    // Fija la política contratada para que futuros cambios del owner no alteren la reserva
+    private function cancellationDeadline(RoomType $roomType, CarbonImmutable $checkIn): ?CarbonImmutable
+    {
+        if ($roomType->free_cancellation_hours === null) {
+            return null;
+        }
+
+        $checkInTime = $roomType->hotel->check_in_time?->format('H:i:s') ?? '00:00:00';
+
+        return CarbonImmutable::parse($checkIn->toDateString().' '.$checkInTime)
+            ->subHours($roomType->free_cancellation_hours);
     }
 
     // Registra el pago simulado cuando el cliente elige tarjeta

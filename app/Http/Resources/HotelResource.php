@@ -112,6 +112,7 @@ class HotelResource extends JsonResource
             'currency' => $roomType->currency ?? self::DEFAULT_PRICE_CURRENCY,
             'currency_symbol' => $this->currencySymbol($roomType->currency ?? self::DEFAULT_PRICE_CURRENCY),
             'total_units' => $roomType->total_units,
+            'free_cancellation_hours' => $roomType->free_cancellation_hours,
             'status' => $roomType->status,
             'cover_image' => $roomType->relationLoaded('coverImage') && $roomType->coverImage ? [
                 'id' => $roomType->coverImage->id,

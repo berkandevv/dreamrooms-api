@@ -25,6 +25,7 @@ class RoomTypeFactory extends Factory
             'base_price' => fake()->randomFloat(2, 70, 420),
             'currency' => 'EUR',
             'total_units' => fake()->numberBetween(2, 20),
+            'free_cancellation_hours' => fake()->randomElement([null, 24, 48, 72]),
             'status' => 'active',
         ];
     }

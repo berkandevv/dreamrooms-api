@@ -25,6 +25,7 @@ class RoomType extends Model
         'base_price',
         'currency',
         'total_units',
+        'free_cancellation_hours',
         'status',
     ];
 

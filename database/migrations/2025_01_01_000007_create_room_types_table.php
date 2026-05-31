@@ -24,6 +24,7 @@ return new class extends Migration
             $table->decimal('base_price', 10, 2);
             $table->char('currency', 3)->default('EUR');
             $table->unsignedSmallInteger('total_units');
+            $table->unsignedSmallInteger('free_cancellation_hours')->nullable();
             $table->enum('status', ['active', 'inactive']);
             $table->timestamps();
         });

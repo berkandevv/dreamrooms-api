@@ -40,6 +40,7 @@ class Booking extends Model
         'expires_at',
         'confirmed_at',
         'cancelled_at',
+        'cancellation_deadline_at',
         'notes',
     ];
 
@@ -52,6 +53,7 @@ class Booking extends Model
             'expires_at' => 'datetime',
             'confirmed_at' => 'datetime',
             'cancelled_at' => 'datetime',
+            'cancellation_deadline_at' => 'datetime',
             'subtotal_amount' => 'decimal:2',
             'taxes_amount' => 'decimal:2',
             'discount_amount' => 'decimal:2',
@@ -87,5 +89,12 @@ class Booking extends Model
     public function review(): HasOne
     {
         return $this->hasOne(Review::class);
+    }
+
+    // Indica si el cliente todavía puede cancelar según la política contratada
+    public function canBeCancelledByCustomer(): bool
+    {
+        return ! in_array($this->status, ['cancelled', 'completed'], true)
+            && ($this->cancellation_deadline_at === null || $this->cancellation_deadline_at->isFuture());
     }
 }
