@@ -104,6 +104,48 @@ class AuthController extends Controller
     }
 
     /**
+     * Update the authenticated user's password
+     *
+     * Requires the current password before saving a new one
+     */
+    public function updatePassword(Request $request)
+    {
+        $validated = $request->validate([
+            'current_password' => ['required', 'string'],
+            'password' => ['required', 'confirmed', Password::min(8)],
+        ]);
+
+        $user = $request->user();
+        $this->ensureCurrentPasswordIsValid($user, $validated['current_password']);
+        $user->update(['password' => $validated['password']]);
+
+        return response()->json([
+            'message' => 'Password updated successfully.',
+        ]);
+    }
+
+    /**
+     * Deactivate the authenticated user's account
+     *
+     * Keeps the user record but blocks login and revokes every API token
+     */
+    public function deactivateAccount(Request $request)
+    {
+        $validated = $request->validate([
+            'current_password' => ['required', 'string'],
+        ]);
+
+        $user = $request->user();
+        $this->ensureCurrentPasswordIsValid($user, $validated['current_password']);
+        $user->update(['status' => 'inactive']);
+        $user->tokens()->delete();
+
+        return response()->json([
+            'message' => 'Account deactivated successfully.',
+        ]);
+    }
+
+    /**
      * Logout the current token
      *
      * Revokes only the bearer token used for the current request
@@ -116,5 +158,17 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Logged out successfully.',
         ]);
+    }
+
+    /**
+     * Reject a sensitive action when the current password is incorrect.
+     */
+    private function ensureCurrentPasswordIsValid(User $user, string $password): void
+    {
+        if (! Hash::check($password, $user->password)) {
+            throw ValidationException::withMessages([
+                'current_password' => ['The current password is incorrect.'],
+            ]);
+        }
     }
 }

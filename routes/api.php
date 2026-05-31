@@ -18,6 +18,8 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 // Sesión autenticada: usuarios API activos con token Sanctum
 Route::middleware('auth:sanctum')->group(function (): void {
     Route::get('/auth/me', [AuthController::class, 'me']);
+    Route::put('/auth/password', [AuthController::class, 'updatePassword']);
+    Route::delete('/auth/account', [AuthController::class, 'deactivateAccount']);
     Route::post('/auth/logout', [AuthController::class, 'logout']);
 });
 
