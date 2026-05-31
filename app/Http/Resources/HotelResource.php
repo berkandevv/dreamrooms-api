@@ -39,8 +39,8 @@ class HotelResource extends JsonResource
                 'phone' => $this->contact_phone,
                 'address' => $this->address,
             ],
-            'check_in_time' => $this->check_in_time?->format('H:i:s'),
-            'check_out_time' => $this->check_out_time?->format('H:i:s'),
+            'check_in_time' => $this->check_in_time?->format('H:i'),
+            'check_out_time' => $this->check_out_time?->format('H:i'),
             'cancellation_policy' => $this->cancellation_policy,
             'pricing' => [
                 'tax_rate_percent' => $this->tax_rate_percent,
