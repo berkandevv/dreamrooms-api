@@ -6,6 +6,7 @@ use App\Models\Hotel;
 use App\Models\RoomType;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class ImageStorageService
 {
@@ -19,7 +20,7 @@ class ImageStorageService
             'alt_text' => ['nullable', 'string', 'max:150'],
             'image_alt_texts' => ['sometimes', 'array', 'size:1'],
             'image_alt_texts.*' => ['nullable', 'string', 'max:150'],
-            'is_cover' => ['nullable', 'boolean'],
+            'is_cover' => ['nullable', Rule::in(['true', 'false'])],
         ];
     }
 
@@ -34,7 +35,7 @@ class ImageStorageService
 
         $hasCoverImage = $imageOwner->images()->where('is_cover', true)->exists();
         $isCover = array_key_exists('is_cover', $validated)
-            ? (bool) $validated['is_cover']
+            ? filter_var($validated['is_cover'], FILTER_VALIDATE_BOOLEAN)
             : ! $hasCoverImage;
 
         if ($isCover) {
