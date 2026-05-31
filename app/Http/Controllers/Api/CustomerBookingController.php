@@ -356,7 +356,10 @@ class CustomerBookingController extends Controller
 
         $checkInTime = $roomType->hotel->check_in_time?->format('H:i:s') ?? '00:00:00';
 
-        return CarbonImmutable::parse($checkIn->toDateString().' '.$checkInTime)
+        return CarbonImmutable::parse(
+            $checkIn->toDateString().' '.$checkInTime,
+            config('app.booking_timezone')
+        )
             ->subHours($roomType->free_cancellation_hours);
     }
 

@@ -99,6 +99,7 @@ class BookingResource extends JsonResource
             'cancelled_at' => $this->cancelled_at?->toISOString(),
             'cancellation' => [
                 'deadline_at' => $this->cancellation_deadline_at?->toISOString(),
+                'timezone' => config('app.booking_timezone'),
                 'can_cancel' => $this->canBeCancelledByCustomer(),
             ],
         ];

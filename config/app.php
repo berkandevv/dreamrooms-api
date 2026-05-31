@@ -67,6 +67,8 @@ return [
 
     'timezone' => 'UTC',
 
+    'booking_timezone' => env('BOOKING_TIMEZONE', 'Europe/Madrid'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
