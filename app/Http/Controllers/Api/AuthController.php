@@ -43,7 +43,7 @@ class AuthController extends Controller
         $user->load('role');
 
         return response()->json([
-            'data' => new UserResource($user),
+            'data' => UserResource::make($user),
             'token' => $user->createToken('api')->plainTextToken,
             'token_type' => 'Bearer',
         ], 201);
@@ -84,7 +84,7 @@ class AuthController extends Controller
         }
 
         return response()->json([
-            'data' => new UserResource($user),
+            'data' => UserResource::make($user),
             'token' => $user->createToken('api')->plainTextToken,
             'token_type' => 'Bearer',
         ]);
@@ -100,7 +100,7 @@ class AuthController extends Controller
         $user = $request->user();
         $user->loadMissing('role');
 
-        return new UserResource($user);
+        return UserResource::make($user);
     }
 
     /**

@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\BookResource;
-use App\Http\Resources\ReservationListResource;
-use App\Http\Resources\ReservationReadResource;
+use App\Http\Resources\BookingResource;
 use App\Http\Resources\ReviewResource;
 use App\Models\Booking;
 use App\Models\RoomType;
@@ -35,28 +33,28 @@ class CustomerBookingController extends Controller
             ->orderBy('id')
             ->get();
 
-        return ReservationListResource::collection($bookings);
+        return BookingResource::collection($bookings);
     }
 
     // Muestra el detalle de una reserva del cliente autenticado
-    public function show(Request $request, int $bookingId): ReservationReadResource
+    public function show(Request $request, int $bookingId): BookingResource
     {
         $booking = Booking::query()
             ->where('user_id', $request->user()->id)
             ->with($this->bookingDetailRelations())
             ->findOrFail($bookingId);
 
-        return new ReservationReadResource($booking);
+        return BookingResource::make($booking);
     }
 
     // Cancela una reserva activa del cliente y restaura la disponibilidad
-    public function cancel(Request $request, int $bookingId): ReservationReadResource
+    public function cancel(Request $request, int $bookingId): BookingResource
     {
         $booking = $this->bookings->cancelForCustomer($bookingId, $request->user()->id);
 
         $this->loadBookingDetails($booking);
 
-        return new ReservationReadResource($booking);
+        return BookingResource::make($booking);
     }
 
     // Crea una reseña pública para una reserva completada
@@ -71,7 +69,7 @@ class CustomerBookingController extends Controller
 
         $review->load('user:id,name');
 
-        return (new ReviewResource($review))
+        return ReviewResource::make($review)
             ->response()
             ->setStatusCode(201);
     }
@@ -106,7 +104,7 @@ class CustomerBookingController extends Controller
 
         $this->loadBookingDetails($booking);
 
-        return (new BookResource($booking))
+        return BookingResource::make($booking)
             ->response()
             ->setStatusCode(201);
     }

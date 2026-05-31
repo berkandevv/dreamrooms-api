@@ -62,7 +62,7 @@ class OwnerHotelController extends Controller
             ])
             ->firstOrFail();
 
-        return new HotelResource($hotel);
+        return HotelResource::make($hotel);
     }
 
     // Crea un hotel para el propietario autenticado
@@ -82,7 +82,7 @@ class OwnerHotelController extends Controller
             'services' => fn ($query) => $query->orderBy('name'),
         ]);
 
-        return (new HotelResource($hotel))
+        return HotelResource::make($hotel)
             ->response()
             ->setStatusCode(201);
     }
@@ -113,7 +113,7 @@ class OwnerHotelController extends Controller
             'services' => fn ($query) => $query->orderBy('name'),
         ]);
 
-        return new HotelResource($hotel);
+        return HotelResource::make($hotel);
     }
 
     // Añade una imagen a un hotel del propietario
@@ -133,7 +133,7 @@ class OwnerHotelController extends Controller
             'services' => fn ($query) => $query->orderBy('name'),
         ]);
 
-        return new HotelResource($hotel);
+        return HotelResource::make($hotel);
     }
 
     // Devuelve las reglas de validación de hoteles

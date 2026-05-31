@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\AvailabilityResource;
+use App\Http\Resources\RoomTypeAvailabilityResource;
 use App\Http\Resources\RoomTypeResource;
 use App\Models\Hotel;
 use App\Models\RoomType;
@@ -53,7 +53,7 @@ class OwnerRoomTypeController extends Controller
         $this->storeImages($roomType, $validated);
         $this->loadRoomTypeDetails($roomType);
 
-        return (new RoomTypeResource($roomType))
+        return RoomTypeResource::make($roomType)
             ->response()
             ->setStatusCode(201);
     }
@@ -71,7 +71,7 @@ class OwnerRoomTypeController extends Controller
             ->withCount($this->roomTypeCounts())
             ->firstOrFail();
 
-        return new RoomTypeResource($roomType);
+        return RoomTypeResource::make($roomType);
     }
 
     // Devuelve la disponibilidad de un tipo de habitación del propietario
@@ -97,7 +97,7 @@ class OwnerRoomTypeController extends Controller
             ->orderBy('date')
             ->get();
 
-        return AvailabilityResource::collection($availability);
+        return RoomTypeAvailabilityResource::collection($availability);
     }
 
     // Actualiza en bloque la disponibilidad y precios de varias fechas
@@ -151,7 +151,7 @@ class OwnerRoomTypeController extends Controller
             ->orderBy('date')
             ->get();
 
-        return AvailabilityResource::collection($availability);
+        return RoomTypeAvailabilityResource::collection($availability);
     }
 
     // Evita guardar más disponibilidad diaria que habitaciones reales tiene el tipo
@@ -201,7 +201,7 @@ class OwnerRoomTypeController extends Controller
         $this->storeImages($roomType, $validated);
         $this->loadRoomTypeDetails($roomType);
 
-        return new RoomTypeResource($roomType);
+        return RoomTypeResource::make($roomType);
     }
 
     // Sube imágenes a un tipo de habitación del propietario autenticado
@@ -218,7 +218,7 @@ class OwnerRoomTypeController extends Controller
         $this->storeImages($roomType, $validated);
         $this->loadRoomTypeDetails($roomType);
 
-        return new RoomTypeResource($roomType);
+        return RoomTypeResource::make($roomType);
     }
 
     // Reglas de validación compartidas para crear y actualizar habitaciones

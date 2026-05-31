@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\ReservationListResource;
-use App\Http\Resources\ReservationReadResource;
+use App\Http\Resources\BookingResource;
 use App\Models\Booking;
 use App\Services\BookingService;
 use Illuminate\Http\Request;
@@ -38,11 +37,11 @@ class OwnerBookingController extends Controller
             ->orderByDesc('id')
             ->get();
 
-        return ReservationListResource::collection($bookings);
+        return BookingResource::collection($bookings);
     }
 
     // Muestra el detalle de una reserva que pertenece al propietario autenticado
-    public function show(Request $request, int $bookingId): ReservationReadResource
+    public function show(Request $request, int $bookingId): BookingResource
     {
         // La reserva debe pertenecer a un hotel del owner autenticado
         $ownerUserId = $request->user()->id;
@@ -53,11 +52,11 @@ class OwnerBookingController extends Controller
             ->with($this->ownerBookingRelations())
             ->firstOrFail();
 
-        return new ReservationReadResource($booking);
+        return BookingResource::make($booking);
     }
 
     // Actualiza el estado de una reserva respetando las transiciones permitidas
-    public function updateStatus(Request $request, int $bookingId): ReservationReadResource
+    public function updateStatus(Request $request, int $bookingId): BookingResource
     {
         $validated = $request->validate([
             'status' => ['required', 'string', 'in:pending,confirmed,cancelled,completed'],
@@ -66,7 +65,7 @@ class OwnerBookingController extends Controller
 
         $this->loadOwnerBookingRelations($booking);
 
-        return new ReservationReadResource($booking);
+        return BookingResource::make($booking);
     }
 
     // Registra un pago sobre una reserva de uno de los hoteles del propietario
@@ -85,7 +84,7 @@ class OwnerBookingController extends Controller
 
         $this->loadOwnerBookingRelations($booking);
 
-        return (new ReservationReadResource($booking))
+        return BookingResource::make($booking)
             ->response()
             ->setStatusCode(201);
     }

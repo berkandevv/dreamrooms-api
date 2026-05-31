@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\AvailabilityResource;
+use App\Http\Resources\RoomTypeAvailabilityResource;
 use App\Models\RoomType;
 use App\Services\RoomTypeAvailabilityService;
 use Carbon\CarbonImmutable;
@@ -39,7 +39,7 @@ class RoomTypeController extends Controller
             ->orderBy('date')
             ->get();
 
-        return AvailabilityResource::collection($availability);
+        return RoomTypeAvailabilityResource::collection($availability);
     }
 
     // Calcula el presupuesto de una estancia
