@@ -60,6 +60,12 @@ class Hotel extends Model
         return $query->where('status', 'published');
     }
 
+    // Filtra los hoteles que pertenecen a un propietario concreto
+    public function scopeOwnedBy(Builder $query, int $ownerUserId): Builder
+    {
+        return $query->where('owner_user_id', $ownerUserId);
+    }
+
     // Añade las métricas del resumen público
     public function scopeWithPublicSummaryMetrics(Builder $query): Builder
     {

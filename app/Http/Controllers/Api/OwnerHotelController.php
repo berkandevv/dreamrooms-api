@@ -24,7 +24,7 @@ class OwnerHotelController extends Controller
         $ownerUserId = $request->user()->id;
 
         $hotels = Hotel::query()
-            ->where('owner_user_id', $ownerUserId)
+            ->ownedBy($ownerUserId)
             ->with([
                 'coverImage',
                 'services' => fn ($query) => $query->orderBy('name'),
@@ -47,7 +47,7 @@ class OwnerHotelController extends Controller
         $ownerUserId = $request->user()->id;
 
         $hotel = Hotel::query()
-            ->where('owner_user_id', $ownerUserId)
+            ->ownedBy($ownerUserId)
             ->where('id', $hotelId)
             ->with([
                 'coverImage',
@@ -79,11 +79,7 @@ class OwnerHotelController extends Controller
 
         $this->syncServices($hotel, $validated);
         $this->storeImages($hotel, $validated);
-        $hotel->load([
-            'coverImage',
-            'images' => fn ($query) => $query->orderBy('sort_order'),
-            'services' => fn ($query) => $query->orderBy('name'),
-        ]);
+        $this->loadHotelRelations($hotel);
 
         return HotelResource::make($hotel)
             ->response()
@@ -98,7 +94,7 @@ class OwnerHotelController extends Controller
         $ownerUserId = $request->user()->id;
 
         $hotel = Hotel::query()
-            ->where('owner_user_id', $ownerUserId)
+            ->ownedBy($ownerUserId)
             ->findOrFail($hotelId);
 
         $payload = $this->hotelPayload($validated, $hotel);
@@ -110,11 +106,7 @@ class OwnerHotelController extends Controller
         $hotel->update($payload);
         $this->syncServices($hotel, $validated);
         $this->storeImages($hotel, $validated);
-        $hotel->load([
-            'coverImage',
-            'images' => fn ($query) => $query->orderBy('sort_order'),
-            'services' => fn ($query) => $query->orderBy('name'),
-        ]);
+        $this->loadHotelRelations($hotel);
 
         return HotelResource::make($hotel);
     }
@@ -126,15 +118,11 @@ class OwnerHotelController extends Controller
         $ownerUserId = $request->user()->id;
 
         $hotel = Hotel::query()
-            ->where('owner_user_id', $ownerUserId)
+            ->ownedBy($ownerUserId)
             ->findOrFail($hotelId);
 
         $this->storeImages($hotel, $validated);
-        $hotel->load([
-            'coverImage',
-            'images' => fn ($query) => $query->orderBy('sort_order'),
-            'services' => fn ($query) => $query->orderBy('name'),
-        ]);
+        $this->loadHotelRelations($hotel);
 
         return HotelResource::make($hotel);
     }
@@ -197,6 +185,22 @@ class OwnerHotelController extends Controller
     private function storeImages(Hotel $hotel, array $validated): void
     {
         $this->images->store($hotel, $validated, 'hotels');
+    }
+
+    // Devuelve las relaciones básicas que acompañan a un hotel al crearlo o editarlo
+    private function hotelRelations(): array
+    {
+        return [
+            'coverImage',
+            'images' => fn ($query) => $query->orderBy('sort_order'),
+            'services' => fn ($query) => $query->orderBy('name'),
+        ];
+    }
+
+    // Carga en memoria las relaciones básicas del hotel
+    private function loadHotelRelations(Hotel $hotel): void
+    {
+        $hotel->load($this->hotelRelations());
     }
 
     // Prepara los datos permitidos para guardar el hotel

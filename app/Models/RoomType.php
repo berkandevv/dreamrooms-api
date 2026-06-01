@@ -46,6 +46,12 @@ class RoomType extends Model
             ->whereHas('hotel', fn ($hotelQuery) => $hotelQuery->published());
     }
 
+    // Filtra los tipos de habitación de los hoteles de un propietario concreto
+    public function scopeOwnedBy(Builder $query, int $ownerUserId): Builder
+    {
+        return $query->whereHas('hotel', fn ($hotelQuery) => $hotelQuery->ownedBy($ownerUserId));
+    }
+
     // Devuelve el hotel del tipo de habitación
     public function hotel(): BelongsTo
     {

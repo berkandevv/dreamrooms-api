@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -59,6 +60,12 @@ class Booking extends Model
             'discount_amount' => 'decimal:2',
             'total_amount' => 'decimal:2',
         ];
+    }
+
+    // Filtra las reservas de los hoteles de un propietario concreto
+    public function scopeOwnedBy(Builder $query, int $ownerUserId): Builder
+    {
+        return $query->whereHas('hotel', fn ($hotelQuery) => $hotelQuery->ownedBy($ownerUserId));
     }
 
     public function user(): BelongsTo

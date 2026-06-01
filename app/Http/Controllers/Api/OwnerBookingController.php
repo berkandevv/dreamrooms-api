@@ -28,7 +28,7 @@ class OwnerBookingController extends Controller
         $ownerUserId = $request->user()->id;
 
         $bookings = Booking::query()
-            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $ownerUserId))
+            ->ownedBy($ownerUserId)
             ->when($validated['hotel_id'] ?? null, fn ($query, $hotelId) => $query->where('hotel_id', $hotelId))
             ->when($validated['status'] ?? null, fn ($query, $status) => $query->where('status', $status))
             ->when($validated['payment_status'] ?? null, fn ($query, $paymentStatus) => $query->where('payment_status', $paymentStatus))
@@ -48,7 +48,7 @@ class OwnerBookingController extends Controller
 
         $booking = Booking::query()
             ->whereKey($bookingId)
-            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $ownerUserId))
+            ->ownedBy($ownerUserId)
             ->with($this->ownerBookingRelations())
             ->firstOrFail();
 

@@ -25,7 +25,7 @@ class OwnerRoomTypeController extends Controller
         $ownerUserId = $request->user()->id;
 
         $hotel = Hotel::query()
-            ->where('owner_user_id', $ownerUserId)
+            ->ownedBy($ownerUserId)
             ->findOrFail($hotelId);
 
         $roomTypes = $hotel->roomTypes()
@@ -45,7 +45,7 @@ class OwnerRoomTypeController extends Controller
         $ownerUserId = $request->user()->id;
 
         $hotel = Hotel::query()
-            ->where('owner_user_id', $ownerUserId)
+            ->ownedBy($ownerUserId)
             ->findOrFail($hotelId);
 
         $roomType = $hotel->roomTypes()->create($this->roomTypePayload($validated));
@@ -66,7 +66,7 @@ class OwnerRoomTypeController extends Controller
 
         $roomType = RoomType::query()
             ->where('id', $roomTypeId)
-            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $ownerUserId))
+            ->ownedBy($ownerUserId)
             ->with($this->roomTypeRelations())
             ->withCount($this->roomTypeCounts())
             ->firstOrFail();
@@ -86,7 +86,7 @@ class OwnerRoomTypeController extends Controller
 
         $roomType = RoomType::query()
             ->where('id', $roomTypeId)
-            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $ownerUserId))
+            ->ownedBy($ownerUserId)
             ->firstOrFail();
 
         $from = CarbonImmutable::parse($validated['from']);
@@ -117,7 +117,7 @@ class OwnerRoomTypeController extends Controller
 
         $roomType = RoomType::query()
             ->where('id', $roomTypeId)
-            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $ownerUserId))
+            ->ownedBy($ownerUserId)
             ->firstOrFail();
 
         $this->validateAvailableUnits($validated['items'], $roomType->total_units);
@@ -189,7 +189,7 @@ class OwnerRoomTypeController extends Controller
 
         $roomType = RoomType::query()
             ->where('id', $roomTypeId)
-            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $ownerUserId))
+            ->ownedBy($ownerUserId)
             ->firstOrFail();
 
         if (isset($validated['total_units'])) {
@@ -212,7 +212,7 @@ class OwnerRoomTypeController extends Controller
 
         $roomType = RoomType::query()
             ->where('id', $roomTypeId)
-            ->whereHas('hotel', fn ($query) => $query->where('owner_user_id', $ownerUserId))
+            ->ownedBy($ownerUserId)
             ->firstOrFail();
 
         $this->storeImages($roomType, $validated);
